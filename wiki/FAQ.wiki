@@ -1,0 +1,15 @@
+#summary Common questions and answers
+
+= FAQ =
+
+*Q: What is GWT?*
+
+A: GWT is _mainly_ a Java to Javascript compiler, allowing you to write Javascript without the pain of writing Javascript.
+
+*Q: How does GWT integrate with WebObjects?*
+
+A: The GWT compiler produces static Javascript files that are included in your application as WebServerResources.  The Javascript can interact with your server through regular ajax HTTP requests and through RPC calls to Java services that you create.  RPC requests are handled by the special WOGWT request handler.
+
+*Q: If I use GWT do I have to rewrite my whole application?*
+
+A: No, GWT can be used as little or as much as you need, in the same way as you would use Javascript.  You can use GWT to wrap existing HTML elements on a page to add dynamic behavior; or you can use GWT to create entirely new elements and widgets, or even construct your entire UI with it.
