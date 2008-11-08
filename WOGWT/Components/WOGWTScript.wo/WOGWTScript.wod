@@ -1,0 +1,3 @@
+EnableHistorySupport : WOConditional {
+  condition = ^enableHistorySupport;
+}

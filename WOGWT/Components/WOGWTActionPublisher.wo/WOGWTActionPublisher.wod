@@ -1,0 +1,11 @@
+ActionMethodRepetition : WORepetition {
+	list = actionMethodList;
+	item = actionMethodItem;
+}
+
+MetaActionMethod : WOGenericContainer {
+	elementName = "meta";
+	name = actionMethodNameAnnotated;
+	content = context.componentActionURL;
+	invokeAction = performAction;
+}

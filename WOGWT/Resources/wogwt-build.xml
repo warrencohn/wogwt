@@ -1,0 +1,129 @@
+<project name="gwtbuild" basedir=".">
+
+	<path id="empty.path" />
+		
+	<macrodef name="gwtCompile">
+		<!-- the module to compile -->
+		<attribute name="module" />
+		<!-- if your module specifies the rename-to attribute, the value of it -->
+		<attribute name="renamedTo" default="@{module}" />
+		<!-- the root of your source tree, usually "src" -->
+		<attribute name="srcDir" default="Sources"/>
+		<!-- possible values are: ERROR, WARN, INFO, TRACE, DEBUG, SPAM, or ALL -->
+		<attribute name="logLevel" default="INFO"/>
+		<!-- The directory into which generated files will be written for review -->
+		<attribute name="genDir" default="" />
+		<!-- The directory to write output files into -->
+		<attribute name="outputDir" default="WebServerResources"/>
+		<!-- Logs output in a graphical tree view  -->
+		<attribute name="useTreeLogger" default="false"/>
+		<!-- possible style values are: OBFUSCATED, PRETTY, and DETAILED -->
+		<attribute name="style" default="OBFUSCATED"/>
+		<!-- Debugging: causes the compiled output to check assert statements -->
+		<attribute name="enableAssert" default="false"/>
+		<!-- Validate all source code, but do not compile -->
+		<attribute name="validateOnly" default="false"/>
+		<!-- build even if not deemed necessary by file timestamps -->
+		<attribute name="forceBuild" default="false"/>
+		<!-- classpath element id for adding third-party jars to the compiler classpath -->
+		<attribute name="classpathRefid" default="empty.path"/>
+		<attribute name="gwtHome" default="${wo.wolocalroot}/Library/Frameworks/WOGWT.framework/Resources/Java" />
+		<sequential>
+			<gwt-uptodate property="gwtGenerate.notRequired" 
+				module="@{renamedTo}" 
+				srcdir="@{srcDir}"
+				output="@{outputDir}"
+				gwthome="@{gwtHome}"/>
+			
+			<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+			
+			<condition property="genDirArg" value="-gen" else="">
+				<length string="@{genDir}" when="greater" length="0" />
+			</condition>
+				
+			<condition property="treeLogger" value="-treeLogger" else="">
+				<istrue value="@{useTreeLogger}"/>
+			</condition>
+			
+			<condition property="assertArg" value="-ea" else="">
+				<istrue value="@{enableAssert}"/>
+			</condition>
+				
+			<condition property="validateOnlyArg" value="-validateOnly" else="">
+				<istrue value="@{validateOnly}"/>
+			</condition>
+				
+			<if>
+				<or>
+					<not>
+						<isset property="gwtGenerate.notRequired" />
+					</not>
+					<istrue value="@{forceBuild}"/>
+				</or>
+				<then>
+					<java classname="com.google.gwt.dev.GWTCompiler" fork="true">
+						<classpath refid="@{classpathRefid}" />
+						<classpath>
+							<pathelement location="@{srcDir}" />
+						  
+							<pathelement path="@{gwthome}/gwt-user.jar" />
+							<pathelement path="@{gwthome}/gwt-dev-mac.jar" />
+							<pathelement path="@{gwthome}/gwt-log-2.5.2.jar" />
+							<pathelement path="@{gwthome}/gwt-math-2.0.1.jar" />
+							<pathelement path="@{gwthome}/wogwt.jar" />
+						</classpath>
+						
+						<sysproperty key="java.awt.headless" value="true"/>
+						<jvmarg line="-XstartOnFirstThread" />
+						<jvmarg line="-Xms256m -Xmx512m" />
+						<jvmarg line="-XX:+AggressiveOpts" />
+						<jvmarg line="-XX:ThreadPriorityPolicy=1" />
+						<jvmarg line="-Xverify:none" />
+						<arg value="-logLevel" />
+						<arg value="@{logLevel}" />
+						<arg value="${genDirArg}" />
+						<arg value="@{genDir}" />
+						<arg value="-out" />
+						<arg value="@{outputDir}" />
+						<arg value="${treeLogger}" />
+						<arg value="-style" />
+						<arg value="@{style}" />
+						<arg value="${assertArg}" />
+						<arg value="${validateOnlyArg}" />
+						<arg value="@{module}" />
+					</java>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<!-- this defines a macro task 'gwt-uptodate' -->
+	<macrodef name="gwt-uptodate"
+		description="sets a property indicating if the module is up to date">
+		<attribute name="property" />
+		<attribute name="module" />
+		<attribute name="srcdir" default="Sources"/>
+		<attribute name="output" default="WebServerResources"/>
+		<attribute name="gwthome" default="${wo.wolocalroot}/Library/Frameworks/WOGWT.framework/Resources/Java" />
+		<sequential>
+
+			<path id="module.package" path="@{srcdir}/@{module}"/>
+
+			<pathconvert property="module.path" refid="module.package">
+				<chainedmapper>  
+					<filtermapper>
+						<replaceregex pattern="\.\p{Upper}.*$"/>
+					</filtermapper> 
+					<unpackagemapper from="*" to="*"/>
+				</chainedmapper>  
+			</pathconvert>
+
+			<!-- the module is uptodate if the .nocache.html is not older than any of the module src files -->
+			<uptodate property="@{property}"
+				targetfile="@{output}/@{module}/@{module}.nocache.js">
+				<srcfiles dir="${module.path}" includes="**/*.*" />
+			</uptodate>
+		</sequential>
+	</macrodef>
+	
+</project>
