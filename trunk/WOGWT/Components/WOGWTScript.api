@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wodefinitions>
+    <wo class="WOGWTScript" wocomponentcontent="false">    <binding name="module"/>
+        <validation message="'moduleName' is a required binding.">
+            <unbound name="module"/>
+        </validation>
+        <binding defaults="Boolean" name="enableHistorySupport"/>
+    
+    </wo>
+</wodefinitions>
