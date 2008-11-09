@@ -1,0 +1,22 @@
+{
+    EOModelVersion = "2.1"; 
+    adaptorName = JDBC; 
+    connectionDictionary = {URL = "jdbc:Frontbase://localhost/WOGWTDemo/user=_SYSTEM"; }; 
+    entities = (
+        {className = "your.app.eo.RootEntity"; name = RootEntity; }, 
+        {className = "your.app.eo.ToManyEntity"; name = ToManyEntity; }, 
+        {className = "your.app.eo.ToOneEntity"; name = ToOneEntity; }
+    ); 
+    userInfo = {
+        "_EntityModeler" = {
+            activeDatabaseConfigName = Default; 
+            databaseConfigs = {
+                Default = {
+                    adaptorName = JDBC; 
+                    connectionDictionary = {URL = "jdbc:Frontbase://localhost/WOGWTDemo/user=_SYSTEM"; }; 
+                    prototypeEntityName = EOJDBCFrontBasePrototypes; 
+                }; 
+            }; 
+        }; 
+    }; 
+}

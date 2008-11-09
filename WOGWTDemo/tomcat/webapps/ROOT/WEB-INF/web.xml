@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+	<!-- Indicates if application is development or deployment mode. In development
+		mode, images are vended by the application directly from frameworks. In
+		deployment mode, images are vended by the webserver. -->
+	<context-param>
+		<param-name>WOAppMode</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+	
+		<!-- This parameter points to the WebObjects directories required for
+		this application. If a directory contains resources, they will be
+		picked up; as well, if a directory contains JARs, they will be
+		picked up. WOROOT, LOCALROOT or WOAINSTALLROOT placeholders here
+		will be replaced at runtime with the appropriate values (Java System
+		Properties if defined, the context-param values located above 
+		otherwise). WEBINFROOT placeholders will be replaced at runtime 
+		with the full path to the WEB-INF directory. -->
+	<context-param>
+		<param-name>WOClasspath</param-name>
+		<param-value>
+			/workspace/WOGWTDemo/build/WOGWTDemo.woa/Contents/Resources/Java/your/app/Application.class
+		</param-value>
+	</context-param>
+	
+		<!-- Class name of the WOApplication subclass that defines the
+		WebObjects application. -->
+	<context-param>
+		<param-name>WOApplicationClass</param-name>
+		<param-value>your.app.Application</param-value>
+	</context-param>
+	
+	<servlet>
+		<servlet-name>shell</servlet-name>
+		<servlet-class>com.google.gwt.dev.shell.GWTShellServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>shell</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+
+</web-app>

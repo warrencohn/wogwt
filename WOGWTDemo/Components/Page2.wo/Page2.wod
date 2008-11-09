@@ -1,0 +1,4 @@
+WOGWTScript : WOGWTScript {
+  module = "your.app.gwt.Application";
+  enableHistorySupport = "true";
+}

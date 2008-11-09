@@ -1,0 +1,26 @@
+{
+    attributes = (
+        {
+            allowsNull = N; 
+            columnName = name; 
+            name = name; 
+            prototypeName = varchar50; 
+            userInfo = {"_EntityModeler" = {generateSource = NO; }; }; 
+        }, 
+        {
+            allowsNull = N; 
+            columnName = toOneEntityID; 
+            name = toOneEntityID; 
+            prototypeName = id; 
+            userInfo = {"_EntityModeler" = {generateSource = NO; }; }; 
+        }
+    ); 
+    attributesUsedForLocking = (name, toOneEntityID); 
+    className = "your.app.eo.ToOneEntity"; 
+    classProperties = (name); 
+    externalName = ToOneEntity; 
+    fetchSpecificationDictionary = {}; 
+    internalInfo = {"_javaClientClassName" = "your.app.gwt.eo.ToOneEntityClient"; }; 
+    name = ToOneEntity; 
+    primaryKeyAttributes = (toOneEntityID); 
+}
