@@ -1,8 +1,6 @@
 #summary Common questions and answers
 #labels Featured
 
-= FAQ =
-
 *Q: What is GWT?*
 
 A: GWT is _mainly_ a Java-to-Javascript compiler, allowing you to write Javascript without the pain of writing Javascript.
