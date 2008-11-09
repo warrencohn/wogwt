@@ -1,0 +1,48 @@
+<!-- 
+	A "module" is GWT is basically the project file.  It defines:
+	
+ 	1) what libraries are needed to build the project.  These are 
+       other modules like com.google.gwt.user.User.  
+       
+       <inherits name="com.google.gwt.user.User"/>
+       <inherits name="com.google.gwt.http.HTTP"/>
+       <inherits name="com.google.gwt.xml.XML"/>
+       <inherits name="com.google.gwt.json.JSON"/>
+       
+    2) the path to the source.  The empty source path means any classes in 
+       the same package as this module file and all classes in any subpackages 
+       will be translated to javascript.  Of course, this requires that these
+       classes are ABLE to be translated, so be careful what other classes you
+       reference in these source files.
+    
+       <source path=""/>
+       
+    3) the entry points for the application.  There is one entry point for 
+       each HTML page (or in this case, each WOComponent) in an application.
+       
+       <entry-point class="com.yourcompany.gwt.Page1Script"/>
+         
+    4) the CSS theme for GWT widgets.  If you use GWT widgets you will probably 
+        want to add one of these themes.  However, be aware that the CSS used by 
+        the theme may alter the existing appearance of your pages.
+        
+	   <inherits name="com.google.gwt.user.theme.standard.Standard"/>
+  	   <inherits name="com.google.gwt.user.theme.chrome.Chrome"/>
+  	   <inherits name="com.google.gwt.user.theme.dark.Dark"/>
+  	   
+-->
+<module>
+
+	<inherits name="com.google.gwt.user.User"/>
+	<inherits name="com.google.gwt.xml.XML"/>
+	<inherits name="wogwt.translatable.WOGWT"/>
+	<inherits name="com.googlecode.gwt.math.Math"/> 
+	
+  	<source path=""/>
+
+	<entry-point class="your.app.gwt.MainScript"/>
+	<entry-point class="your.app.gwt.Page2Script"/>
+
+	<servlet path="/WOGWTDemo/WebObjects" class="er.extensions.jspservlet.ERXServletAdaptor"/>
+
+</module>

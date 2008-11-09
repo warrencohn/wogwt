@@ -1,0 +1,43 @@
+{
+    attributes = (
+        {
+            allowsNull = N; 
+            columnName = name; 
+            name = name; 
+            prototypeName = varchar50; 
+            userInfo = {"_EntityModeler" = {generateSource = NO; }; }; 
+        }, 
+        {
+            allowsNull = N; 
+            columnName = rootEntityID; 
+            name = rootEntityID; 
+            prototypeName = id; 
+            userInfo = {"_EntityModeler" = {generateSource = NO; }; }; 
+        }, 
+        {
+            allowsNull = N; 
+            columnName = toManyEntity; 
+            name = toManyEntity; 
+            prototypeName = id; 
+            userInfo = {"_EntityModeler" = {generateSource = NO; }; }; 
+        }
+    ); 
+    attributesUsedForLocking = (name, rootEntityID, toManyEntity); 
+    className = "your.app.eo.ToManyEntity"; 
+    classProperties = (name, rootEntityObject); 
+    externalName = ToManyEntity; 
+    fetchSpecificationDictionary = {}; 
+    internalInfo = {"_javaClientClassName" = "your.app.gwt.eo.ToManyEntityClient"; }; 
+    name = ToManyEntity; 
+    primaryKeyAttributes = (toManyEntity); 
+    relationships = (
+        {
+            destination = RootEntity; 
+            isMandatory = Y; 
+            isToMany = N; 
+            joinSemantic = EOInnerJoin; 
+            joins = ({destinationAttribute = stateID; sourceAttribute = rootEntityID; }); 
+            name = rootEntityObject; 
+        }
+    ); 
+}
