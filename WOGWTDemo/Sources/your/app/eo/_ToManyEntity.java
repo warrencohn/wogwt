@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import wogwt.translatable.WOGWTClientEO;
 import wogwt.WOGWTServerEO;
+import wogwt.WOGWTServerUtil;
 
 // This class can only be used on the server-side
 public abstract class _ToManyEntity extends  EOGenericRecord implements WOGWTServerEO {
@@ -125,38 +126,37 @@ public abstract class _ToManyEntity extends  EOGenericRecord implements WOGWTSer
     return localInstance;
   }
   
+
+  
   public WOGWTClientEO toClientEO() {
-	  NSMutableDictionary data = snapshot().mutableClone();
+	  return new your.app.gwt.eo.ToManyEntityClient( WOGWTServerUtil.eoToDictionary(this) ); 
+  }
+  
+  public WOGWTClientEO toClientEO(List<String> relationshipsToSerialize) {
+	  NSMutableDictionary data = WOGWTServerUtil.eoToDictionary(this).mutableClone();
 	  
-	  String key;
-	  Object value;
-	  EOEnterpriseObject eoValue;
-	  
-	  // To one relationships - either send faults or turn into client EOs
-		key = "rootEntityObject";
-	    value = data.get( key );
-	    if (value.equals( NSKeyValueCoding.NullValue ))
-	    	data.remove( key );
-	    
-	    eoValue = (EOEnterpriseObject)value;
-	    if (eoValue.isFault()) {
-	    	Integer pk = (Integer)((EOKeyGlobalID)editingContext().globalIDForObject( eoValue )).keyValues()[0];
-	    	your.app.gwt.eo.RootEntityClient clientEO = new your.app.gwt.eo.RootEntityClient();
-	    	clientEO.setPrimaryKeyValue(pk);
-	    	clientEO.setIsFault(true);
-	    	data.setObjectForKey( clientEO, key );
-	    } else {
-	    	data.setObjectForKey( ((WOGWTServerEO)eoValue).toClientEO(), key );
-	    }
-
-		List list;
-		NSArray array;
-	  	// To  many relationships
-
-	  if (editingContext() != null && !editingContext().globalIDForObject( this ).isTemporary()) {
-		  data.setObjectForKey( ((EOKeyGlobalID)editingContext().globalIDForObject( this )).keyValues()[0], "primaryKeyValue" );
+	  for (int i = 0; i < relationshipsToSerialize.size(); i++) { 
+		String keyPath = relationshipsToSerialize.get(i);
+		Object value = valueForKey(keyPath);
+		
+		if (value != null && value instanceof NSArray) {
+			
+			NSArray objects = (NSArray)value;
+			List result = new ArrayList();
+			for (int j = 0; j < objects.count(); j++) {
+				WOGWTServerEO eo = (WOGWTServerEO)objects.objectAtIndex(j);
+				result.add(eo.toClientEO());
+			}
+			data.setObjectForKey(result, keyPath);
+			
+		} else if (value != null && value instanceof EOEnterpriseObject) {
+			WOGWTServerEO serverEO = (WOGWTServerEO)value;
+			data.setObjectForKey(serverEO.toClientEO(), keyPath);
+		}
+		
 	  }
-	  your.app.gwt.eo.ToManyEntityClient rec = new your.app.gwt.eo.ToManyEntityClient( data.immutableClone() ); 
+	  
+	  your.app.gwt.eo.ToManyEntityClient rec = new your.app.gwt.eo.ToManyEntityClient( data ); 
 	  return rec;
   }
   

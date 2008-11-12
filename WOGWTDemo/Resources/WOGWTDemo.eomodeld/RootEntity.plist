@@ -43,7 +43,7 @@
             userInfo = {"_EntityModeler" = {generateSource = NO; }; }; 
         }, 
         {
-            allowsNull = N; 
+            allowsNull = Y; 
             columnName = toOneEntityID; 
             name = toOneEntityID; 
             prototypeName = id; 
@@ -59,7 +59,7 @@
         anInt, 
         aString, 
         toManyEntityObjects, 
-        toOneEntityObject
+        toOneEntity
     ); 
     externalName = RootEntity; 
     fetchSpecificationDictionary = {}; 
@@ -76,11 +76,10 @@
         }, 
         {
             destination = ToOneEntity; 
-            isMandatory = Y; 
             isToMany = N; 
             joinSemantic = EOInnerJoin; 
             joins = ({destinationAttribute = toOneEntityID; sourceAttribute = toOneEntityID; }); 
-            name = toOneEntityObject; 
+            name = toOneEntity; 
         }
     ); 
 }

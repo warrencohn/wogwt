@@ -36,8 +36,9 @@
 	<inherits name="com.google.gwt.user.User"/>
 	<inherits name="com.google.gwt.xml.XML"/>
 	<inherits name="wogwt.translatable.WOGWT"/>
+	<inherits name="wogwt.emulation.WOGWTEmulation"/>
 	<inherits name="com.googlecode.gwt.math.Math"/> 
-	
+
   	<source path=""/>
 
 	<entry-point class="your.app.gwt.MainScript"/>
