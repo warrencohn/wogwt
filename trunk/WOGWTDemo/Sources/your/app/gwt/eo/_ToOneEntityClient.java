@@ -16,7 +16,7 @@ import wogwt.translatable.WOGWTClientEO;
 public abstract class _ToOneEntityClient implements IsSerializable, WOGWTClientEO {
 	
 	private String name;
-	private boolean isFault = false;
+	private List<your.app.gwt.eo.RootEntityClient> rootEntities;
 
 	public _ToOneEntityClient() {
 		super();
@@ -30,17 +30,20 @@ public abstract class _ToOneEntityClient implements IsSerializable, WOGWTClientE
 	public static String[] keys() {
 		List keys = new ArrayList();
 		keys.add("name");
+		keys.add("rootEntities");
     	return (String[])keys.toArray( new String[keys.size()] );
 	}
 
 	public Map<String, ?> toMap() {
 		Map map = new HashMap();
 		map.put("name", name);
+		map.put("rootEntities", rootEntities);
 		return map;
 	}
 
 	public void takeValuesFromMap(Map<String, ?> map) {
 		name = (String)map.get("name");
+		rootEntities = (List)map.get("rootEntities");
 		if (map.get( "primaryKeyValue" ) != null)
 			primaryKeyValue = (Integer)map.get( "primaryKeyValue" );
 	}
@@ -51,9 +54,6 @@ public abstract class _ToOneEntityClient implements IsSerializable, WOGWTClientE
 	
 	// Attributes
 	public String name() {
-		if (isFault()) {
-			System.out.println("I'm a fault!!!");
-		}
 		return name;
 	}
 	
@@ -70,15 +70,20 @@ public abstract class _ToOneEntityClient implements IsSerializable, WOGWTClientE
 	public void setPrimaryKeyValue(Integer primaryKeyValue) {
 		this.primaryKeyValue = primaryKeyValue;
 	}
-	
-	public boolean isFault() {
-		return isFault;
-	}
-	
-	public void setIsFault(boolean value) {
-		this.isFault = value;
-	}
 
 	// To One Relationships
 	//To Many Relationships
+	public List<your.app.gwt.eo.RootEntityClient> rootEntities() {
+		return rootEntities;
+	}
+	
+	public void setRootEntities(List<your.app.gwt.eo.RootEntityClient> rootEntities) {
+		this.rootEntities = rootEntities;
+	}
+	
+
+	public String toString() {
+		return toMap().toString();
+	}
+
 }

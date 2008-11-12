@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import wogwt.translatable.WOGWTClientEO;
 import wogwt.WOGWTServerEO;
+import wogwt.WOGWTServerUtil;
 
 // This class can only be used on the server-side
 public abstract class _ToOneEntity extends  EOGenericRecord implements WOGWTServerEO {
@@ -21,6 +22,7 @@ public abstract class _ToOneEntity extends  EOGenericRecord implements WOGWTServ
 	public static final String NAME_KEY = "name";
 
 	// Relationships
+	public static final String ROOT_ENTITIES_KEY = "rootEntities";
 
   private static Logger LOG = Logger.getLogger(_ToOneEntity.class);
 
@@ -41,6 +43,80 @@ public abstract class _ToOneEntity extends  EOGenericRecord implements WOGWTServ
     	_ToOneEntity.LOG.debug( "updating name from " + name() + " to " + value);
     }
     takeStoredValueForKey(value, "name");
+  }
+
+  public NSArray rootEntities() {
+    return (NSArray)storedValueForKey("rootEntities");
+  }
+
+  public NSArray rootEntities(EOQualifier qualifier) {
+    return rootEntities(qualifier, null, false);
+  }
+
+  public NSArray rootEntities(EOQualifier qualifier, boolean fetch) {
+    return rootEntities(qualifier, null, fetch);
+  }
+
+  public NSArray rootEntities(EOQualifier qualifier, NSArray sortOrderings, boolean fetch) {
+    NSArray results;
+    if (fetch) {
+      EOQualifier fullQualifier;
+      EOQualifier inverseQualifier = new EOKeyValueQualifier(your.app.eo.RootEntity.TO_ONE_ENTITY_KEY, EOQualifier.QualifierOperatorEqual, this);
+      if (qualifier == null) {
+        fullQualifier = inverseQualifier;
+      }
+      else {
+        NSMutableArray qualifiers = new NSMutableArray();
+        qualifiers.addObject(qualifier);
+        qualifiers.addObject(inverseQualifier);
+        fullQualifier = new EOAndQualifier(qualifiers);
+      }
+      results = your.app.eo.RootEntity.fetchRootEntities(editingContext(), fullQualifier, sortOrderings);
+    }
+    else {
+      results = rootEntities();
+      if (qualifier != null) {
+        results = (NSArray)EOQualifier.filteredArrayWithQualifier(results, qualifier);
+      }
+      if (sortOrderings != null) {
+        results = (NSArray)EOSortOrdering.sortedArrayUsingKeyOrderArray(results, sortOrderings);
+      }
+    }
+    return results;
+  }
+  
+  public void addToRootEntitiesRelationship(your.app.eo.RootEntity object) {
+    if (_ToOneEntity.LOG.isDebugEnabled()) {
+      _ToOneEntity.LOG.debug("adding " + object + " to rootEntities relationship");
+    }
+    addObjectToBothSidesOfRelationshipWithKey(object, "rootEntities");
+  }
+
+  public void removeFromRootEntitiesRelationship(your.app.eo.RootEntity object) {
+    if (_ToOneEntity.LOG.isDebugEnabled()) {
+      _ToOneEntity.LOG.debug("removing " + object + " from rootEntities relationship");
+    }
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "rootEntities");
+  }
+
+  public your.app.eo.RootEntity createRootEntitiesRelationship() {
+    EOClassDescription eoClassDesc = EOClassDescription.classDescriptionForEntityName("RootEntity");
+    EOEnterpriseObject eo = eoClassDesc.createInstanceWithEditingContext(editingContext(), null);
+    editingContext().insertObject(eo);
+    addObjectToBothSidesOfRelationshipWithKey(eo, "rootEntities");
+    return (your.app.eo.RootEntity) eo;
+  }
+
+  public void deleteRootEntitiesRelationship(your.app.eo.RootEntity object) {
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "rootEntities");
+    editingContext().deleteObject(object);
+  }
+
+  public void deleteAllRootEntitiesRelationships() {
+    Enumeration objects = rootEntities().immutableClone().objectEnumerator();
+    while (objects.hasMoreElements()) {
+      deleteRootEntitiesRelationship((your.app.eo.RootEntity)objects.nextElement());
+    }
   }
 
   public static ToOneEntity createToOneEntity(EOEditingContext editingContext, String name
@@ -105,23 +181,37 @@ public abstract class _ToOneEntity extends  EOGenericRecord implements WOGWTServ
     return localInstance;
   }
   
+
+  
   public WOGWTClientEO toClientEO() {
-	  NSMutableDictionary data = snapshot().mutableClone();
+	  return new your.app.gwt.eo.ToOneEntityClient( WOGWTServerUtil.eoToDictionary(this) ); 
+  }
+  
+  public WOGWTClientEO toClientEO(List<String> relationshipsToSerialize) {
+	  NSMutableDictionary data = WOGWTServerUtil.eoToDictionary(this).mutableClone();
 	  
-	  String key;
-	  Object value;
-	  EOEnterpriseObject eoValue;
-	  
-	  // To one relationships - either send faults or turn into client EOs
-
-		List list;
-		NSArray array;
-	  	// To  many relationships
-
-	  if (editingContext() != null && !editingContext().globalIDForObject( this ).isTemporary()) {
-		  data.setObjectForKey( ((EOKeyGlobalID)editingContext().globalIDForObject( this )).keyValues()[0], "primaryKeyValue" );
+	  for (int i = 0; i < relationshipsToSerialize.size(); i++) { 
+		String keyPath = relationshipsToSerialize.get(i);
+		Object value = valueForKey(keyPath);
+		
+		if (value != null && value instanceof NSArray) {
+			
+			NSArray objects = (NSArray)value;
+			List result = new ArrayList();
+			for (int j = 0; j < objects.count(); j++) {
+				WOGWTServerEO eo = (WOGWTServerEO)objects.objectAtIndex(j);
+				result.add(eo.toClientEO());
+			}
+			data.setObjectForKey(result, keyPath);
+			
+		} else if (value != null && value instanceof EOEnterpriseObject) {
+			WOGWTServerEO serverEO = (WOGWTServerEO)value;
+			data.setObjectForKey(serverEO.toClientEO(), keyPath);
+		}
+		
 	  }
-	  your.app.gwt.eo.ToOneEntityClient rec = new your.app.gwt.eo.ToOneEntityClient( data.immutableClone() ); 
+	  
+	  your.app.gwt.eo.ToOneEntityClient rec = new your.app.gwt.eo.ToOneEntityClient( data ); 
 	  return rec;
   }
   

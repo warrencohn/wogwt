@@ -20,9 +20,8 @@ public abstract class _RootEntityClient implements IsSerializable, WOGWTClientEO
 	private NSTimestamp aDate;
 	private Integer anInt;
 	private String aString;
-	private your.app.gwt.eo.ToOneEntityClient toOneEntityObject;
+	private your.app.gwt.eo.ToOneEntityClient toOneEntity;
 	private List<your.app.gwt.eo.ToManyEntityClient> toManyEntityObjects;
-	private boolean isFault = false;
 
 	public _RootEntityClient() {
 		super();
@@ -40,7 +39,7 @@ public abstract class _RootEntityClient implements IsSerializable, WOGWTClientEO
 		keys.add("aDate");
 		keys.add("anInt");
 		keys.add("aString");
-		keys.add("toOneEntityObject");
+		keys.add("toOneEntity");
 		keys.add("toManyEntityObjects");
     	return (String[])keys.toArray( new String[keys.size()] );
 	}
@@ -52,7 +51,7 @@ public abstract class _RootEntityClient implements IsSerializable, WOGWTClientEO
 		map.put("aDate", aDate);
 		map.put("anInt", anInt);
 		map.put("aString", aString);
-		map.put("toOneEntityObject", toOneEntityObject);
+		map.put("toOneEntity", toOneEntity);
 		map.put("toManyEntityObjects", toManyEntityObjects);
 		return map;
 	}
@@ -63,7 +62,7 @@ public abstract class _RootEntityClient implements IsSerializable, WOGWTClientEO
 		aDate = (NSTimestamp)map.get("aDate");
 		anInt = (Integer)map.get("anInt");
 		aString = (String)map.get("aString");
-		toOneEntityObject = (your.app.gwt.eo.ToOneEntityClient)map.get("toOneEntityObject");
+		toOneEntity = (your.app.gwt.eo.ToOneEntityClient)map.get("toOneEntity");
 		toManyEntityObjects = (List)map.get("toManyEntityObjects");
 		if (map.get( "primaryKeyValue" ) != null)
 			primaryKeyValue = (Integer)map.get( "primaryKeyValue" );
@@ -75,9 +74,6 @@ public abstract class _RootEntityClient implements IsSerializable, WOGWTClientEO
 	
 	// Attributes
 	public BigDecimal aBigDecimal() {
-		if (isFault()) {
-			System.out.println("I'm a fault!!!");
-		}
 		return aBigDecimal;
 	}
 	
@@ -86,9 +82,6 @@ public abstract class _RootEntityClient implements IsSerializable, WOGWTClientEO
 	}
 
 	public Boolean aBoolean() {
-		if (isFault()) {
-			System.out.println("I'm a fault!!!");
-		}
 		return aBoolean;
 	}
 	
@@ -97,9 +90,6 @@ public abstract class _RootEntityClient implements IsSerializable, WOGWTClientEO
 	}
 
 	public NSTimestamp aDate() {
-		if (isFault()) {
-			System.out.println("I'm a fault!!!");
-		}
 		return aDate;
 	}
 	
@@ -108,9 +98,6 @@ public abstract class _RootEntityClient implements IsSerializable, WOGWTClientEO
 	}
 
 	public Integer anInt() {
-		if (isFault()) {
-			System.out.println("I'm a fault!!!");
-		}
 		return anInt;
 	}
 	
@@ -119,9 +106,6 @@ public abstract class _RootEntityClient implements IsSerializable, WOGWTClientEO
 	}
 
 	public String aString() {
-		if (isFault()) {
-			System.out.println("I'm a fault!!!");
-		}
 		return aString;
 	}
 	
@@ -138,22 +122,14 @@ public abstract class _RootEntityClient implements IsSerializable, WOGWTClientEO
 	public void setPrimaryKeyValue(Integer primaryKeyValue) {
 		this.primaryKeyValue = primaryKeyValue;
 	}
-	
-	public boolean isFault() {
-		return isFault;
-	}
-	
-	public void setIsFault(boolean value) {
-		this.isFault = value;
-	}
 
 	// To One Relationships
-	public your.app.gwt.eo.ToOneEntityClient toOneEntityObject() {
-		return toOneEntityObject;
+	public your.app.gwt.eo.ToOneEntityClient toOneEntity() {
+		return toOneEntity;
 	}
 	
-	public void setToOneEntityObject(your.app.gwt.eo.ToOneEntityClient toOneEntityObject) {
-		this.toOneEntityObject =  toOneEntityObject;
+	public void setToOneEntity(your.app.gwt.eo.ToOneEntityClient toOneEntity) {
+		this.toOneEntity =  toOneEntity;
 	}
 	
 	//To Many Relationships
@@ -165,4 +141,9 @@ public abstract class _RootEntityClient implements IsSerializable, WOGWTClientEO
 		this.toManyEntityObjects = toManyEntityObjects;
 	}
 	
+
+	public String toString() {
+		return toMap().toString();
+	}
+
 }

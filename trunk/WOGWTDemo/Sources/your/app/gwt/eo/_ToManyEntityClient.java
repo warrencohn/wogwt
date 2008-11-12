@@ -17,7 +17,6 @@ public abstract class _ToManyEntityClient implements IsSerializable, WOGWTClient
 	
 	private String name;
 	private your.app.gwt.eo.RootEntityClient rootEntityObject;
-	private boolean isFault = false;
 
 	public _ToManyEntityClient() {
 		super();
@@ -55,9 +54,6 @@ public abstract class _ToManyEntityClient implements IsSerializable, WOGWTClient
 	
 	// Attributes
 	public String name() {
-		if (isFault()) {
-			System.out.println("I'm a fault!!!");
-		}
 		return name;
 	}
 	
@@ -74,14 +70,6 @@ public abstract class _ToManyEntityClient implements IsSerializable, WOGWTClient
 	public void setPrimaryKeyValue(Integer primaryKeyValue) {
 		this.primaryKeyValue = primaryKeyValue;
 	}
-	
-	public boolean isFault() {
-		return isFault;
-	}
-	
-	public void setIsFault(boolean value) {
-		this.isFault = value;
-	}
 
 	// To One Relationships
 	public your.app.gwt.eo.RootEntityClient rootEntityObject() {
@@ -93,4 +81,9 @@ public abstract class _ToManyEntityClient implements IsSerializable, WOGWTClient
 	}
 	
 	//To Many Relationships
+
+	public String toString() {
+		return toMap().toString();
+	}
+
 }

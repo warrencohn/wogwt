@@ -17,10 +17,19 @@
     ); 
     attributesUsedForLocking = (name, toOneEntityID); 
     className = "your.app.eo.ToOneEntity"; 
-    classProperties = (name); 
+    classProperties = (name, rootEntities); 
     externalName = ToOneEntity; 
     fetchSpecificationDictionary = {}; 
     internalInfo = {"_javaClientClassName" = "your.app.gwt.eo.ToOneEntityClient"; }; 
     name = ToOneEntity; 
     primaryKeyAttributes = (toOneEntityID); 
+    relationships = (
+        {
+            destination = RootEntity; 
+            isToMany = Y; 
+            joinSemantic = EOInnerJoin; 
+            joins = ({destinationAttribute = toOneEntityID; sourceAttribute = toOneEntityID; }); 
+            name = rootEntities; 
+        }
+    ); 
 }

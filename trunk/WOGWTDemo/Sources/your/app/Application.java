@@ -25,10 +25,6 @@ public class Application extends ERXApplication {
 		
 		setPageCacheSize(5);
 	}
-	
-	public boolean _rapidTurnaroundActiveForAnyProject() {
-		return ERXApplication.isDevelopmentModeSafe();
-	}
 
     public WOResponse dispatchRequest(WORequest request) {
     	WOResponse response = super.dispatchRequest( request );
