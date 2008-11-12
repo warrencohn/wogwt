@@ -28,6 +28,7 @@
 		<!-- classpath element id for adding third-party jars to the compiler classpath -->
 		<attribute name="classpathRefid" default="empty.path"/>
 		<attribute name="gwtHome" default="${wo.wolocalroot}/Library/Frameworks/WOGWT.framework/Resources/Java" />
+
 		<sequential>
 			<gwt-uptodate property="gwtGenerate.notRequired" 
 				module="@{renamedTo}" 
@@ -69,8 +70,9 @@
 							<pathelement path="@{gwthome}/gwt-user.jar" />
 							<pathelement path="@{gwthome}/gwt-dev-mac.jar" />
 							<pathelement path="@{gwthome}/gwt-log-2.5.2.jar" />
-							<pathelement path="@{gwthome}/gwt-math-2.0.1.jar" />
 							<pathelement path="@{gwthome}/wogwt.jar" />
+							<pathelement path="@{gwthome}/../../WebServerResources/gwt-math-2.0.1.jar" />
+							<pathelement path="@{gwthome}/../../WebServerResources/wogwt-emulation.jar" />
 						</classpath>
 						
 						<sysproperty key="java.awt.headless" value="true"/>

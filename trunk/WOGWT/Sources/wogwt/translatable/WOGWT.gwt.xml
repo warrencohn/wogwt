@@ -6,7 +6,8 @@
 	<inherits name="wogwt.emulation.WOGWTEmulation"/>
 	<!-- Add gwt-log support, default level `DEBUG` -->
     <inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
-        
+    <inherits name="com.googlecode.gwt.math.Math"/>
+    
 	<!-- This means any classes in the same package as this module file and all classes
 	     in any subpackages will be translated to javascript -->
   	<source path=""/>

@@ -1,3 +1,2 @@
 **/*.gwt.xml
 wogwt/translatable/**/*.java
-wogwt/emulation/**/*.java

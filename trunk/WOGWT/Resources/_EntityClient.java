@@ -24,7 +24,6 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 #foreach ($relationship in $entity.sortedClassToManyRelationships)
 	private List<$relationship.destination.clientClassName> ${relationship.name};
 #end
-	private boolean isFault = false;
 
 	public ${entity.prefixClassNameWithoutPackage}() {
 		super();
@@ -84,9 +83,6 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 	// Attributes
 #foreach ($attribute in $entity.sortedClassAttributes)
 	public $attribute.javaClassName ${attribute.name}() {
-		if (isFault()) {
-			System.out.println("I'm a fault!!!");
-		}
 		return ${attribute.name};
 	}
 	
@@ -103,14 +99,6 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 	
 	public void setPrimaryKeyValue(Integer primaryKeyValue) {
 		this.primaryKeyValue = primaryKeyValue;
-	}
-	
-	public boolean isFault() {
-		return isFault;
-	}
-	
-	public void setIsFault(boolean value) {
-		this.isFault = value;
 	}
 
 	// To One Relationships
@@ -135,4 +123,9 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 	}
 	
 #end
+
+	public String toString() {
+		return toMap().toString();
+	}
+
 }

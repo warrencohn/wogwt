@@ -1,17 +1,20 @@
 package wogwt;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.w3c.dom.Node;
 
 import wogwt.translatable.WOGWTClientUtil;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
 import com.webobjects.appserver.WORequest;
 import com.webobjects.appserver.WOResponse;
+import com.webobjects.eocontrol.EOEnterpriseObject;
+import com.webobjects.eocontrol.EOKeyGlobalID;
+import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSLog;
+import com.webobjects.foundation.NSMutableDictionary;
 
 public class WOGWTServerUtil {
 
@@ -37,13 +40,39 @@ public class WOGWTServerUtil {
     	}	
 	}
 	
-	public static List toClientEOList(Collection serverEOs) {
+	public static Object primaryKeyValue(EOEnterpriseObject eo) {
+		if (eo.editingContext() != null && !eo.editingContext().globalIDForObject( eo ).isTemporary()) {
+			return ((EOKeyGlobalID)eo.editingContext().globalIDForObject( eo )).keyValues()[0];
+		} else {
+			return null;
+		}
+	}
+	  
+	public static NSDictionary eoToDictionary(EOEnterpriseObject eo) {
+		NSMutableDictionary data = eo.snapshot().mutableClone();
+
+		if (primaryKeyValue(eo) != null) {
+			data.setObjectForKey( primaryKeyValue(eo), "primaryKeyValue" );
+		}
+
+		return data;
+	}
+	
+	public static List toClientEOList(List serverEOs) {
+		return toClientEOList(serverEOs, null);
+	}
+	
+	public static List toClientEOList(List serverEOs, List<String> relationshipsToSerialize) {
 		List result = new ArrayList(serverEOs.size());	  
 
-		for (Iterator iterator = serverEOs.iterator(); iterator.hasNext();) {
-			WOGWTServerEO eo = (WOGWTServerEO)iterator.next();
-			result.add( eo.toClientEO() );
+		for (int i = 0; i < serverEOs.size(); i++) {
+			WOGWTServerEO eo = (WOGWTServerEO)serverEOs.get(i);
+			if (relationshipsToSerialize == null)
+				result.add( eo.toClientEO() );
+			else
+				result.add( eo.toClientEO(relationshipsToSerialize) );
 		}
+		
 		return result;
 	}
 }

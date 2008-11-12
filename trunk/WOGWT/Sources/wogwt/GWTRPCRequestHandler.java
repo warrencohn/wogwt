@@ -8,9 +8,12 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
 import com.google.gwt.user.server.rpc.RPCRequest;
+import com.webobjects.appserver.WOApplication;
+import com.webobjects.appserver.WOContext;
 import com.webobjects.appserver.WORequest;
 import com.webobjects.appserver.WORequestHandler;
 import com.webobjects.appserver.WOResponse;
+import com.webobjects.appserver.WOSession;
 
 /**
  * Register the request handler in your Application constructor by calling:
@@ -67,16 +70,37 @@ public class GWTRPCRequestHandler extends WORequestHandler {
 	
 	@Override
 	public WOResponse handleRequest(WORequest request) {
-		WOResponse response = new WOResponse();
+		WOApplication application = WOApplication.application();
+		WOContext context = application.createContextForRequest(request);
+		WOResponse response = application.createResponseInContext(context);
+
+		String wosid = request.stringFormValueForKey(WOContext.SessionIDBindingKey);
+		if (wosid == null) {
+			wosid = request.cookieValueForKey("wosid");
+		}
+		context._setRequestSessionID(wosid);
+
+		WOSession session = null;
+		if (context._requestSessionID() != null) {
+			session = WOApplication.application().restoreSessionWithID(wosid, context);
+		}
 		try {
-			response.setContent(processCall(request.contentString()));
-			return response;
-		} catch (Exception e) {
-			return doUnexpectedFailure(e);
+			
+			try {
+				response.setContent(processCall(request.contentString(), context));
+				return response;
+			} catch (Exception e) {
+				return doUnexpectedFailure(e);
+			}
+			
+		} finally {
+			if (context._session() != null) {
+				WOApplication.application().saveSessionForContext(context);
+			}
 		}
 	}
 	
-	protected String processCall(String payload) 
+	protected String processCall(String payload, WOContext context) 
 		throws SerializationException, ClassNotFoundException, NoSuchMethodException, 
 			InvocationTargetException, IllegalArgumentException, InstantiationException, IllegalAccessException {
 		
@@ -96,9 +120,16 @@ public class GWTRPCRequestHandler extends WORequestHandler {
 						" to register the service and it's implementation.");
 			}
 		}
-		
-		Constructor constructor = serviceImplementation.getConstructor();
-		Object serviceObject = constructor.newInstance();
+
+		Constructor constructor;
+		Object serviceObject;
+		try {
+			constructor = serviceImplementation.getConstructor(WOContext.class);
+			serviceObject = constructor.newInstance(context);
+		} catch (NoSuchMethodException e) {
+			constructor = serviceImplementation.getConstructor();
+			serviceObject = constructor.newInstance();
+		}
 		
 		return RPC.invokeAndEncodeResponse(serviceObject, rpcRequest.getMethod(), rpcRequest.getParameters());
 	}
