@@ -1,5 +1,5 @@
 #summary RPC summary
-#labels Featured,Phase-Implementation
+#labels Phase-Implementation
 
 GWT RPC allows you to transfer objects between client and server in Java.  GWT serizalization is limited to only serializing certain kinds of objects.  Regular EOs aren't able to be serialized so WOGWT includes templates that allow you to generate Data Transfer Objects (DTOs) for your entities.
 
