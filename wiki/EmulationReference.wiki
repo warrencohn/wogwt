@@ -1,5 +1,5 @@
 #summary The following standard WO classes are emulated and can be used in client code (i.e. in the browser).
-#labels Featured,Phase-Implementation
+#labels Phase-Implementation
 
   * NSArray
   * NSMutableArray
