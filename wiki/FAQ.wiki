@@ -1,5 +1,4 @@
 #summary Common questions and answers
-#labels Featured
 
 *Q: What is GWT?*
 
@@ -15,4 +14,4 @@ A: No, GWT can be used as little or as much as you need, in the same way as you 
 
 *Q: What dependencies are necessary to use WOGWT?*
 
-A: WebObjects 5.4 or later and a recent version Project Wonder (with ERXResponseRewriter).
+A: WebObjects 5.4 or later and a recent version Project Wonder.
