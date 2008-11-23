@@ -1,0 +1,17 @@
+
+<project basedir="." default="install" name="WOGWT-Emulation">
+	
+	<target name="install">
+	    <delete file="../WOGWT/Libraries/wogwt-emulation.jar" quiet="true"/>	
+
+		<jar destfile="../WOGWT/Libraries/wogwt-emulation.jar"
+			basedir="src">
+		</jar>
+		
+		<jar destfile="../WOGWT/Libraries/wogwt-emulation.jar"
+			basedir="bin" includes="**/*_CustomFieldSerializer.class"
+			update="true">
+		</jar>
+	</target>
+	
+</project>
