@@ -1,4 +1,4 @@
-package wogwt;
+package wogwt.components;
 
 import java.lang.reflect.Method;
 

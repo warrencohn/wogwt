@@ -1,5 +1,6 @@
-package wogwt;
+package wogwt.server.rpc;
 
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.webobjects.appserver.WOApplication;
 import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;

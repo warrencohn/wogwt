@@ -1,19 +1,30 @@
-package wogwt;
+package wogwt.server.rpc;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
 import com.google.gwt.user.server.rpc.RPCRequest;
+import com.google.gwt.user.server.rpc.SerializationPolicy;
+import com.google.gwt.user.server.rpc.SerializationPolicyLoader;
+import com.google.gwt.user.server.rpc.SerializationPolicyProvider;
 import com.webobjects.appserver.WOApplication;
 import com.webobjects.appserver.WOContext;
 import com.webobjects.appserver.WORequest;
 import com.webobjects.appserver.WORequestHandler;
 import com.webobjects.appserver.WOResponse;
 import com.webobjects.appserver.WOSession;
+import com.webobjects.foundation.NSTimestamp;
 
 /**
  * Register the request handler in your Application constructor by calling:
@@ -30,7 +41,9 @@ import com.webobjects.appserver.WOSession;
  *		
  * where HelloService and HelloServiceAsync are your service classes.
  */
-public class GWTRPCRequestHandler extends WORequestHandler {
+public class GWTRPCRequestHandler extends WORequestHandler /*implements SerializationPolicyProvider*/ {
+
+	private static Logger log = Logger.getLogger(GWTRPCRequestHandler.class);
 
 	public static final String KEY = "gwtrpc";
 	private static final String RPC_PACKAGE_KEY = "wogwt.rpcImplementationPackage";
@@ -104,8 +117,44 @@ public class GWTRPCRequestHandler extends WORequestHandler {
 		throws SerializationException, ClassNotFoundException, NoSuchMethodException, 
 			InvocationTargetException, IllegalArgumentException, InstantiationException, IllegalAccessException {
 		
-		RPCRequest rpcRequest = RPC.decodeRequest(payload);
+		try {
+			RPCRequest rpcRequest = RPC.decodeRequest(payload);	
+			Object serviceObject = createServiceObject(context, rpcRequest);
 		
+			return RPC.invokeAndEncodeResponse(
+					serviceObject, 
+					rpcRequest.getMethod(), 
+					rpcRequest.getParameters());
+			
+		} catch (IncompatibleRemoteServiceException e) {
+			log.error(e.getMessage(), e);
+			return RPC.encodeResponseForFailure(null, e);
+		}
+	}
+
+//	public SerializationPolicy getSerializationPolicy(String moduleBaseURL, 
+//			String serializationPolicyStrongName) {
+//
+//		try {
+//			InputStream stream = new FileInputStream("/workspace/WOGWTDemo/WebServerResources/.gwt-tmp/shell/your.app.gwt.Application/4278A9353A8157C624FCE5A29F23D438.gwt.rpc");
+//			List exceptions = new ArrayList();
+//			SerializationPolicy p = SerializationPolicyLoader.loadFromStream(stream, exceptions);
+//			log.debug("deserialize=" + p.shouldDeserializeFields(NSTimestamp.class));
+//			log.debug("serialize=" + p.shouldSerializeFields(NSTimestamp.class));
+//			return p;
+//		} catch (Exception e) {
+//			log.error(e);
+//			return RPC.getDefaultSerializationPolicy();
+//		}
+//		
+//		//return new AllowEverythingSerializationPolicy();
+//		//return RPC.getDefaultSerializationPolicy();
+//		//return doGetSerializationPolicy(moduleBaseURL, serializationPolicyStrongName);
+//	}
+	
+	private Object createServiceObject(WOContext context, RPCRequest rpcRequest)
+			throws InstantiationException, IllegalAccessException,
+			InvocationTargetException, NoSuchMethodException {
 		// target will be the service implementation class (the servlet in normal RPC)
 		Class serviceInterface = rpcRequest.getMethod().getDeclaringClass();
 		
@@ -115,7 +164,8 @@ public class GWTRPCRequestHandler extends WORequestHandler {
 			
 			if (serviceImplementation == null) {
 				throw new RuntimeException("No service implementation registered for service:" + 
-						serviceInterface.getName() + ". Call " + 
+						serviceInterface.getName() + ". Set the property '" + RPC_PACKAGE_KEY + 
+						"' to the package with your service implementations or call " + 
 						GWTRPCRequestHandler.class.getSimpleName() + ".registerServiceImplementation()" + 
 						" to register the service and it's implementation.");
 			}
@@ -130,8 +180,7 @@ public class GWTRPCRequestHandler extends WORequestHandler {
 			constructor = serviceImplementation.getConstructor();
 			serviceObject = constructor.newInstance();
 		}
-		
-		return RPC.invokeAndEncodeResponse(serviceObject, rpcRequest.getMethod(), rpcRequest.getParameters());
+		return serviceObject;
 	}
 
 	/**

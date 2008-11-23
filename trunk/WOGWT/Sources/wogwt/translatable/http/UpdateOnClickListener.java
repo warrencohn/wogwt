@@ -1,4 +1,6 @@
-package wogwt.translatable;
+package wogwt.translatable.http;
+
+import wogwt.translatable.WOGWTClientUtil;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.user.client.Event;

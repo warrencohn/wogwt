@@ -1,8 +1,8 @@
-package wogwt;
+package wogwt.server.rpc;
 
 import java.util.List;
 
-import wogwt.translatable.WOGWTClientEO;
+import wogwt.translatable.rpc.WOGWTClientEO;
 
 public interface WOGWTServerEO {
 
