@@ -3,6 +3,6 @@
 
 = Requirements =
 
-WebObjects 5.4 or later
-Project Wonder build 8565 (Nov 11, 2008) or later
-Mac OS X  (the Mac distribution of GWT is embedded)
+  * WebObjects 5.4 or later
+  * Project Wonder build 8565 (Nov 11, 2008) or later
+  * Mac OS X  (the Mac distribution of GWT is embedded)
