@@ -1,4 +1,4 @@
-<!-- 
+<?xml version="1.0" encoding="UTF-8"?><!-- 
 	A "module" is GWT is basically the project file.  It defines:
 	
  	1) what libraries are needed to build the project.  These are 
@@ -30,8 +30,7 @@
   	   <inherits name="com.google.gwt.user.theme.chrome.Chrome"/>
   	   <inherits name="com.google.gwt.user.theme.dark.Dark"/>
   	   
--->
-<module>
+--><module>
 
 	<inherits name="com.google.gwt.user.User"/>
 	<inherits name="com.google.gwt.xml.XML"/>
@@ -44,6 +43,6 @@
 	<entry-point class="your.app.gwt.MainScript"/>
 	<entry-point class="your.app.gwt.Page2Script"/>
 
-	<servlet path="/WOGWTDemo/WebObjects" class="er.extensions.jspservlet.ERXServletAdaptor"/>
+	<servlet class="er.extensions.jspservlet.ERXServletAdaptor" path="/WOGWTDemo/WebObjects"/>
 
 </module>

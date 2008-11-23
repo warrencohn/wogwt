@@ -20,7 +20,10 @@
     classProperties = (name, rootEntities); 
     externalName = ToOneEntity; 
     fetchSpecificationDictionary = {}; 
-    internalInfo = {"_javaClientClassName" = "your.app.gwt.eo.ToOneEntityClient"; }; 
+    internalInfo = {
+        "_clientClassPropertyNames" = (name); 
+        "_javaClientClassName" = "your.app.gwt.eo.ToOneEntityClient"; 
+    }; 
     name = ToOneEntity; 
     primaryKeyAttributes = (toOneEntityID); 
     relationships = (

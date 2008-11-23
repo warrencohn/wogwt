@@ -1,6 +1,4 @@
-package your.app.gwt;
-
-import java.util.List;
+package your.app.gwt.rpc;
 
 import wogwt.translatable.WOGWTClientUtil;
 import your.app.gwt.eo.RootEntityClient;
@@ -8,6 +6,7 @@ import your.app.gwt.eo.RootEntityClient;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
+import com.webobjects.foundation.NSArray;
 
 public interface EOService extends RemoteService {
 	
@@ -19,6 +18,6 @@ public interface EOService extends RemoteService {
 		}
 	}
 
-	public List<RootEntityClient> allRootEntities();
-	
+	public NSArray<RootEntityClient> allRootEntities();
+
 }

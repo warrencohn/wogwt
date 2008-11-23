@@ -1,5 +1,5 @@
 
-wogwt.rpcImplementationPackage = your.app.gwtrpc
+wogwt.rpcImplementationPackage = your.app.server.rpc
 
 WODirectConnectEnabled=false
 
