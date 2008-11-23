@@ -1,21 +1,20 @@
 package your.app.gwt;
 
-import java.util.List;
-
-import wogwt.translatable.AfterDOMUpdateCallback;
-import wogwt.translatable.SingleFieldSubmitOnChangeListener;
-import wogwt.translatable.SubmitOnClickListener;
-import wogwt.translatable.UpdateOnClickListener;
 import wogwt.translatable.WOGWTClientUtil;
+import wogwt.translatable.http.AfterDOMUpdateCallback;
+import wogwt.translatable.http.SingleFieldSubmitOnChangeListener;
+import wogwt.translatable.http.SubmitOnClickListener;
+import wogwt.translatable.http.UpdateOnClickListener;
+import wogwt.translatable.rpc.LogOnErrorAsyncCallback;
 import your.app.gwt.eo.RootEntityClient;
+import your.app.gwt.eo.ToManyEntityClient;
+import your.app.gwt.rpc.EOService;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ChangeListener;
@@ -23,7 +22,6 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.webobjects.foundation.NSArray;
 
 public class MainScript implements EntryPoint {
@@ -48,16 +46,15 @@ public class MainScript implements EntryPoint {
 		
 		Log.debug(getClass().getName() + ": onModuleLoad");
 		
-		EOService.Util.getInstance().allRootEntities(new AsyncCallback<List<RootEntityClient>>() {
-			public void onSuccess(List<RootEntityClient> response) {
+		EOService.Util.getInstance().allRootEntities(new LogOnErrorAsyncCallback<NSArray<RootEntityClient>>() {
+			public void onSuccess(NSArray<RootEntityClient> response) {
 				if (response.size() > 0) {
-					Window.alert(response.get(0).toString());
+					RootEntityClient eo = (RootEntityClient)response.get(0);
+					ToManyEntityClient toMany = (ToManyEntityClient)eo.toManyEntities().get(0);
+					Window.alert("result: " + toMany.name());
 				} else {
 					Window.alert("no objects");
 				}
-			}
-			public void onFailure(Throwable error) {
-				Log.error(error.getMessage(), error);
 			}
 		});
 		
@@ -84,20 +81,7 @@ public class MainScript implements EntryPoint {
 		//PeriodicUpdater periodicUpdater = new PeriodicUpdater("periodicContainer", 2000);
 		
 		Button helloButton = Button.wrap(DOM.getElementById("helloButton"));
-		helloButton.addClickListener(new ClickListener() {
-			public void onClick(Widget sender) {
-				HelloService.Util.getInstance().hello(new AsyncCallback<String>() {
-					public void onSuccess(String response) {
-						Window.alert(response);
-					}
-					public void onFailure(Throwable error) {
-						Log.error(error.getMessage(), error);
-					}
-				});
-				Event.getCurrentEvent().preventDefault();
-			}
-		});
-		//helloButton.addClickListener(new SubmitOnClickListener("formOutsideContainer"));
+		helloButton.addClickListener(new SubmitOnClickListener("formOutsideContainer"));
 															    
 		Button goodbyeButton = Button.wrap(DOM.getElementById("goodbyeButton"));
 		goodbyeButton.addClickListener(new SubmitOnClickListener("formOutsideContainer"));

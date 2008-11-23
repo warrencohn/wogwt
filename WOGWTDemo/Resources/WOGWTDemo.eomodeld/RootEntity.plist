@@ -37,8 +37,8 @@
         }, 
         {
             allowsNull = N; 
-            columnName = stateID; 
-            name = stateID; 
+            columnName = rootEntityID; 
+            name = rootEntityID; 
             prototypeName = id; 
             userInfo = {"_EntityModeler" = {generateSource = NO; }; }; 
         }, 
@@ -50,29 +50,24 @@
             userInfo = {"_EntityModeler" = {generateSource = NO; }; }; 
         }
     ); 
-    attributesUsedForLocking = (stateID, toOneEntityID); 
+    attributesUsedForLocking = (rootEntityID, toOneEntityID); 
     className = "your.app.eo.RootEntity"; 
-    classProperties = (
-        aBigDecimal, 
-        aBoolean, 
-        aDate, 
-        anInt, 
-        aString, 
-        toManyEntityObjects, 
-        toOneEntity
-    ); 
+    classProperties = (aBigDecimal, aBoolean, aDate, anInt, aString, toManyEntities, toOneEntity); 
     externalName = RootEntity; 
     fetchSpecificationDictionary = {}; 
-    internalInfo = {"_javaClientClassName" = "your.app.gwt.eo.RootEntityClient"; }; 
+    internalInfo = {
+        "_clientClassPropertyNames" = (aBigDecimal, aBoolean, aDate, anInt, aString, toManyEntities, toOneEntity); 
+        "_javaClientClassName" = "your.app.gwt.eo.RootEntityClient"; 
+    }; 
     name = RootEntity; 
-    primaryKeyAttributes = (stateID); 
+    primaryKeyAttributes = (rootEntityID); 
     relationships = (
         {
             destination = ToManyEntity; 
             isToMany = Y; 
             joinSemantic = EOInnerJoin; 
-            joins = ({destinationAttribute = rootEntityID; sourceAttribute = stateID; }); 
-            name = toManyEntityObjects; 
+            joins = ({destinationAttribute = rootEntityID; sourceAttribute = rootEntityID; }); 
+            name = toManyEntities; 
         }, 
         {
             destination = ToOneEntity; 

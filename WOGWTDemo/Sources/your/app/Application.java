@@ -1,7 +1,7 @@
 package your.app;
 
-import wogwt.GWTRPCRequestHandler;
 import wogwt.WOGWTServerUtil;
+import wogwt.server.rpc.GWTRPCRequestHandler;
 
 import com.webobjects.appserver.WORequest;
 import com.webobjects.appserver.WOResponse;

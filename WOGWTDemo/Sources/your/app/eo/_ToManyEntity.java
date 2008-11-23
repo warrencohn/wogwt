@@ -1,32 +1,38 @@
-// DO NOT EDIT.  Make changes to ToManyEntity.java instead.
+// $LastChangedRevision: 4733 $ DO NOT EDIT.  Make changes to ToManyEntity.java instead.
 package your.app.eo;
 
 import com.webobjects.eoaccess.*;
 import com.webobjects.eocontrol.*;
 import com.webobjects.foundation.*;
-
 import java.math.*;
 import java.util.*;
-
 import org.apache.log4j.Logger;
 
-import wogwt.translatable.WOGWTClientEO;
-import wogwt.WOGWTServerEO;
+import er.extensions.eof.*;
+import er.extensions.foundation.*;
+
+import wogwt.translatable.rpc.WOGWTClientEO;
+import wogwt.server.rpc.WOGWTServerEO;
 import wogwt.WOGWTServerUtil;
 
 // This class can only be used on the server-side
-public abstract class _ToManyEntity extends  EOGenericRecord implements WOGWTServerEO {
-	public static final String ENTITY_NAME = "ToManyEntity";
+@SuppressWarnings("all")
+public abstract class _ToManyEntity extends  ERXGenericRecord implements WOGWTServerEO {
+  public static final String ENTITY_NAME = "ToManyEntity";
 
-	// Attributes
-	public static final String NAME_KEY = "name";
+  // Attribute Keys
+  public static final ERXKey<String> NAME = new ERXKey<String>("name");
+  // Relationship Keys
+  public static final ERXKey<your.app.eo.RootEntity> ROOT_ENTITY = new ERXKey<your.app.eo.RootEntity>("rootEntity");
 
-	// Relationships
-	public static final String ROOT_ENTITY_OBJECT_KEY = "rootEntityObject";
+  // Attributes
+  public static final String NAME_KEY = NAME.key();
+  // Relationships
+  public static final String ROOT_ENTITY_KEY = ROOT_ENTITY.key();
 
   private static Logger LOG = Logger.getLogger(_ToManyEntity.class);
 
-  public ToManyEntity localInstanceOfToManyEntity(EOEditingContext editingContext) {
+  public ToManyEntity localInstanceIn(EOEditingContext editingContext) {
     ToManyEntity localInstance = (ToManyEntity)EOUtilities.localInstanceOfObject(editingContext, this);
     if (localInstance == null) {
       throw new IllegalStateException("You attempted to localInstance " + this + ", which has not yet committed.");
@@ -45,44 +51,52 @@ public abstract class _ToManyEntity extends  EOGenericRecord implements WOGWTSer
     takeStoredValueForKey(value, "name");
   }
 
-  public your.app.eo.RootEntity rootEntityObject() {
-    return (your.app.eo.RootEntity)storedValueForKey("rootEntityObject");
+  public your.app.eo.RootEntity rootEntity() {
+    return (your.app.eo.RootEntity)storedValueForKey("rootEntity");
+  }
+  
+  public void setRootEntity(your.app.eo.RootEntity value) {
+    takeStoredValueForKey(value, "rootEntity");
   }
 
-  public void setRootEntityObjectRelationship(your.app.eo.RootEntity value) {
+  public void setRootEntityRelationship(your.app.eo.RootEntity value) {
     if (_ToManyEntity.LOG.isDebugEnabled()) {
-      _ToManyEntity.LOG.debug("updating rootEntityObject from " + rootEntityObject() + " to " + value);
+      _ToManyEntity.LOG.debug("updating rootEntity from " + rootEntity() + " to " + value);
     }
-    if (value == null) {
-    	your.app.eo.RootEntity oldValue = rootEntityObject();
+    if (er.extensions.eof.ERXGenericRecord.InverseRelationshipUpdater.updateInverseRelationships()) {
+    	setRootEntity(value);
+    }
+    else if (value == null) {
+    	your.app.eo.RootEntity oldValue = rootEntity();
     	if (oldValue != null) {
-    		removeObjectFromBothSidesOfRelationshipWithKey(oldValue, "rootEntityObject");
+    		removeObjectFromBothSidesOfRelationshipWithKey(oldValue, "rootEntity");
       }
     } else {
-    	addObjectToBothSidesOfRelationshipWithKey(value, "rootEntityObject");
+    	addObjectToBothSidesOfRelationshipWithKey(value, "rootEntity");
     }
   }
   
+
   public static ToManyEntity createToManyEntity(EOEditingContext editingContext, String name
-, your.app.eo.RootEntity rootEntityObject) {
-    ToManyEntity eo = (ToManyEntity)EOUtilities.createAndInsertInstance(editingContext, _ToManyEntity.ENTITY_NAME);
+, your.app.eo.RootEntity rootEntity) {
+    ToManyEntity eo = (ToManyEntity) EOUtilities.createAndInsertInstance(editingContext, _ToManyEntity.ENTITY_NAME);    
 		eo.setName(name);
-    eo.setRootEntityObjectRelationship(rootEntityObject);
+    eo.setRootEntityRelationship(rootEntity);
     return eo;
   }
 
-  public static NSArray fetchAllToManyEntities(EOEditingContext editingContext) {
+  public static NSArray<ToManyEntity> fetchAllToManyEntities(EOEditingContext editingContext) {
     return _ToManyEntity.fetchAllToManyEntities(editingContext, null);
   }
 
-  public static NSArray fetchAllToManyEntities(EOEditingContext editingContext, NSArray sortOrderings) {
+  public static NSArray<ToManyEntity> fetchAllToManyEntities(EOEditingContext editingContext, NSArray<EOSortOrdering> sortOrderings) {
     return _ToManyEntity.fetchToManyEntities(editingContext, null, sortOrderings);
   }
 
-  public static NSArray fetchToManyEntities(EOEditingContext editingContext, EOQualifier qualifier, NSArray sortOrderings) {
+  public static NSArray<ToManyEntity> fetchToManyEntities(EOEditingContext editingContext, EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings) {
     EOFetchSpecification fetchSpec = new EOFetchSpecification(_ToManyEntity.ENTITY_NAME, qualifier, sortOrderings);
     fetchSpec.setIsDeep(true);
-    NSArray eoObjects = (NSArray)editingContext.objectsWithFetchSpecification(fetchSpec);
+    NSArray<ToManyEntity> eoObjects = (NSArray<ToManyEntity>)editingContext.objectsWithFetchSpecification(fetchSpec);
     return eoObjects;
   }
 
@@ -91,7 +105,7 @@ public abstract class _ToManyEntity extends  EOGenericRecord implements WOGWTSer
   }
 
   public static ToManyEntity fetchToManyEntity(EOEditingContext editingContext, EOQualifier qualifier) {
-    NSArray eoObjects = _ToManyEntity.fetchToManyEntities(editingContext, qualifier, null);
+    NSArray<ToManyEntity> eoObjects = _ToManyEntity.fetchToManyEntities(editingContext, qualifier, null);
     ToManyEntity eoObject;
     int count = eoObjects.count();
     if (count == 0) {
@@ -118,46 +132,24 @@ public abstract class _ToManyEntity extends  EOGenericRecord implements WOGWTSer
     return eoObject;
   }
 
-  public static ToManyEntity localInstanceOfToManyEntity(EOEditingContext editingContext, ToManyEntity eo) {
+  public static ToManyEntity localInstanceIn(EOEditingContext editingContext, ToManyEntity eo) {
     ToManyEntity localInstance = (eo == null) ? null : (ToManyEntity)EOUtilities.localInstanceOfObject(editingContext, eo);
     if (localInstance == null && eo != null) {
       throw new IllegalStateException("You attempted to localInstance " + eo + ", which has not yet committed.");
     }
     return localInstance;
   }
-  
 
-  
   public WOGWTClientEO toClientEO() {
-	  return new your.app.gwt.eo.ToManyEntityClient( WOGWTServerUtil.eoToDictionary(this) ); 
+    return new your.app.gwt.eo.ToManyEntityClient( WOGWTServerUtil.eoToDictionary(this) ); 
   }
-  
+
   public WOGWTClientEO toClientEO(List<String> relationshipsToSerialize) {
-	  NSMutableDictionary data = WOGWTServerUtil.eoToDictionary(this).mutableClone();
-	  
-	  for (int i = 0; i < relationshipsToSerialize.size(); i++) { 
-		String keyPath = relationshipsToSerialize.get(i);
-		Object value = valueForKey(keyPath);
-		
-		if (value != null && value instanceof NSArray) {
-			
-			NSArray objects = (NSArray)value;
-			List result = new ArrayList();
-			for (int j = 0; j < objects.count(); j++) {
-				WOGWTServerEO eo = (WOGWTServerEO)objects.objectAtIndex(j);
-				result.add(eo.toClientEO());
-			}
-			data.setObjectForKey(result, keyPath);
-			
-		} else if (value != null && value instanceof EOEnterpriseObject) {
-			WOGWTServerEO serverEO = (WOGWTServerEO)value;
-			data.setObjectForKey(serverEO.toClientEO(), keyPath);
-		}
-		
-	  }
-	  
-	  your.app.gwt.eo.ToManyEntityClient rec = new your.app.gwt.eo.ToManyEntityClient( data ); 
-	  return rec;
+    NSMutableDictionary data = WOGWTServerUtil.eoToDictionary(this).mutableClone();
+	data.addEntriesFromDictionary(
+			WOGWTServerUtil.relationshipsToClientEOs(this, relationshipsToSerialize));
+    your.app.gwt.eo.ToManyEntityClient rec = new your.app.gwt.eo.ToManyEntityClient( data ); 
+    return rec;
   }
-  
+
 }

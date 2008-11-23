@@ -1,12 +1,11 @@
-<!-- 
+<?xml version="1.0" encoding="UTF-8"?><!-- 
 	The development module builds on top of the main Application module
 	and actually replaces it during development.
 	
 	It exists only to speed compilation time by statically defining which
 	brower and locale permutations are available.  If you do all your development
 	using the GWT shell / Hosted Mode Browser, then this isn't needed.
--->
-<module rename-to="your.app.gwt.Application">
+--><module rename-to="your.app.gwt.Application">
 
 	<inherits name="your.app.gwt.Application"/>
 
