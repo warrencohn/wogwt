@@ -20,6 +20,8 @@ The implementation class has be associated with the interface classes by setting
 wogwt.rpcImplementationPackage = your.app.server.rpc
 }}}
 
+So a service with one function that returns an array of EOs would look like this:
+
 your/app/gwt/rpc/EOService.java
 {{{
 package your.app.gwt.rpc;
@@ -89,3 +91,5 @@ public class EOServiceImpl extends WOGWTRpcService implements EOService {
 		
 }
 }}}
+
+Notice that the return parameter is the "client" class, the DTO, not the regular EO.
