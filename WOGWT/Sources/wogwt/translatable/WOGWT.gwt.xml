@@ -11,7 +11,7 @@
 	<!-- This means any classes in the same package as this module file and all classes
 	     in any subpackages will be translated to javascript -->
   	<source path=""/>
-
+	<source path=""/>
 	<set-property name="log_DivLogger" value="DISABLED" />
 	
 </module>

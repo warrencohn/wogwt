@@ -1,10 +1,12 @@
-package wogwt;
+package wogwt.components;
 
 import java.util.Enumeration;
 
 import org.apache.log4j.Appender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.varia.StringMatchFilter;
+
+import wogwt.server.rpc.GWTRPCRequestHandler;
 
 import com.webobjects.appserver.WOApplication;
 import com.webobjects.appserver.WOComponent;

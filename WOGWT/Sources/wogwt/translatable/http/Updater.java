@@ -1,7 +1,9 @@
-package wogwt.translatable;
+package wogwt.translatable.http;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import wogwt.translatable.WOGWTClientUtil;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.dom.client.Document;

@@ -1,4 +1,4 @@
-package wogwt.translatable;
+package wogwt.translatable.rpc;
 
 import java.util.Map;
 

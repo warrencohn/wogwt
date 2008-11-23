@@ -25,7 +25,7 @@
 <div>
 <h1>WOGWT - Getting Started</h1>
 
-<p>This framework brings <a href="http://code.google.com/webtoolkit/overview.html">GWT</a> into the WO world.</p>
+<p>This page describes how to integrate <a href="http://code.google.com/webtoolkit/overview.html">GWT</a> into your existing WebObjects application.</p>
 
 <p>GWT runs in different modes for development and production.  In production GWT compiles into static javascript files that served as WebServerResources by your application, which is all very normal.  This is called "<a href="http://code.google.com/docreader/#p=google-web-toolkit-doc-1-5&s=google-web-toolkit-doc-1-5&t=DevGuideRunningInWebMode">web mode</a>". </p>
 
@@ -35,7 +35,7 @@
 
 <p>Here are the steps you need to follow to use WOGWT in your application.</p>
 
-<p>0) WOGWT requires WebObjects 5.4 or later (for ajax support) so be sure it is installed.</p>
+<p>0) WOGWT requires WebObjects 5.4 or later (for ajax support) so be sure it is installed.  It also requires Project Wonder build 8565 (Nov 11, 2008) or later.</p>
 
 <p>1) Install WOGWT.framework into /Library/Frameworks.</p>
 
@@ -261,9 +261,10 @@ f) Check the "Java Client" box under Options. This will cause the EO class to be
 <br/>
 g) Open your EOModel in Entity Modeler<br/>
 h) For each entity, in the Properties view, on the Advanced tab, set the "Client Class Name" to something like "your.app.gwt.eo.MyEntityClient". The package MUST be inside your GWT package so that these classes are available to the GWT compiler. Adding "Client" to the end of the class name makes it easier to distinguish between the Server version of the class and the Client version, especially when using both classes in the same source file.<br/>
-i) Right-click your new .eogen file and choose "EOGenerate" to create the new client classes (DTOs).<br/>
+i) For all the attributes and relationships you want to make available for RPC, select the Advanced tab in the Entity Modeler Properties view and check the "Client class property" box.
+j) Right-click your new .eogen file and choose "EOGenerate" to create the new client classes (DTOs).<br/>
 <br/>
-Your RPC servce will need to only return and accept the Client version of your EO classes since the Server versions are not serializable.
+Your RPC servce will need to only return and accept the Client version of your EO classes since the Server versions are not serializable.  For details about how to implement the service see the <a href="http://code.google.com/p/wogwt/wiki/RPC">RPC wiki page</a>.
 <br/>
 For information about how to define an RPC service, see the GWT <a href="http://code.google.com/docreader/#p=google-web-toolkit-doc-1-5&s=google-web-toolkit-doc-1-5&t=DevGuideCreatingServices">documentation</a> or look at the WOGWTDemo example application.
 </div>

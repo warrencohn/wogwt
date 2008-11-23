@@ -1,4 +1,5 @@
-package wogwt.translatable;
+package wogwt.translatable.http;
+
 
 import com.google.gwt.user.client.Timer;
 

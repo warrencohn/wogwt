@@ -5,15 +5,18 @@ import java.util.List;
 
 import org.w3c.dom.Node;
 
+import wogwt.server.rpc.WOGWTServerEO;
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+import com.google.gwt.dev.util.msg.Message2StringURL;
 import com.webobjects.appserver.WORequest;
 import com.webobjects.appserver.WOResponse;
 import com.webobjects.eocontrol.EOEnterpriseObject;
 import com.webobjects.eocontrol.EOKeyGlobalID;
+import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSLog;
+import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSMutableDictionary;
 
 public class WOGWTServerUtil {
@@ -50,7 +53,10 @@ public class WOGWTServerUtil {
 	  
 	public static NSDictionary eoToDictionary(EOEnterpriseObject eo) {
 		NSMutableDictionary data = eo.snapshot().mutableClone();
-
+		
+		data.removeObjectsForKeys(eo.toOneRelationshipKeys());
+		data.removeObjectsForKeys(eo.toManyRelationshipKeys());
+		
 		if (primaryKeyValue(eo) != null) {
 			data.setObjectForKey( primaryKeyValue(eo), "primaryKeyValue" );
 		}
@@ -58,12 +64,12 @@ public class WOGWTServerUtil {
 		return data;
 	}
 	
-	public static List toClientEOList(List serverEOs) {
+	public static NSArray toClientEOList(List serverEOs) {
 		return toClientEOList(serverEOs, null);
 	}
 	
-	public static List toClientEOList(List serverEOs, List<String> relationshipsToSerialize) {
-		List result = new ArrayList(serverEOs.size());	  
+	public static NSArray toClientEOList(List serverEOs, List<String> relationshipsToSerialize) {
+		NSMutableArray result = new NSMutableArray(serverEOs.size());	  
 
 		for (int i = 0; i < serverEOs.size(); i++) {
 			WOGWTServerEO eo = (WOGWTServerEO)serverEOs.get(i);
@@ -73,6 +79,30 @@ public class WOGWTServerUtil {
 				result.add( eo.toClientEO(relationshipsToSerialize) );
 		}
 		
-		return result;
+		return result.immutableClone();
+	}
+	
+	public static NSDictionary relationshipsToClientEOs(EOEnterpriseObject rootEO, List<String> relationshipsToSerialize) {
+		NSMutableDictionary result = new NSMutableDictionary();
+		for (int i = 0; i < relationshipsToSerialize.size(); i++) { 
+			String keyPath = relationshipsToSerialize.get(i);
+			Object value = rootEO.valueForKey(keyPath);
+
+			if (value != null && value instanceof NSArray) { // to-many relationship
+
+				NSArray objects = (NSArray)value;
+				NSMutableArray array = new NSMutableArray();
+				for (int j = 0; j < objects.count(); j++) {
+					WOGWTServerEO eo = (WOGWTServerEO)objects.objectAtIndex(j);
+					array.add(eo.toClientEO());
+				}
+				result.setObjectForKey(array.immutableClone(), keyPath);
+
+			} else if (value != null && value instanceof EOEnterpriseObject) { // to-one relationship
+				WOGWTServerEO serverEO = (WOGWTServerEO)value;
+				result.setObjectForKey(serverEO.toClientEO(), keyPath);
+			}
+		}
+		return result.immutableClone();
 	}
 }
