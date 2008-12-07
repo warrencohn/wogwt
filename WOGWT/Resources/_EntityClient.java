@@ -31,7 +31,7 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 #foreach ($attribute in $entity.sortedClientClassAttributes)
 	private $attribute.javaClassName ${attribute.name};
 #end
-#foreach ($relationship in $entity.clientClassToOneRelationships)
+#foreach ($relationship in $entity.sortedClientClassToOneRelationships)
 	private $relationship.destination.classNameWithDefault ${relationship.name};
 #end
 #foreach ($relationship in $entity.sortedClientClassToManyRelationships)
@@ -67,8 +67,8 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 	
 	public static NSArray<String> toOneRelationshipKeys() {
 		NSArray<String> keys = new NSArray<String>( new String[] {	
-#foreach ($relationship in $entity.clientClassToOneRelationships)
-			"${relationship.name}"#if ($velocityCount < $entity.sortedClassAttributes.size()),#end
+#foreach ($relationship in $entity.sortedClientClassToOneRelationships)
+			"${relationship.name}"#if ($velocityCount < $entity.sortedClientClassToOneRelationships.size()),#end
 			
 #end	
 		});
@@ -90,7 +90,7 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 #foreach ($attribute in $entity.sortedClientClassAttributes)
 		map.put("${attribute.name}", ${attribute.name});
 #end
-#foreach ($relationship in $entity.clientClassToOneRelationships)
+#foreach ($relationship in $entity.sortedClientClassToOneRelationships)
 		map.put("${relationship.name}", ${relationship.name});
 #end
 #foreach ($relationship in $entity.sortedClientClassToManyRelationships)
@@ -103,7 +103,7 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 #foreach ($attribute in $entity.sortedClientClassAttributes)
 		${attribute.name} = ($attribute.javaClassName)map.get("${attribute.name}");
 #end		
-#foreach ($relationship in $entity.clientClassToOneRelationships)
+#foreach ($relationship in $entity.sortedClientClassToOneRelationships)
 		${relationship.name} = ($relationship.destination.classNameWithDefault)map.get("${relationship.name}");
 #end
 #foreach ($relationship in $entity.sortedClientClassToManyRelationships)
@@ -122,7 +122,7 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 		else if ("${attribute.name}".equals(key))
 			return ${attribute.name}();
 #end		
-#foreach ($relationship in $entity.clientClassToOneRelationships)
+#foreach ($relationship in $entity.sortedClientClassToOneRelationships)
 		else if ("${relationship.name}".equals(key))
 			return ${relationship.name}();
 #end
@@ -141,7 +141,7 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 		else if ("${attribute.name}".equals(key))
 			set${attribute.capitalizedName}(($attribute.javaClassName)value);
 #end		
-#foreach ($relationship in $entity.clientClassToOneRelationships)
+#foreach ($relationship in $entity.sortedClientClassToOneRelationships)
 		else if ("${relationship.name}".equals(key))
 			set${relationship.capitalizedName}(($relationship.destination.classNameWithDefault)value);
 #end
@@ -179,7 +179,7 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 	}
 
 	// To One Relationships
-#foreach ($relationship in $entity.clientClassToOneRelationships)
+#foreach ($relationship in $entity.sortedClientClassToOneRelationships)
 	public $relationship.destination.classNameWithDefault ${relationship.name}() {
 		return ${relationship.name};
 	}

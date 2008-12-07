@@ -1,4 +1,4 @@
-#Sat Nov 22 21:34:09 CST 2008
+#Tue Nov 25 16:57:48 CST 2008
 eclipse.preferences.version=1
 encoding//Components/WOGWTActionPublisher.api=UTF-8
 encoding//Components/WOGWTActionPublisher.wo=UTF-8
@@ -9,6 +9,11 @@ encoding//Components/WOGWTScript.wo=UTF-8
 encoding//Components/WOGWTScript.wo/WOGWTScript.html=UTF-8
 encoding//Components/WOGWTScript.wo/WOGWTScript.wod=UTF-8
 encoding//Components/WOGWTScript.wo/WOGWTScript.woo=UTF-8
+encoding//Components/WOGWTSingleActionPublisher.wo=UTF-8
+encoding//Components/WOGWTSingleActionPublisher.wo/WOGWTSingleActionPublisher.html=UTF-8
+encoding//Components/WOGWTSingleActionPublisher.wo/WOGWTSingleActionPublisher.wod=UTF-8
+encoding//Components/WOGWTSingleActionPublisher.wo/WOGWTSingleActionPublisher.woo=UTF-8
 encoding//Sources/wogwt/components/WOGWTActionPublisher.java=UTF-8
 encoding//Sources/wogwt/components/WOGWTScript.java=UTF-8
+encoding//Sources/wogwt/components/WOGWTSingleActionPublisher.java=UTF-8
 encoding/Components=UTF-8

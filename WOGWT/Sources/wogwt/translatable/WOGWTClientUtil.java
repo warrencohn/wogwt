@@ -7,6 +7,7 @@ import java.util.Map;
 
 import wogwt.translatable.http.WOGWTRequestCallback;
 
+import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.FormElement;
@@ -21,13 +22,15 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.http.client.RequestBuilder.Method;
+import com.google.gwt.user.client.DOM;
 
 public class WOGWTClientUtil {
 	
 	// TODO: test RPC!
     
 	public static final String UPDATE_CONTAINER_ID_KEY = "__updateID";
-	public static final String WOGWTMissingUpdateContainer = "WOGWTMissingUpdateContainer";	
+	public static final String WOGWTMissingUpdateContainer = "WOGWTMissingUpdateContainer";
+	public static final String ACTION_ID_PREFIX = "wogwt_action_";
 	
     public static MetaElement metaTagWithName(String name) {
     	NodeList<Element> metas = Document.get().getElementsByTagName("meta");
@@ -56,13 +59,12 @@ public class WOGWTClientUtil {
     }
 
     public static String publishedUrlForComponentActionNamed(String actionName) {
-    	MetaElement metaTag = metaTagWithName("action:" + actionName);
-    	
-    	if (metaTag == null) {
+    	Element element = DOM.getElementById(ACTION_ID_PREFIX + actionName);
+    	if (element != null) {
+    		return AnchorElement.as(element).getHref();
+    	} else {
     		return null;
     	}
-    	
-    	return metaTag.getContent();
     }
     
     /**
@@ -182,10 +184,15 @@ public class WOGWTClientUtil {
 		return $wnd.WOGWT.directActionBaseUrl;
 	}-*/;
 	
+	/* this has to be an absolate URL to work in hosted mode */
+	public static native String resourceUrl() /*-{
+		return $wnd.location.protocol + '//' + $wnd.location.host + $wnd.WOGWT.resourceUrl;
+	}-*/;
+	
 	public static native String componentRequestHanderKey() /*-{
 		return $wnd.WOGWT.componentRequestHandlerKey;
 	}-*/;
-
+ 
 	public static native String ajaxRequestHanderKey() /*-{
 		return $wnd.WOGWT.ajaxRequestHandlerKey;
 	}-*/;

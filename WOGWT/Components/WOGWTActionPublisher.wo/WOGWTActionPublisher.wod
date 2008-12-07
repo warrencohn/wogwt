@@ -3,9 +3,8 @@ ActionMethodRepetition : WORepetition {
 	item = actionMethodItem;
 }
 
-MetaActionMethod : WOGenericContainer {
-	elementName = "meta";
-	name = actionMethodNameAnnotated;
-	content = context.componentActionURL;
-	invokeAction = performAction;
+ActionMethodLink : WOHyperlink {
+	style = "display: none;";
+	id = actionMethodNameAnnotated;
+	action = performAction;
 }

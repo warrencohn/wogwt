@@ -87,11 +87,18 @@ public class WOGWTScript extends WOComponent {
     	}
     	String rpcUrl = context.urlWithRequestHandlerKey(GWTRPCRequestHandler.KEY, null, queryString);
     	
+
+    	String resourceUrl = WOApplication.application().resourceManager().urlForResourceNamed(scriptPath(), "app", null, context.request());
+    	resourceUrl = resourceUrl.substring(0, resourceUrl.lastIndexOf('/'));
+    	resourceUrl = resourceUrl.substring(0, resourceUrl.lastIndexOf('/')+1);
+    	
     	ERXResponseRewriter.addScriptCodeInHead(response, context, 
+    			//"if (!WOGWT)\n" +
     			"WOGWT={};\n" +
     			"WOGWT.hostPageName='" + rootParent().getClass().getSimpleName() + "';\n" +
     			"WOGWT.rpcUrl='" + rpcUrl + "';\n" +
     			"WOGWT.directActionBaseUrl='" + directActionUrl + "';\n" +
+    			"WOGWT.resourceUrl='" + resourceUrl + "';\n" + 
     			"WOGWT.componentRequestHandlerKey='" + application().componentRequestHandlerKey() + "';\n" +
     			"WOGWT.ajaxRequestHandlerKey='" + application().ajaxRequestHandlerKey() + "';\n"
     			);
