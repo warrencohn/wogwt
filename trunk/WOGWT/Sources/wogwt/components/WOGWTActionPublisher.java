@@ -2,6 +2,8 @@ package wogwt.components;
 
 import java.lang.reflect.Method;
 
+import wogwt.translatable.WOGWTClientUtil;
+
 import com.webobjects.appserver.WOActionResults;
 import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
@@ -9,6 +11,8 @@ import com.webobjects.appserver.WORequest;
 import com.webobjects.appserver.WOResponse;
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSMutableArray;
+
+import er.extensions.appserver.ERXResponseRewriter;
 
 /**
  * This component "publishes" the urls of all the component actions in the
@@ -18,6 +22,8 @@ import com.webobjects.foundation.NSMutableArray;
  * the construction of the UI on the client, so this component allows you to
  * do that and still access the component actions on the server.
  * 
+ * This component must be placed in the BODY of the page because it generates
+ * hidden anchor elements.
  */
 public class WOGWTActionPublisher extends WOComponent {
 	
@@ -38,12 +44,25 @@ public class WOGWTActionPublisher extends WOComponent {
     }
     
     public String actionMethodNameAnnotated() {
-    	return "action:" + actionMethodName();
+    	return WOGWTClientUtil.ACTION_ID_PREFIX + actionMethodName();
     }
     
     @Override
     public void appendToResponse(WOResponse response, WOContext context) {
+    	// TODO: figure out how to write this content in to the head tag directly instead of placing the component there
     	actionMethodList = findActionMethods();
+//    	
+//    	StringBuffer script = new StringBuffer();
+//    	script.append("if (!WOGWT)\n");
+//    	script.append("  WOGWT={};\n");
+//    	script.append("WOGWT.actions={};\n");
+//    	
+//    	for (int i = 0; i < actionMethodList.size(); i++) {
+//    		script.append("WOGWT.actions[" + actionMethodList.get(i).getName());
+//		}
+//    	
+//    	ERXResponseRewriter.addScriptCodeInHead(response, context, script.toString());
+//    	
     	super.appendToResponse(response, context);
     }
 
@@ -57,7 +76,8 @@ public class WOGWTActionPublisher extends WOComponent {
 				if (WOActionResults.class.isAssignableFrom(method.getReturnType()) ||
 						method.getReturnType().equals(void.class)) {
 					if (!method.getDeclaringClass().equals(WOComponent.class) &&
-							!method.getDeclaringClass().equals(Object.class)) {
+							!method.getDeclaringClass().equals(Object.class) &&
+							!method.getName().equals("reset")) {
 						actionMethods.addObject(method);
 					}
 				}

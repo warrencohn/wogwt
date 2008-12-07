@@ -5,6 +5,7 @@ import com.webobjects.appserver.WOApplication;
 import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
 import com.webobjects.appserver.WOSession;
+import com.webobjects.eocontrol.EOEditingContext;
 
 /**
  * Base class for all GWT RPC Service classes.
@@ -15,6 +16,8 @@ import com.webobjects.appserver.WOSession;
  */
 public class WOGWTRpcService {
 
+	public static final String EDITING_CONTEXT_KEY = "editingContext";
+	
 	private WOContext _context;
 	
 	public WOGWTRpcService(WOContext context) {
@@ -40,6 +43,10 @@ public class WOGWTRpcService {
 	
 	public <T extends WOSession> T session(Class<T> sessionClass) {
 		return (T) session();
+	}
+	
+	public EOEditingContext editingContext() {
+		return (EOEditingContext) context().userInfoForKey(EDITING_CONTEXT_KEY);
 	}
 	
 }

@@ -24,7 +24,10 @@ import com.webobjects.appserver.WORequest;
 import com.webobjects.appserver.WORequestHandler;
 import com.webobjects.appserver.WOResponse;
 import com.webobjects.appserver.WOSession;
+import com.webobjects.eocontrol.EOEditingContext;
 import com.webobjects.foundation.NSTimestamp;
+
+import er.extensions.eof.ERXEC;
 
 /**
  * Register the request handler in your Application constructor by calling:
@@ -49,7 +52,7 @@ public class GWTRPCRequestHandler extends WORequestHandler /*implements Serializ
 	private static final String RPC_PACKAGE_KEY = "wogwt.rpcImplementationPackage";
 	
 	private static final HashMap<Class, Class> serviceImplementations = new HashMap();
-	
+
 	public static void registerServiceImplementation(Class theInterface, Class theImplementation) {
 		if (!theInterface.isInterface()) {
 			throw new RuntimeException("The service interface must be an interface.");
@@ -97,13 +100,19 @@ public class GWTRPCRequestHandler extends WORequestHandler /*implements Serializ
 		if (context._requestSessionID() != null) {
 			session = WOApplication.application().restoreSessionWithID(wosid, context);
 		}
+		
 		try {
-			
+			EOEditingContext ec = editingContext();
+			ec.lock();
 			try {
+				context.setUserInfoForKey(ec, WOGWTRpcService.EDITING_CONTEXT_KEY);
 				response.setContent(processCall(request.contentString(), context));
 				return response;
+				
 			} catch (Exception e) {
 				return doUnexpectedFailure(e);
+			} finally {
+				ec.unlock();
 			}
 			
 		} finally {
@@ -111,6 +120,10 @@ public class GWTRPCRequestHandler extends WORequestHandler /*implements Serializ
 				WOApplication.application().saveSessionForContext(context);
 			}
 		}
+	}
+	
+	protected EOEditingContext editingContext() {
+		return ERXEC.newEditingContext();
 	}
 	
 	protected String processCall(String payload, WOContext context) 

@@ -1,0 +1,5 @@
+ActionMethodLink : WOHyperlink {
+	style = "display: none;";
+	id = actionNameAnnotated;
+	action = ^action;
+}

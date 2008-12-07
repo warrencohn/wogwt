@@ -144,6 +144,17 @@ public WOResponse dispatchRequest(WORequest request) {
 }
 </pre>
 
+<div class="instructions">
+You also need to add a few things to the constructor:
+</div>
+<pre>
+public Application() {
+	super();
+	registerRequestHandler(new GWTRPCRequestHandler(), GWTRPCRequestHandler.KEY);
+	// needed for proper class loading in GWT's Hosted Mode shell
+	_NSUtilities.setClassForName( your.app.components.Main.class, "Main" );
+}
+</pre>
 <p>9) Run the GWT Shell (the hosted mode browser) once so that it generates it's configuration files.  To do this:</p>
 
 <div class="instructions">
@@ -189,7 +200,8 @@ PROJECTROOT/tomcat/webapps/ROOT/WEB-INF/web.xml
 	&lt;context-param&gt;
 		&lt;param-name&gt;WOClasspath&lt;/param-name&gt;
 		&lt;param-value&gt;
-			/workspace/<span class="identifier">WOGWTDemo</span>/build/<span class="identifier">WOGWTDemo</span>.woa/Contents/Resources/Java/<span class="identifier">your/app/</span>Application.class
+			<span class="identifier">/workspace/WOGWTDemo</span>/build/<span class="identifier">WOGWTDemo</span>.woa/Contents/Resources/Java/<span class="identifier">your/app/</span>Application.class
+			<span class="identifier">/workspace/WOGWTDemo</span>/build/<span class="identifier">WOGWTDemo</span>.woa/Contents/Resources/Java
 		&lt;/param-value&gt;
 	&lt;/context-param&gt;
 	
