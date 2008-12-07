@@ -2,8 +2,8 @@ package your.app.server.rpc;
 
 import wogwt.WOGWTServerUtil;
 import wogwt.server.rpc.WOGWTRpcService;
-import your.app.eo.RootEntity;
-import your.app.gwt.eo.RootEntityClient;
+import your.app.eo.Movie;
+import your.app.gwt.eo.MovieClient;
 import your.app.gwt.rpc.EOService;
 
 import com.webobjects.appserver.WOContext;
@@ -16,12 +16,12 @@ public class EOServiceImpl extends WOGWTRpcService implements EOService {
 		super(context);
 	}
 	
-	public NSArray<RootEntityClient> allRootEntities() {
-		NSArray<RootEntity> eos = RootEntity.fetchAllRootEntities(session().defaultEditingContext());
+	public NSArray<MovieClient> allMovies() {
+		NSArray<Movie> eos = Movie.fetchAllMovies(editingContext());
 		NSArray result = WOGWTServerUtil.toClientEOList(eos, 
 				new NSArray<String>(new String[] {
-						RootEntity.TO_ONE_ENTITY_KEY,
-						RootEntity.TO_MANY_ENTITIES_KEY}));
+						Movie.STUDIO_KEY,
+						Movie.ROLES_KEY}));
 		return result;
 	}
 		

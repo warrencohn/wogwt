@@ -19,8 +19,8 @@ er.extensions.ERXEC.defaultCoalesceAutoLocks=true
 er.extensions.ERXEnterpriseObject.applyRestrictingQualifierOnInsert=true
 
 # Migrations
-#er.migration.migrateAtStartup=true
-#er.migration.createTablesIfNecessary=true
+er.migration.migrateAtStartup=true
+er.migration.createTablesIfNecessary=true
 #er.migration.modelNames=YourModel
 
 # Repetition Fixes

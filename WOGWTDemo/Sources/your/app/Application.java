@@ -22,7 +22,7 @@ public class Application extends ERXApplication {
 
 		// needed for proper class loading in GWT's Hosted Mode shell
 		_NSUtilities.setClassForName( your.app.components.Main.class, "Main" );
-		
+
 		setPageCacheSize(5);
 	}
 

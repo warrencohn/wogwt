@@ -1,0 +1,9 @@
+PageWrapper : PageWrapper {	
+}
+
+WOGWTActionPublisher : WOGWTActionPublisher {	
+}
+
+CountString : WOString {
+	value = count;
+}

@@ -38,10 +38,17 @@
 	<inherits name="wogwt.emulation.WOGWTEmulation"/>
 	<inherits name="com.googlecode.gwt.math.Math"/> 
 
+	<inherits name="com.google.gwt.user.theme.standard.Standard"/>
+
   	<source path=""/>
 
 	<entry-point class="your.app.gwt.MainScript"/>
-	<entry-point class="your.app.gwt.Page2Script"/>
+	<entry-point class="your.app.gwt.UpdateLinkScript"/>
+	<entry-point class="your.app.gwt.PeriodicUpdateScript"/>
+	<entry-point class="your.app.gwt.SubmitButtonScript"/>
+	<entry-point class="your.app.gwt.SubmitOnChangeScript"/>
+	<entry-point class="your.app.gwt.DynamicUIScript"/>
+	<entry-point class="your.app.gwt.RPCExampleScript"/>
 
 	<servlet class="er.extensions.jspservlet.ERXServletAdaptor" path="/WOGWTDemo/WebObjects"/>
 

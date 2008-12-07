@@ -1,0 +1,37 @@
+PageWrapper : PageWrapper {	
+}
+
+PartialForm : WOForm {
+	action = updateAction;
+	multipleSubmit = true;
+	id = "partialForm";
+	style = "border: 1px solid black";
+}
+
+StatePopup : WOPopUpButton {
+	list = stateList;
+	item = stateItem;
+	selection = selectedState;
+	noSelectionString = "Choose a state";
+	id = "statePopup";
+}
+
+CountyPopup : WOPopUpButton {
+	list = countyList;
+	item = countyItem;
+	selection = selectedCounty;
+	noSelectionString = "Choose a county";
+	id = "countyPopup";
+}
+
+StreetPopup : WOPopUpButton {
+	list = streetList;
+	item = streetItem;
+	selection = selectedStreet;
+	noSelectionString = "Choose a street";
+	id = "streetPopup";
+}
+
+StreetString : WOString {
+	value = selectedStreet;
+}

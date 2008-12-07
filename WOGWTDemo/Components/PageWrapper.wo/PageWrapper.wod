@@ -1,0 +1,37 @@
+WOGWTScript : WOGWTScript {
+  module = "your.app.gwt.Application";
+  enableHistorySupport = "true";
+}
+
+
+
+Content : WOComponentContent {
+}
+
+Stylesheet : ERXStyleSheet {
+	filename = "style.css";	
+}
+
+UpdateLink : WOHyperlink {
+	pageName = "UpdateLink";
+}
+
+PeriodicUpdate : WOHyperlink {
+	pageName = "PeriodicUpdate";
+}
+
+SubmitButton : WOHyperlink {
+	pageName = "SubmitButton";
+}
+
+SubmitOnChange : WOHyperlink {
+	pageName = "SubmitOnChange";
+}
+
+DynamicUI : WOHyperlink {
+	pageName = "DynamicUI";
+}
+
+RPCExample : WOHyperlink {
+	pageName = "RPCExample";
+}

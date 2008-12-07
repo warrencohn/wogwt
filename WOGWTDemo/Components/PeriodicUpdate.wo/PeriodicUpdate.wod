@@ -1,0 +1,14 @@
+PageWrapper : PageWrapper {	
+}
+
+PeriodicUpdateContainer : WOGenericContainer {
+	invokeAction = periodicUpdateAction;
+	updateUrl = context.componentActionURL;
+	elementName = "div";
+	id = "periodicContainer"; 
+	style = "border: 1px solid black";
+}
+
+Now : WOString {
+  value = now;
+}

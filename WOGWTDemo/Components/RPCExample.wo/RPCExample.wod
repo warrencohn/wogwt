@@ -1,0 +1,7 @@
+PageWrapper : PageWrapper {	
+}
+
+Image : WOImage {
+	filename = "wait18.gif";
+	style = "display: none";
+}

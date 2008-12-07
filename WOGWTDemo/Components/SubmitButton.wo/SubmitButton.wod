@@ -1,0 +1,101 @@
+PageWrapper : PageWrapper {	
+}
+
+ButtonForm : WOForm {
+	multipleSubmit = true;
+}
+
+FirstNameField : WOTextField {
+  value = firstName;
+}
+
+LastNameField : WOTextField {
+  value = lastName;
+}
+
+MaleRadio : WORadioButton {
+	checked = isMale;
+	name = "sex";
+}
+
+FemaleRadio : WORadioButton {
+	checked = isFemale;
+	name = "sex";
+}
+
+BigCheckBox : WOCheckBox {
+	checked = isBig;
+}
+
+TallCheckBox : WOCheckBox {
+	checked = isTall;
+}
+
+Notes : WOText {
+  value = notes;
+}
+
+HelloButton : WOSubmitButton {
+	action = helloAction;
+	value = "Hello";
+	id = "helloButton";
+}
+
+GoodbyeButton : WOSubmitButton {
+	action = goodbyeAction;
+	value = "Goodbye";
+	id = "goodbyeButton";
+}
+
+FirstNameString : WOString {
+  value = firstName;
+}
+
+LastNameString : WOString {
+  value = lastName;
+}
+
+GreetingString : WOString {
+  value = greeting;
+}
+
+HairColorPopup : WOPopUpButton {
+  list = hairColorList;
+  item = hairColorItem;
+  selection = selectedHairColor;
+  noSelectionString = "none";
+}
+
+IsMale : WOConditional {
+  condition = isMale;
+}
+
+IsFemale : WOConditional {
+  condition = isFemale;
+}
+
+IsBig : WOConditional {
+  condition = isBig;
+}
+
+NotBig : WOConditional {
+  condition = isBig;
+  negate = true;
+}
+
+IsTall : WOConditional {
+  condition = isTall;
+}
+
+NotTall : WOConditional {
+  condition = isTall;
+  negate = true;
+}
+
+HairColorString : WOString {
+	value = selectedHairColor;
+}
+
+NotesString : WOString {
+	value = notes;
+}
