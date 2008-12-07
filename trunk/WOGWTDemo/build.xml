@@ -27,7 +27,6 @@
 		</condition>
 		<fail message="Could not find ${user.home}${file.separator}Library${file.separator}wobuild.properties." if="wo.properties.check.failed" />
 		<property name="install.dir" value="${wo.wolocalroot}/Library/WebObjects/Applications" />
-		<property name="servletDeployment" value="true"/>
 	</target>
 
 	<!-- basic initializations  -->

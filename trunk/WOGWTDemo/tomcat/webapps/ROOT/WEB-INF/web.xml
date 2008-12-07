@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app>
 
-	<!-- Indicates if application is development or deployment mode. In development
+	<!-- Indicates if application is development or deployment mode. In Development
 		mode, images are vended by the application directly from frameworks. In
-		deployment mode, images are vended by the webserver. -->
+		Deployment mode, images are vended by the webserver. -->
 	<context-param>
 		<param-name>WOAppMode</param-name>
 		<param-value>Development</param-value>
@@ -21,6 +21,7 @@
 		<param-name>WOClasspath</param-name>
 		<param-value>
 			/workspace/WOGWTDemo/build/WOGWTDemo.woa/Contents/Resources/Java/your/app/Application.class
+			/workspace/WOGWTDemo/build/WOGWTDemo.woa/Contents/Resources/Java
 		</param-value>
 	</context-param>
 	

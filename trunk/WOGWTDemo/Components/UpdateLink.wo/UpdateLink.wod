@@ -1,0 +1,16 @@
+PageWrapper : PageWrapper {	
+}
+
+Now : WOString {
+  value = now;
+}
+
+OutsideLink : WOHyperlink {
+  action = updateTimeAction;
+  id = "outsideLink";
+}
+
+InsideLink : WOHyperlink {
+  action = updateTimeAction;
+  id = "insideLink";
+}
