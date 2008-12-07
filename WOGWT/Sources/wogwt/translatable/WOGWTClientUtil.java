@@ -184,9 +184,8 @@ public class WOGWTClientUtil {
 		return $wnd.WOGWT.directActionBaseUrl;
 	}-*/;
 	
-	/* this has to be an absolate URL to work in hosted mode */
 	public static native String resourceUrl() /*-{
-		return $wnd.location.protocol + '//' + $wnd.location.host + $wnd.WOGWT.resourceUrl;
+		return $wnd.WOGWT.resourceUrl;
 	}-*/;
 	
 	public static native String componentRequestHanderKey() /*-{
