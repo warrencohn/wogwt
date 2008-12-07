@@ -19,6 +19,8 @@ import com.webobjects.foundation.NSLog;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSMutableDictionary;
 
+import er.extensions.foundation.ERXDictionaryUtilities;
+
 public class WOGWTServerUtil {
 
 	/**
@@ -53,6 +55,8 @@ public class WOGWTServerUtil {
 	  
 	public static NSDictionary eoToDictionary(EOEnterpriseObject eo) {
 		NSMutableDictionary data = eo.snapshot().mutableClone();
+		
+		data = ERXDictionaryUtilities.removeNullValues(data).mutableClone();
 		
 		data.removeObjectsForKeys(eo.toOneRelationshipKeys());
 		data.removeObjectsForKeys(eo.toManyRelationshipKeys());
