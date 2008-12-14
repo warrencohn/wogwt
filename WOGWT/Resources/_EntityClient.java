@@ -35,7 +35,7 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 	private $relationship.destination.classNameWithDefault ${relationship.name};
 #end
 #foreach ($relationship in $entity.sortedClientClassToManyRelationships)
-	private List<$relationship.destination.clientClassName> ${relationship.name};
+	private NSArray<$relationship.destination.clientClassName> ${relationship.name};
 #end
 
 	public ${entity.prefixClassNameWithoutPackage}() {
@@ -107,7 +107,7 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 		${relationship.name} = ($relationship.destination.classNameWithDefault)map.get("${relationship.name}");
 #end
 #foreach ($relationship in $entity.sortedClientClassToManyRelationships)
-		${relationship.name} = (List)map.get("${relationship.name}");
+		${relationship.name} = (NSArray)map.get("${relationship.name}");
 #end
 		if (map.get( "primaryKeyValue" ) != null)
 			primaryKeyValue = (Integer)map.get( "primaryKeyValue" );
@@ -147,7 +147,7 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 #end
 #foreach ($relationship in $entity.sortedClientClassToManyRelationships)
 		else if ("${relationship.name}".equals(key))
-			set${relationship.capitalizedName}((List)value);
+			set${relationship.capitalizedName}((NSArray)value);
 #end
 		else
 			throw new RuntimeException(getClass().getName() + " does not has a key named '" + key + "'");
@@ -191,11 +191,11 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 #end
 	//To Many Relationships
 #foreach ($relationship in $entity.sortedClientClassToManyRelationships)
-	public List<$relationship.destination.clientClassName> ${relationship.name}() {
+	public NSArray<$relationship.destination.clientClassName> ${relationship.name}() {
 		return ${relationship.name};
 	}
 	
-	public void set${relationship.capitalizedName}(List<$relationship.destination.clientClassName> ${relationship.name}) {
+	public void set${relationship.capitalizedName}(NSArray<$relationship.destination.clientClassName> ${relationship.name}) {
 		this.${relationship.name} = ${relationship.name};
 	}
 	

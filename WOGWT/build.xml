@@ -121,4 +121,12 @@
 			</classpath>
 		</wocompile>
 	</target>
+	
+	<target name="javadoc" depends="setProps">
+		<mkdir dir="javadoc"/>
+		<javadoc sourcepath="Sources"
+		             destdir="javadoc"
+		             windowtitle="WOGWT API"
+		             doctitle="WOGWT"/>
+	</target>
 </project>

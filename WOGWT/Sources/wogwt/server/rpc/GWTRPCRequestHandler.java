@@ -1,12 +1,8 @@
 package wogwt.server.rpc;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -15,9 +11,6 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.server.rpc.RPC;
 import com.google.gwt.user.server.rpc.RPCRequest;
-import com.google.gwt.user.server.rpc.SerializationPolicy;
-import com.google.gwt.user.server.rpc.SerializationPolicyLoader;
-import com.google.gwt.user.server.rpc.SerializationPolicyProvider;
 import com.webobjects.appserver.WOApplication;
 import com.webobjects.appserver.WOContext;
 import com.webobjects.appserver.WORequest;
@@ -25,11 +18,12 @@ import com.webobjects.appserver.WORequestHandler;
 import com.webobjects.appserver.WOResponse;
 import com.webobjects.appserver.WOSession;
 import com.webobjects.eocontrol.EOEditingContext;
-import com.webobjects.foundation.NSTimestamp;
 
 import er.extensions.eof.ERXEC;
 
 /**
+ * Enables GWT RPC calls for your WOApplication.
+ * 
  * Register the request handler in your Application constructor by calling:
  * 
  * 		registerRequestHandler(new GWTRPCRequestHandler(), GWTRPCRequestHandler.KEY);
@@ -122,6 +116,10 @@ public class GWTRPCRequestHandler extends WORequestHandler /*implements Serializ
 		}
 	}
 	
+	/**
+	 * Override this to return a different type of EOEditingContext if you need to.
+	 * @return ERXEC.newEditingContext()
+	 */
 	protected EOEditingContext editingContext() {
 		return ERXEC.newEditingContext();
 	}
@@ -165,7 +163,7 @@ public class GWTRPCRequestHandler extends WORequestHandler /*implements Serializ
 //		//return doGetSerializationPolicy(moduleBaseURL, serializationPolicyStrongName);
 //	}
 	
-	private Object createServiceObject(WOContext context, RPCRequest rpcRequest)
+	protected Object createServiceObject(WOContext context, RPCRequest rpcRequest)
 			throws InstantiationException, IllegalAccessException,
 			InvocationTargetException, NoSuchMethodException {
 		// target will be the service implementation class (the servlet in normal RPC)

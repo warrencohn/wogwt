@@ -16,12 +16,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.tidy.Tidy;
 
+/**
+ * Utility class used mainly to extract an elment and its children from
+ * an XHTML page
+ *
+ */
 public class XMLUtilsServer {
 
-	public XMLUtilsServer() {
-		super();
-	}
-	
 	/**
 	 * 
 	 * @param node

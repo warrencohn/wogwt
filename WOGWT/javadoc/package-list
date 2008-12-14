@@ -1,0 +1,7 @@
+wogwt
+wogwt.components
+wogwt.server.rpc
+wogwt.translatable
+wogwt.translatable.http
+wogwt.translatable.richtext
+wogwt.translatable.rpc
