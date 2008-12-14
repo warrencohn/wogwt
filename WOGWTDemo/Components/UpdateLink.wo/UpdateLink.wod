@@ -14,3 +14,4 @@ InsideLink : WOHyperlink {
   action = updateTimeAction;
   id = "insideLink";
 }
+

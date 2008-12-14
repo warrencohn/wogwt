@@ -1,0 +1,27 @@
+htmlFrame : WOGenericContainer {
+	elementName = "iframe";
+	src = htmlURL;
+	style ="width: 100%; height: 300px";
+}
+
+wodFrame : WOGenericContainer {
+	elementName = "iframe";
+	src = wodURL;
+	style ="width: 100%; height: 300px";
+}
+
+javaFrame : WOGenericContainer {
+	elementName = "iframe";
+	src = javaURL;
+	style ="width: 100%; height: 400px";
+}
+
+gwtFrame : WOGenericContainer {
+	elementName = "iframe";
+	src = gwtURL;
+	style ="width: 100%; height: 400px";
+}
+
+Title : WOString {
+  value = title;
+}

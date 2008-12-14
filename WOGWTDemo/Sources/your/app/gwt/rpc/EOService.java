@@ -2,6 +2,7 @@ package your.app.gwt.rpc;
 
 import wogwt.translatable.WOGWTClientUtil;
 import your.app.gwt.eo.MovieClient;
+import your.app.gwt.eo.StudioClient;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -19,5 +20,5 @@ public interface EOService extends RemoteService {
 	}
 
 	public NSArray<MovieClient> allMovies();
-
+	public NSArray<StudioClient> allStudios();
 }

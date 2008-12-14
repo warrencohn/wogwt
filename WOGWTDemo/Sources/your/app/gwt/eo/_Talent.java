@@ -30,8 +30,8 @@ public abstract class _Talent implements IsSerializable, WOGWTClientEO, NSKeyVal
 	private String firstName;
 	private String lastName;
 	private your.app.gwt.eo.TalentPhoto photo;
-	private List<your.app.gwt.eo.MovieClient> moviesDirected;
-	private List<your.app.gwt.eo.MovieRole> roles;
+	private NSArray<your.app.gwt.eo.MovieClient> moviesDirected;
+	private NSArray<your.app.gwt.eo.MovieRole> roles;
 
 	public _Talent() {
 		super();
@@ -87,8 +87,8 @@ public abstract class _Talent implements IsSerializable, WOGWTClientEO, NSKeyVal
 		firstName = (String)map.get("firstName");
 		lastName = (String)map.get("lastName");
 		photo = (your.app.gwt.eo.TalentPhoto)map.get("photo");
-		moviesDirected = (List)map.get("moviesDirected");
-		roles = (List)map.get("roles");
+		moviesDirected = (NSArray)map.get("moviesDirected");
+		roles = (NSArray)map.get("roles");
 		if (map.get( "primaryKeyValue" ) != null)
 			primaryKeyValue = (Integer)map.get( "primaryKeyValue" );
 	}
@@ -122,9 +122,9 @@ public abstract class _Talent implements IsSerializable, WOGWTClientEO, NSKeyVal
 		else if ("photo".equals(key))
 			setPhoto((your.app.gwt.eo.TalentPhoto)value);
 		else if ("moviesDirected".equals(key))
-			setMoviesDirected((List)value);
+			setMoviesDirected((NSArray)value);
 		else if ("roles".equals(key))
-			setRoles((List)value);
+			setRoles((NSArray)value);
 		else
 			throw new RuntimeException(getClass().getName() + " does not has a key named '" + key + "'");
 	}
@@ -170,19 +170,19 @@ public abstract class _Talent implements IsSerializable, WOGWTClientEO, NSKeyVal
 	}
 	
 	//To Many Relationships
-	public List<your.app.gwt.eo.MovieClient> moviesDirected() {
+	public NSArray<your.app.gwt.eo.MovieClient> moviesDirected() {
 		return moviesDirected;
 	}
 	
-	public void setMoviesDirected(List<your.app.gwt.eo.MovieClient> moviesDirected) {
+	public void setMoviesDirected(NSArray<your.app.gwt.eo.MovieClient> moviesDirected) {
 		this.moviesDirected = moviesDirected;
 	}
 	
-	public List<your.app.gwt.eo.MovieRole> roles() {
+	public NSArray<your.app.gwt.eo.MovieRole> roles() {
 		return roles;
 	}
 	
-	public void setRoles(List<your.app.gwt.eo.MovieRole> roles) {
+	public void setRoles(NSArray<your.app.gwt.eo.MovieRole> roles) {
 		this.roles = roles;
 	}
 	

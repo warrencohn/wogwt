@@ -3,7 +3,9 @@ package your.app.server.rpc;
 import wogwt.WOGWTServerUtil;
 import wogwt.server.rpc.WOGWTRpcService;
 import your.app.eo.Movie;
+import your.app.eo.Studio;
 import your.app.gwt.eo.MovieClient;
+import your.app.gwt.eo.StudioClient;
 import your.app.gwt.rpc.EOService;
 
 import com.webobjects.appserver.WOContext;
@@ -25,4 +27,11 @@ public class EOServiceImpl extends WOGWTRpcService implements EOService {
 		return result;
 	}
 		
+	public NSArray<StudioClient> allStudios() {
+		NSArray<Studio> eos = Studio.fetchAllStudios(editingContext());
+		NSArray result = WOGWTServerUtil.toClientEOList(eos, 
+				new NSArray<String>(new String[] {
+						Studio.MOVIES_KEY}));
+		return result;
+	}
 }

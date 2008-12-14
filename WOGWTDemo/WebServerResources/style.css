@@ -1,44 +1,141 @@
-body, table td, select {
-  font-family: Arial Unicode MS, Arial, sans-serif;
-  font-size: small;
+/*// GWT BASE STYLE //////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////////////////////////*/
+
+body,table td,select {
+	font-family: Arial Unicode MS, Arial, sans-serif;
+	font-size: small;
 }
+
 pre {
-  font-family: "courier new", courier;
-  font-size: small;
+	font-family: "courier new", courier;
+	font-size: small;
 }
+
 body {
-  color: black;
-  margin: 0px;
-  border: 0px;
-  padding: 0px;
-  background: #fff;
-  direction: ltr;
+	color: black;
+	margin: 0px;
+	border: 0px;
+	padding: 0px;
+	background: #fff;
+	direction: ltr;
 }
-a, a:visited, a:hover {
-  color: #0000AA;
-  text-decoration: none;
+
+a,a:visited,a:hover {
+	color: #0000AA;
+	text-decoration: none;
 }
+
+/*// MY STYLE RULES //////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////////////////////////*/
+
 #sidebar {
-	float:left;
+	float: left;
 	width: 250px;
 	border: 1px solid black;
 	padding: 10px;
 	background-color: #e0e0e0;
 }
+
 #content {
 	float: left;
 	width: 500px;
-	margin: 10px;
+	margin: 0 10px;
 }
+
 .dataTable {
 	border-collapse: collapse;
 }
+
 .dataTable td {
 	padding: 0 5px;
 }
+
 .header {
 	font-weight: bold;
 }
+
+ul {
+	margin: 0;	
+}
+
+/*// WIDGET STYLE RULES //////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////////////////////////*/
+
 .gwt-Hyperlink {
 	cursor: pointer;
+}
+
+.gwt-Label {
+	padding: 20px;	
+}
+
+/**
+ * Applied to the decorator panel.
+ */
+.gwt-DecoratorPanel .topCenter,.gwt-DecoratorPanel .bottomCenter {
+	background: url(images/hborder.png) repeat-x;
+}
+
+.gwt-DecoratorPanel .middleLeft,.gwt-DecoratorPanel .middleRight {
+	background: url(images/vborder.png) repeat-y;
+}
+
+.gwt-DecoratorPanel .topLeft,.gwt-DecoratorPanel .topRight,.gwt-DecoratorPanel .bottomLeft,.gwt-DecoratorPanel .bottomRight
+	{
+	width: 5px;
+	height: 5px;
+	zoom: 1;
+}
+
+html>body .gwt-DecoratorPanel .topLeft {
+	background: url(images/corner.png) no-repeat 0px 0px;
+}
+
+html>body .gwt-DecoratorPanel .topRight {
+	background: url(images/corner.png) no-repeat -5px 0px;
+}
+
+html>body .gwt-DecoratorPanel .bottomLeft {
+	background: url(images/corner.png) no-repeat 0px -5px;
+}
+
+html>body .gwt-DecoratorPanel .bottomRight {
+	background: url(images/corner.png) no-repeat -5px -5px;
+}
+
+* html .gwt-DecoratorPanel .topLeftInner {
+	width: 5px;
+	height: 5px;
+	overflow: hidden;
+	filter: progid : DXImageTransform . Microsoft .
+		AlphaImageLoader(src = 'images/corner.png', sizingMethod = 'crop');
+}
+
+* html .gwt-DecoratorPanel .topRightInner {
+	width: 10px;
+	height: 5px;
+	margin-left: -5px;
+	overflow: hidden;
+	filter: progid : DXImageTransform . Microsoft .
+		AlphaImageLoader(src = 'images/corner.png', sizingMethod = 'crop');
+}
+
+* html .gwt-DecoratorPanel .bottomLeftInner {
+	width: 5px;
+	height: 10px;
+	margin-left: 0px;
+	margin-top: -5px;
+	overflow: hidden;
+	filter: progid : DXImageTransform . Microsoft .
+		AlphaImageLoader(src = 'images/corner.png', sizingMethod = 'crop');
+}
+
+* html .gwt-DecoratorPanel .bottomRightInner {
+	width: 10px;
+	height: 10px;
+	margin-left: -5px;
+	margin-top: -5px;
+	overflow: hidden;
+	filter: progid : DXImageTransform . Microsoft .
+		AlphaImageLoader(src = 'images/corner.png', sizingMethod = 'crop');
 }

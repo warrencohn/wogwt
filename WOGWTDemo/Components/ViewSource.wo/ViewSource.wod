@@ -1,0 +1,4 @@
+ViewSourceLink : WOHyperlink {
+	action = viewSource;
+	target = "_blank";
+}

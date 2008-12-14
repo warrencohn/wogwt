@@ -1,0 +1,19 @@
+PageWrapper : PageWrapper {
+}
+
+ActionPublisher : WOGWTActionPublisher {
+}
+
+container : WOGenericContainer {
+	elementName = "div";
+	id = containerID;
+}
+
+statusContainer : WOGenericContainer {
+	elementName = "div";
+	id = statusContainerID;
+}
+
+statusString : WOString {
+	value = statusString;
+}

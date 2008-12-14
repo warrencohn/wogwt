@@ -2,7 +2,9 @@ package your.app.components;
 
 import your.app.Application;
 
+import com.webobjects.appserver.WOActionResults;
 import com.webobjects.appserver.WOContext;
+import com.webobjects.appserver.WORequest;
 import com.webobjects.foundation.NSArray;
 
 import er.extensions.components.ERXComponent;
@@ -39,7 +41,7 @@ public class SubmitOnChange extends ERXComponent {
 	public String selectedStreet;
 	public String streetItem;
 	public NSArray streetList() {
-		if (selectedState == null || selectedCounty == null) {
+		if (selectedCounty == null) {
 			return null;
 		}
 		
@@ -51,6 +53,7 @@ public class SubmitOnChange extends ERXComponent {
 	}
 
 	public void setSelectedState(String selectedState) {
+		Application.log.info("setSelectedState called with " + selectedState);
 		this.selectedState = selectedState;
 		selectedCounty = null;
 		selectedStreet = null;
@@ -60,6 +63,7 @@ public class SubmitOnChange extends ERXComponent {
 	}
 
 	public void setSelectedCounty(String selectedCounty) {
+		Application.log.info("setSelectedCounty called with " + selectedCounty );
 		this.selectedCounty = selectedCounty;
 		selectedStreet = null;
 	}
@@ -69,5 +73,22 @@ public class SubmitOnChange extends ERXComponent {
 	
 	public void updateAction() {
 		Application.log.info("update action called");
+	}
+	
+	@Override
+	public WOActionResults invokeAction(WORequest request, WOContext context) {
+		return super.invokeAction(request, context);
+	}
+	
+	@Override
+	public void takeValuesFromRequest(WORequest request, WOContext context) {
+		Application.log.info("takeValuesFromRequest called");
+		Application.log.info("formValues = " + request.formValues());
+		super.takeValuesFromRequest(request, context);
+	}
+	
+	@Override
+	public void takeValueForKey(Object value, String key) {
+		super.takeValueForKey(value, key);
 	}
 }

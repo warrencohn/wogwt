@@ -42,6 +42,8 @@
 
   	<source path=""/>
 
+	<servlet class="er.extensions.jspservlet.ERXServletAdaptor" path="/WOGWTDemo/WebObjects"/>
+
 	<entry-point class="your.app.gwt.MainScript"/>
 	<entry-point class="your.app.gwt.UpdateLinkScript"/>
 	<entry-point class="your.app.gwt.PeriodicUpdateScript"/>
@@ -49,7 +51,11 @@
 	<entry-point class="your.app.gwt.SubmitOnChangeScript"/>
 	<entry-point class="your.app.gwt.DynamicUIScript"/>
 	<entry-point class="your.app.gwt.RPCExampleScript"/>
-
-	<servlet class="er.extensions.jspservlet.ERXServletAdaptor" path="/WOGWTDemo/WebObjects"/>
-
+	<entry-point class="your.app.gwt.RoundedCornersScript"/>
+	<entry-point class="your.app.gwt.RichTextExampleScript"/>
+	<entry-point class="your.app.gwt.CompileTimeIDCheckingScript"/>
+	<entry-point class="your.app.gwt.TreeExampleScript"/>
+	<entry-point class="your.app.gwt.AutoCompletionExampleScript"/>
+	<entry-point class="your.app.gwt.DialogExampleScript"/>
+	
 </module>
