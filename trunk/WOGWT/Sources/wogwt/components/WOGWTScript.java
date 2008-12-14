@@ -12,10 +12,7 @@ import com.webobjects.appserver.WOApplication;
 import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
 import com.webobjects.appserver.WOResponse;
-import com.webobjects.appserver.WOSession;
 import com.webobjects.appserver._private.WOSubmitButton;
-import com.webobjects.foundation.NSDictionary;
-import com.webobjects.foundation.NSKeyValueCoding;
 
 import er.extensions.appserver.ERXResponseRewriter;
 import er.extensions.appserver.ERXResponseRewriter.TagMissingBehavior;
@@ -26,12 +23,14 @@ import er.extensions.foundation.ERXProperties;
 /**
  * Adds GWT functionality to a page.  
  * 
- * This component must be placed in the BODY of the page (anywhere).
+ * This component is invisible, but must be placed in the BODY of the page (anywhere).
  * 
  * Basically just adds the nocache.js script into the head of the host page 
- * along with some meta tags to provide information for the script.
+ * along with some javascript variables to provide information for the script.
  * If history support is enabled, an iframe is added to the body.
  *
+ * @binding module the fully qualified module name
+ * @binding enableHistorySupport true if you want history support
  */
 public class WOGWTScript extends WOComponent {
 	

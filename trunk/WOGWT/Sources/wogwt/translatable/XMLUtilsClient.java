@@ -8,6 +8,13 @@ import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 
+/**
+ * These utilities can be used to extract an UpdateContainer from an
+ * XHTML ajax response if you want to do that on the client instead of
+ * server.  So you could send the whole response and take out the parts
+ * you're interested in.
+ *
+ */
 public class XMLUtilsClient {
 
 	public XMLUtilsClient() {

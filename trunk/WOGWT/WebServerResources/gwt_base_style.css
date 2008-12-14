@@ -1,0 +1,24 @@
+/* this css is present in all GWT themes and you should include it in your pages 
+   if you are using a theme and are going to render your UI mostly in HTML and 
+   only partly using GWT. Otherwise the style will change after the page is 
+   loaded, when the GWT stylesheet gets downloaded. */
+   
+body, table td, select {
+  font-family: Arial Unicode MS, Arial, sans-serif;
+  font-size: small;
+}
+pre {
+  font-family: "courier new", courier;
+  font-size: small;
+}
+body {
+  color: black;
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
+  background: #fff;
+  direction: ltr;
+}
+a, a:visited, a:hover {
+  color: #0000AA;
+}

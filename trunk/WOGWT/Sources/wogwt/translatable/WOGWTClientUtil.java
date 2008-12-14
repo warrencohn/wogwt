@@ -24,10 +24,12 @@ import com.google.gwt.http.client.URL;
 import com.google.gwt.http.client.RequestBuilder.Method;
 import com.google.gwt.user.client.DOM;
 
+/**
+ * Utility methods for CLIENT (gwt) code.
+ *
+ */
 public class WOGWTClientUtil {
 	
-	// TODO: test RPC!
-    
 	public static final String UPDATE_CONTAINER_ID_KEY = "__updateID";
 	public static final String WOGWTMissingUpdateContainer = "WOGWTMissingUpdateContainer";
 	public static final String ACTION_ID_PREFIX = "wogwt_action_";

@@ -7,12 +7,9 @@ import wogwt.translatable.WOGWTClientUtil;
 import com.webobjects.appserver.WOActionResults;
 import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
-import com.webobjects.appserver.WORequest;
 import com.webobjects.appserver.WOResponse;
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSMutableArray;
-
-import er.extensions.appserver.ERXResponseRewriter;
 
 /**
  * This component "publishes" the urls of all the component actions in the
@@ -22,8 +19,11 @@ import er.extensions.appserver.ERXResponseRewriter;
  * the construction of the UI on the client, so this component allows you to
  * do that and still access the component actions on the server.
  * 
- * This component must be placed in the BODY of the page because it generates
- * hidden anchor elements.
+ * This component is invisible, but must be placed in the BODY of the page 
+ * because it generates hidden anchor elements.
+ * 
+ * @binding action the action to publish
+ * 
  */
 public class WOGWTActionPublisher extends WOComponent {
 	

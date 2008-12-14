@@ -1,14 +1,13 @@
 package wogwt;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Node;
 
 import wogwt.server.rpc.WOGWTServerEO;
 import wogwt.translatable.WOGWTClientUtil;
+import wogwt.translatable.rpc.WOGWTClientEO;
 
-import com.google.gwt.dev.util.msg.Message2StringURL;
 import com.webobjects.appserver.WORequest;
 import com.webobjects.appserver.WOResponse;
 import com.webobjects.eocontrol.EOEnterpriseObject;
@@ -21,6 +20,10 @@ import com.webobjects.foundation.NSMutableDictionary;
 
 import er.extensions.foundation.ERXDictionaryUtilities;
 
+/**
+ * Utility functions for the Server ONLY.
+ *
+ */
 public class WOGWTServerUtil {
 
 	/**
@@ -45,6 +48,11 @@ public class WOGWTServerUtil {
     	}	
 	}
 	
+	/**
+	 * Useful if you aren't using Wonder
+	 * @param eo
+	 * @return the primary key of the EO
+	 */
 	public static Object primaryKeyValue(EOEnterpriseObject eo) {
 		if (eo.editingContext() != null && !eo.editingContext().globalIDForObject( eo ).isTemporary()) {
 			return ((EOKeyGlobalID)eo.editingContext().globalIDForObject( eo )).keyValues()[0];
@@ -53,6 +61,12 @@ public class WOGWTServerUtil {
 		}
 	}
 	  
+	/**
+	 * 
+	 * @param eo
+	 * @return the EO's snapshot dictionary minus any nulls and relationships, but
+	 * including the primary key value
+	 */
 	public static NSDictionary eoToDictionary(EOEnterpriseObject eo) {
 		NSMutableDictionary data = eo.snapshot().mutableClone();
 		
@@ -68,15 +82,25 @@ public class WOGWTServerUtil {
 		return data;
 	}
 	
-	public static NSArray toClientEOList(List serverEOs) {
+	/**
+	 * Converts regular EOs to their Client class versions.
+	 * @param serverEOs
+	 * @return array of Client EOs
+	 */
+	public static NSArray toClientEOList(List<? extends WOGWTServerEO> serverEOs) {
 		return toClientEOList(serverEOs, null);
 	}
 	
-	public static NSArray toClientEOList(List serverEOs, List<String> relationshipsToSerialize) {
+	/**
+	 * Converts regular EOs to their Client class versions.
+	 * @param serverEOs
+	 * @return array of Client EOs
+	 */
+	public static NSArray toClientEOList(List<? extends WOGWTServerEO> serverEOs, List<String> relationshipsToSerialize) {
 		NSMutableArray result = new NSMutableArray(serverEOs.size());	  
 
 		for (int i = 0; i < serverEOs.size(); i++) {
-			WOGWTServerEO eo = (WOGWTServerEO)serverEOs.get(i);
+			WOGWTServerEO eo = serverEOs.get(i);
 			if (relationshipsToSerialize == null)
 				result.add( eo.toClientEO() );
 			else
@@ -86,7 +110,13 @@ public class WOGWTServerUtil {
 		return result.immutableClone();
 	}
 	
-	public static NSDictionary relationshipsToClientEOs(EOEnterpriseObject rootEO, List<String> relationshipsToSerialize) {
+	/**
+	 * 
+	 * @param rootEO
+	 * @param relationshipsToSerialize
+	 * @return a dictionary with a key for each relationship the client EO as the value
+	 */
+	public static NSDictionary<String, ? extends WOGWTClientEO> relationshipsToClientEOs(EOEnterpriseObject rootEO, List<String> relationshipsToSerialize) {
 		NSMutableDictionary result = new NSMutableDictionary();
 		for (int i = 0; i < relationshipsToSerialize.size(); i++) { 
 			String keyPath = relationshipsToSerialize.get(i);

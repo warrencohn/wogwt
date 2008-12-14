@@ -10,8 +10,16 @@ import com.google.gwt.http.client.Response;
  */
 public abstract class LogOnErrorRequestCallback extends WOGWTRequestCallback {
 	
-	public abstract void onSuccess(Request request, Response response);
+	/**
+	 * Empty implementation
+	 */
+	public void onSuccess(Request request, Response response) {
+		
+	}
 	
+	/**
+	 * Logs an error to any available consoles: firebug, gwt-shell, eclipse
+	 */
 	public void onError(Request request, Throwable throwable) {
 		super.onError(request, throwable);
 		Log.error("Request error: " + throwable.getMessage());

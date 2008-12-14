@@ -24,14 +24,31 @@ public class UpdateOnClickListener extends Updater implements ClickListener {
 		super();
 	}
 	
+	/**
+	 * Used with an existing WOHyperlink created by your WOComponent page.
+	 * @param updateContainerID DOM container to update
+	 */
 	public UpdateOnClickListener(String updateContainerID) {
 		super(updateContainerID);
 	}
 	
+	/**
+	 * Used with an existing WOHyperlink created by your WOComponent page.
+	 * @param updateContainerID DOM container to update
+	 * @param callback
+	 */
 	public UpdateOnClickListener(String updateContainerID, AfterDOMUpdateCallback callback) {
 		super(updateContainerID, callback);
 	}
 	
+	/**
+	 * Used with a gwt-created Hyperlink or Anchor instead of a link that was
+	 * created in your WOComponent page.
+	 * 
+	 * @param actionName component action to execute on click
+	 * @param updateContainerID DOM container to update
+	 * @param callback
+	 */
 	public UpdateOnClickListener(String actionName, String updateContainerID, AfterDOMUpdateCallback callback) {
 		super(actionName, updateContainerID, callback);
 	}

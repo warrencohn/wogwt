@@ -1,8 +1,6 @@
 package wogwt.server.rpc;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.webobjects.appserver.WOApplication;
-import com.webobjects.appserver.WOComponent;
 import com.webobjects.appserver.WOContext;
 import com.webobjects.appserver.WOSession;
 import com.webobjects.eocontrol.EOEditingContext;
@@ -45,6 +43,11 @@ public class WOGWTRpcService {
 		return (T) session();
 	}
 	
+	/**
+	 * 
+	 * @return a request-level editing context, created and locked by
+	 * the request handler
+	 */
 	public EOEditingContext editingContext() {
 		return (EOEditingContext) context().userInfoForKey(EDITING_CONTEXT_KEY);
 	}
