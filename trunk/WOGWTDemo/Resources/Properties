@@ -10,6 +10,7 @@ er.extensions.ERXApplication.DefaultEncoding=UTF-8
 # OGNL
 ognl.helperFunctions=true
 ognl.inlineBindings=true
+ognl.parseStandardTags=true
 
 # EOF
 er.extensions.ERXApplication.useEditingContextUnlocker=true

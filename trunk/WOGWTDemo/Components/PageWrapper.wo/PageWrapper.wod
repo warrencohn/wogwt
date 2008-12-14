@@ -3,13 +3,14 @@ WOGWTScript : WOGWTScript {
   enableHistorySupport = "true";
 }
 
-
+Stylesheet : ERXStyleSheet {
+	filename = "style.css";	
+}
 
 Content : WOComponentContent {
 }
 
-Stylesheet : ERXStyleSheet {
-	filename = "style.css";	
+ViewSource : ViewSource {
 }
 
 UpdateLink : WOHyperlink {
@@ -34,4 +35,28 @@ DynamicUI : WOHyperlink {
 
 RPCExample : WOHyperlink {
 	pageName = "RPCExample";
+}
+
+RoundedCorners : WOHyperlink {
+	pageName = "RoundedCorners";
+}
+
+RichText : WOHyperlink {
+	pageName = "RichTextExample";
+}
+
+Tree : WOHyperlink {
+	pageName = "TreeExample";
+}
+
+AutoCompletion : WOHyperlink {
+	pageName = "AutoCompletionExample";
+}
+
+DialogExample : WOHyperlink {
+	pageName = "DialogExample";
+}
+
+CompileTimeIDChecking : WOHyperlink {
+	pageName = "CompileTimeIDChecking";
 }

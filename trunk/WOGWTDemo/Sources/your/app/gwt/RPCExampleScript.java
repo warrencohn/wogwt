@@ -63,7 +63,7 @@ public class RPCExampleScript implements EntryPoint {
 		RootPanel panel = RootPanel.get(gridContainerID);
 
 		NSArray<String> attributes = MovieClient.attributeKeys();
-		
+
 		boolean createGrid = (grid == null);
 		if (createGrid) {
 			grid = new Grid(objects.size()+1, attributes.size());

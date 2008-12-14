@@ -45,9 +45,9 @@ public abstract class _MovieClient implements IsSerializable, WOGWTClientEO, NSK
 	private your.app.gwt.eo.PlotSummary plotSummary;
 	private your.app.gwt.eo.StudioClient studio;
 	private your.app.gwt.eo.Voting voting;
-	private List<your.app.gwt.eo.Talent> directors;
-	private List<your.app.gwt.eo.Review> reviews;
-	private List<your.app.gwt.eo.MovieRole> roles;
+	private NSArray<your.app.gwt.eo.Talent> directors;
+	private NSArray<your.app.gwt.eo.Review> reviews;
+	private NSArray<your.app.gwt.eo.MovieRole> roles;
 
 	public _MovieClient() {
 		super();
@@ -126,9 +126,9 @@ public abstract class _MovieClient implements IsSerializable, WOGWTClientEO, NSK
 		plotSummary = (your.app.gwt.eo.PlotSummary)map.get("plotSummary");
 		studio = (your.app.gwt.eo.StudioClient)map.get("studio");
 		voting = (your.app.gwt.eo.Voting)map.get("voting");
-		directors = (List)map.get("directors");
-		reviews = (List)map.get("reviews");
-		roles = (List)map.get("roles");
+		directors = (NSArray)map.get("directors");
+		reviews = (NSArray)map.get("reviews");
+		roles = (NSArray)map.get("roles");
 		if (map.get( "primaryKeyValue" ) != null)
 			primaryKeyValue = (Integer)map.get( "primaryKeyValue" );
 	}
@@ -192,11 +192,11 @@ public abstract class _MovieClient implements IsSerializable, WOGWTClientEO, NSK
 		else if ("voting".equals(key))
 			setVoting((your.app.gwt.eo.Voting)value);
 		else if ("directors".equals(key))
-			setDirectors((List)value);
+			setDirectors((NSArray)value);
 		else if ("reviews".equals(key))
-			setReviews((List)value);
+			setReviews((NSArray)value);
 		else if ("roles".equals(key))
-			setRoles((List)value);
+			setRoles((NSArray)value);
 		else
 			throw new RuntimeException(getClass().getName() + " does not has a key named '" + key + "'");
 	}
@@ -298,27 +298,27 @@ public abstract class _MovieClient implements IsSerializable, WOGWTClientEO, NSK
 	}
 	
 	//To Many Relationships
-	public List<your.app.gwt.eo.Talent> directors() {
+	public NSArray<your.app.gwt.eo.Talent> directors() {
 		return directors;
 	}
 	
-	public void setDirectors(List<your.app.gwt.eo.Talent> directors) {
+	public void setDirectors(NSArray<your.app.gwt.eo.Talent> directors) {
 		this.directors = directors;
 	}
 	
-	public List<your.app.gwt.eo.Review> reviews() {
+	public NSArray<your.app.gwt.eo.Review> reviews() {
 		return reviews;
 	}
 	
-	public void setReviews(List<your.app.gwt.eo.Review> reviews) {
+	public void setReviews(NSArray<your.app.gwt.eo.Review> reviews) {
 		this.reviews = reviews;
 	}
 	
-	public List<your.app.gwt.eo.MovieRole> roles() {
+	public NSArray<your.app.gwt.eo.MovieRole> roles() {
 		return roles;
 	}
 	
-	public void setRoles(List<your.app.gwt.eo.MovieRole> roles) {
+	public void setRoles(NSArray<your.app.gwt.eo.MovieRole> roles) {
 		this.roles = roles;
 	}
 	

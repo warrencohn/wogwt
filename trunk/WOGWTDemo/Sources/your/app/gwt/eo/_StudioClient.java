@@ -27,7 +27,7 @@ public abstract class _StudioClient implements IsSerializable, WOGWTClientEO, NS
 	
 	private BigDecimal budget;
 	private String name;
-	private List<your.app.gwt.eo.MovieClient> movies;
+	private NSArray<your.app.gwt.eo.MovieClient> movies;
 
 	public _StudioClient() {
 		super();
@@ -78,7 +78,7 @@ public abstract class _StudioClient implements IsSerializable, WOGWTClientEO, NS
 	public void takeValuesFromMap(Map<String, ?> map) {
 		budget = (BigDecimal)map.get("budget");
 		name = (String)map.get("name");
-		movies = (List)map.get("movies");
+		movies = (NSArray)map.get("movies");
 		if (map.get( "primaryKeyValue" ) != null)
 			primaryKeyValue = (Integer)map.get( "primaryKeyValue" );
 	}
@@ -106,7 +106,7 @@ public abstract class _StudioClient implements IsSerializable, WOGWTClientEO, NS
 		else if ("name".equals(key))
 			setName((String)value);
 		else if ("movies".equals(key))
-			setMovies((List)value);
+			setMovies((NSArray)value);
 		else
 			throw new RuntimeException(getClass().getName() + " does not has a key named '" + key + "'");
 	}
@@ -144,11 +144,11 @@ public abstract class _StudioClient implements IsSerializable, WOGWTClientEO, NS
 
 	// To One Relationships
 	//To Many Relationships
-	public List<your.app.gwt.eo.MovieClient> movies() {
+	public NSArray<your.app.gwt.eo.MovieClient> movies() {
 		return movies;
 	}
 	
-	public void setMovies(List<your.app.gwt.eo.MovieClient> movies) {
+	public void setMovies(NSArray<your.app.gwt.eo.MovieClient> movies) {
 		this.movies = movies;
 	}
 	

@@ -1,0 +1,7 @@
+PageWrapper : PageWrapper {
+}
+
+LoadingImage : WOImage {
+	filename = "wait18.gif";
+	id = "imgLoading";
+}

@@ -1,0 +1,17 @@
+PageWrapper : PageWrapper {
+}
+
+UpdateLink : WOHyperlink {
+	action = updateAction;
+	id = updateLinkID;
+}
+
+Container : WOGenericContainer {
+	elementName = "div";
+	id = containerID;
+	style = "border: 1px solid black";
+}
+
+TimeString : WOString {
+	value = now;
+}
