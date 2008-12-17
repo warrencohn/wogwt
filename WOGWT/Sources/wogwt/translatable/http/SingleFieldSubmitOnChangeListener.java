@@ -9,6 +9,8 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
+ * NOTE: this class isn't working yet, so don't use it
+ * 
  * Sends the value of only the changed field to the server using the form action url
  * and updates a DOM container with the response
  * 
