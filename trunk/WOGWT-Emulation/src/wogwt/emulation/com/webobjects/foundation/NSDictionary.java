@@ -2,14 +2,13 @@ package com.webobjects.foundation;
 
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Fully implemented except for NSKeyValueCodingAdditions
  */
-public class NSDictionary<K,V> extends HashMap implements NSKeyValueCoding {
+public class NSDictionary<K,V> extends HashMap implements NSKeyValueCoding,
+	NSKeyValueCodingAdditions {
 
 	public static final NSDictionary EmptyDictionary = new NSDictionary();
 	
@@ -126,7 +125,42 @@ public class NSDictionary<K,V> extends HashMap implements NSKeyValueCoding {
 	}
 	
 	public void takeValueForKey(Object value, String key) {
-		superDotPut(key, value);
+		if (value != null)
+			superDotPut(key, value);
+		else
+			superDotRemove(key);
+	}
+	
+	public Object valueForKeyPath(String keyPath) {
+		if (containsKey(keyPath)) {
+			return get(keyPath);
+		}
+		
+		String firstKey;
+		String restOfKeyPath = null;
+		int dotIndex = keyPath.indexOf(NSKeyValueCodingAdditions.KeyPathSeparator);
+		if (dotIndex == -1) {
+			firstKey = keyPath;
+		} else {
+			firstKey = keyPath.substring(0, dotIndex);
+			if (keyPath.length()-1 > dotIndex) {
+				restOfKeyPath = keyPath.substring(dotIndex+1);
+			}
+		}
+
+		Object firstValue = get(firstKey);
+		if (firstValue != null && 
+				(firstValue instanceof NSKeyValueCodingAdditions)
+				&& restOfKeyPath != null) {
+			return ((NSKeyValueCodingAdditions)firstValue).valueForKeyPath(restOfKeyPath);
+		} else {
+			return firstValue;
+		}
+	}
+	
+	// TODO: not sure how this behaves in WO
+	public void takeValueForKeyPath(Object value, String keyPath) {
+		superDotPut(keyPath, value);
 	}
 	
 	protected void superDotClear() {
@@ -151,13 +185,18 @@ public class NSDictionary<K,V> extends HashMap implements NSKeyValueCoding {
 		return super.remove(key);
 	}
 	
-	private static final String UNSUPPORTED = "is not a supported operation in com.webobjects.foundation.NSDictionary";
+	private static final String UNSUPPORTED = " is not a supported operation in com.webobjects.foundation.NSDictionary";
 	
 		@Override
 	public void clear() {
 		throw new UnsupportedOperationException("clear" + UNSUPPORTED);
 	}
 	
+	@Override
+	public Object clone() {
+		return this;
+	}
+		
 	@Override
 	public Object put(Object key, Object value) {
 		throw new UnsupportedOperationException("put" + UNSUPPORTED);

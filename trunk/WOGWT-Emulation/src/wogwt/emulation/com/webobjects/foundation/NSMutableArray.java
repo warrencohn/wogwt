@@ -198,6 +198,11 @@ public class NSMutableArray<E> extends NSArray {
 	}
 	
 	@Override
+	public Object clone() {
+		return mutableClone();
+	}
+	
+	@Override
 	public Object remove(int index) {
 		return superDotRemove(index);
 	}
