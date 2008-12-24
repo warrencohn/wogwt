@@ -24,7 +24,8 @@ public class DialogExampleScript implements EntryPoint {
 		button.setText("Show Dialog");
 		button.addClickListener(new ClickListener() {
 			public void onClick(Widget arg0) {
-				ErrorDialog dialog = new ErrorDialog("javax.naming.NameNotFoundException: Name jdbc is not bound in this Context at org.apache.naming.NamingContext.list(NamingContext.java:343)");
+				ErrorDialog dialog = new ErrorDialog(
+						"Your own error message can be displayed in a fancy dialog like this.");
 				dialog.showModal();
 			}
 		});

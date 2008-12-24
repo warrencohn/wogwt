@@ -79,17 +79,17 @@
 					<excludesfile name="woproject/resources.exclude.patternset" />
 				</patternset>
 			</resources>
-			<frameworks root="${wo.wolocalroot}" embed="${servletDeployment}">
+			<frameworks root="${wo.wolocalroot}" embed="true">
 				<patternset>
 					<includesfile name="woproject/ant.frameworks.wo.wolocalroot" />
 				</patternset>
 			</frameworks>
-			<frameworks root="${user.home}" embed="${servletDeployment}">
+			<frameworks root="${user.home}" embed="true">
 				<patternset>
 					<includesfile name="woproject/ant.frameworks.user.home" />
 				</patternset>
 			</frameworks>
-			<frameworks root="${wo.wosystemroot}" embed="${servletDeployment}">
+			<frameworks root="${wo.wosystemroot}" embed="true">
 				<patternset>
 					<includesfile name="woproject/ant.frameworks.wo.wosystemroot" />
 				</patternset>
