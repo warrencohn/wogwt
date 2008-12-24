@@ -2,8 +2,6 @@ package com.webobjects.foundation;
 
 import java.util.Map;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
-
 /**
  * Fully implemented except for NSKeyValueCodingAdditions
  */
@@ -74,6 +72,11 @@ public class NSMutableDictionary<K,V> extends NSDictionary {
 	@Override
 	public void clear() {
 		superDotClear();
+	}
+	
+	@Override
+	public Object clone() {
+		return mutableClone();
 	}
 	
 	@Override

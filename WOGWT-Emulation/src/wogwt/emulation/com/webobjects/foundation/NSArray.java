@@ -1,5 +1,6 @@
 package com.webobjects.foundation;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -16,7 +17,8 @@ import java.util.Vector;
  * - makeObjectsPerformSelector
  * 
  */
-public class NSArray<E> extends ArrayList implements NSKeyValueCoding {
+public class NSArray<E> extends ArrayList implements NSKeyValueCoding, 
+	NSKeyValueCodingAdditions {
 
 	public static interface Operator {
 		public Object compute(NSArray values, String keyPath);
@@ -35,7 +37,7 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding {
 	public static final boolean CheckForNull = true;
 	public static final boolean IgnoreNull = true;
 	
-	private static final String UNSUPPORTED = "is not a supported operation in com.webobjects.foundation.NSArray";
+	private static final String UNSUPPORTED = " is not a supported operation in com.webobjects.foundation.NSArray";
 	protected static final String NULL_NOT_ALLOWED = "Attempt to insert null into an NSArray.";
 	
 	public NSArray() {
@@ -132,6 +134,11 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding {
 	}
 	
 	public ArrayList<E> arrayList() {
+		return this;
+	}
+	
+	@Override
+	public Object clone() {
 		return this;
 	}
 	
@@ -386,6 +393,135 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding {
 			Object item = get(i);
 			if (item instanceof NSKeyValueCoding) {
 				((NSKeyValueCoding)item).takeValueForKey(value, key);
+			}
+		}
+	}
+	
+	public Object valueForKeyPath(String keyPath) {
+		if (keyPath == null)
+			return null;
+		else if (keyPath.startsWith("@" + CountOperatorName)) {
+			return size();
+		}
+		
+		String aggregateFunction;
+		String keyAfterAggregate;
+		if (keyPath.startsWith("@")) {
+			aggregateFunction = NSKeyValueCodingAdditions.DefaultImplementation.firstPartOfKeyPath(keyPath);
+			keyAfterAggregate = NSKeyValueCodingAdditions.DefaultImplementation.restOfKeyPath(keyPath);
+		} else {
+			aggregateFunction = null;
+			keyAfterAggregate = keyPath;
+		}
+		
+		NSMutableArray result = new NSMutableArray();
+		for (int i = 0; i < size(); i++) {
+			Object item = get(i);
+			if (item instanceof NSKeyValueCodingAdditions) {
+				Object value = ((NSKeyValueCodingAdditions)item).valueForKeyPath(keyPath);
+				if (value != null)
+					result.add(value);
+			}
+		}
+		
+		if (aggregateFunction == null) {
+			return result.immutableClone();
+		} else if (aggregateFunction.equals("@" + SumOperatorName)) {
+			return result.sum();
+		} else if (aggregateFunction.equals("@" + AverageOperatorName)) {
+			return result.avg();
+		} else if (aggregateFunction.equals("@" + MaximumOperatorName)) {
+			return result.max();
+		} else if (aggregateFunction.equals("@" + MinimumOperatorName)) {
+			return result.min();
+		} else {
+			throw new IllegalArgumentException("Invalid aggregate function");
+		}
+	}
+	
+	protected Object max() {
+		if (isEmpty()) {
+			return NSKeyValueCoding.NullValue;
+		}
+		
+		Comparable max = (Comparable) get(0);
+		for (int i = 0; i < size(); i++) {
+			Comparable element = (Comparable) get(i);
+			if (element.equals(NSKeyValueCoding.NullValue))
+				continue;
+			if (element.compareTo(max) > 0) {
+				max = element;
+			}
+		}
+		
+		return max;
+	}
+	
+	protected Object min() {
+		if (isEmpty()) {
+			return NSKeyValueCoding.NullValue;
+		}
+		
+		Comparable min = (Comparable) get(0);
+		for (int i = 0; i < size(); i++) {
+			Comparable element = (Comparable) get(i);
+			if (element.equals(NSKeyValueCoding.NullValue))
+				continue;
+			if (element.compareTo(min) < 0) {
+				min = element;
+			}
+		}
+		
+		return min;
+	}
+	
+	protected Object sum() {
+		if (isEmpty()) {
+			return NSKeyValueCoding.NullValue;
+		}
+		
+		BigDecimal sum = new BigDecimal("0");
+		for (int i = 0; i < size(); i++) {
+			Object element = get(i);
+			if (element.equals(NSKeyValueCoding.NullValue))
+				continue;
+			if (element instanceof BigDecimal) {
+				sum = sum.add((BigDecimal)element);
+			} else {
+				sum = sum.add(new BigDecimal(((Number)element).toString()));
+			}
+		}
+		
+		return sum;
+	}
+	
+	protected int nonNullCount() {
+		int result = 0;
+		for (int i = 0; i < size(); i++) {
+			Object element = get(i);
+			if (!element.equals(NSKeyValueCoding.NullValue))
+				result++;
+		}
+		return result;
+	}
+	
+	protected Object avg() {
+		if (isEmpty()) {
+			return NSKeyValueCoding.NullValue;
+		}
+		
+		return ((BigDecimal)sum()).divide(
+				new BigDecimal(new Integer(nonNullCount()).toString()), 
+				BigDecimal.ROUND_HALF_UP);
+	}
+	
+	public void takeValueForKeyPath(Object value, String keyPath) {
+		if (keyPath == null)
+			return;
+		for (int i = 0; i < size(); i++) {
+			Object item = get(i);
+			if (item instanceof NSKeyValueCodingAdditions) {
+				((NSKeyValueCodingAdditions)item).takeValueForKeyPath(value, keyPath);
 			}
 		}
 	}
