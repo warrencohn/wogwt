@@ -224,15 +224,15 @@ public class NSSet<E> extends HashSet {
 		super.clear();
 	}
 	
-	public boolean superDotRemove(Object o) {
+	protected boolean superDotRemove(Object o) {
 		return super.remove(o);
 	}
 	
-	public boolean superDotRemoveAll(Collection c) {
+	protected boolean superDotRemoveAll(Collection c) {
 		return super.removeAll(c);
 	}
 	
-	public boolean superDotRetainAll(Collection c) {
+	protected boolean superDotRetainAll(Collection c) {
 		return super.retainAll(c);
 	}
 	

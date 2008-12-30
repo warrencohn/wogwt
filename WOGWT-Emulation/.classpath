@@ -4,5 +4,6 @@
 	<classpathentry excluding="wogwt/emulation/" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.objectstyle.wolips.ContainerInitializer/10/1/JavaWOExtensions/1/nil/1/nil/1/0/1/false/10/1/WOGWT/1/nil/1/nil/1/0/1/false/10/1/JavaEOAccess/1/nil/1/nil/1/0/1/false/10/1/JavaEOControl/1/nil/1/nil/1/0/1/false/10/1/JavaFoundation/1/nil/1/nil/1/0/1/false/10/1/JavaWebObjects/1/nil/1/nil/1/0/1/false/10/1/JavaXML/1/nil/1/nil/1/0/1/false"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

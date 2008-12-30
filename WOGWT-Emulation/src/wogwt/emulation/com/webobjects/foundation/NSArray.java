@@ -10,12 +10,10 @@ import java.util.Vector;
 
 /**
  * Implemented EXCEPT for:
- * - operators
- * - NSKeyValueCodingAdditions
- * - Enumeration methods
  * - sortedArrayUsingComparator
+ * - Enumeration methods
  * - makeObjectsPerformSelector
- * 
+ * - NSCoding
  */
 public class NSArray<E> extends ArrayList implements NSKeyValueCoding, 
 	NSKeyValueCodingAdditions {
@@ -104,15 +102,13 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding,
 		if (range == null)
 			throw new IllegalArgumentException("range may not be null");
 		
-		NSArray sourceObjects = new NSArray(list);
-		NSArray items = sourceObjects.subarrayWithRange(range);
-		
-		if (!ignoreNull && items.contains(null))
-			throw new IllegalArgumentException(NULL_NOT_ALLOWED);
-		
-		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i) != null) {
-				super.add(items.get(i));
+		for (int i = range.location; i <= range.maxRange(); i++) {
+			E element = (E)list.get(i);
+			if (element == null) {
+				if (!ignoreNull)
+					throw new IllegalArgumentException(NULL_NOT_ALLOWED);
+			} else {
+				super.add(element);
 			}
 		}
 	}
@@ -146,7 +142,7 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding,
 		StringBuffer result = new StringBuffer();
 		for (int i = 0; i < size(); i++) {
 			result.append(get(i).toString());
-			if (i > 0 && separator != null)
+			if (i < size()-1 && separator != null)
 				result.append(separator);
 		}
 		return result.toString();
@@ -182,7 +178,7 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding,
 				if (count == 0) {
 					return new NSMutableArray(string);
 				}
-				objects = new NSMutableArray(count + 1);
+				objects = new NSMutableArray();
 				int end = stringLength - 1;
 				for (index = 0; index <= end; index++) {
 					if (parseData[index] != charSeparator) {
@@ -310,10 +306,9 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding,
 		return (E)get(index);
 	}
 	
-	public Enumeration<E> objectEnumerator() {
-		// TODO: implement
-		throw new RuntimeException("not implemented");
-	}
+//	public Enumeration<E> objectEnumerator() {
+//		throw new RuntimeException("not implemented");
+//	}
 	
 	public E[] objects() {
 		return (E[])toArray();
@@ -335,25 +330,21 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding,
 		});
 	}
 	
-	public static Operator operatorForKey(String operatorName) {
-		// TODO: implement
-		throw new RuntimeException("not implemented");
-	}
+//	public static Operator operatorForKey(String operatorName) {
+//		throw new RuntimeException("not implemented");
+//	}
+//	
+//	public static void removeOperatorForKey(String operatorName) {
+//		throw new RuntimeException("not implemented");
+//	}
+//	
+//	public static void setOperatorForKey(String operatorName, NSArray.Operator arrayOperator) {
+//		throw new RuntimeException("not implemented");
+//	}
 	
-	public static void removeOperatorForKey(String operatorName) {
-		// TODO: implement
-		throw new RuntimeException("not implemented");
-	}
-	
-	public static void setOperatorForKey(String operatorName, NSArray.Operator arrayOperator) {
-		// TODO: implement
-		throw new RuntimeException("not implemented");
-	}
-	
-	public Enumeration<E> reverseObjectEnumerator() {
-		// TODO: implement
-		throw new RuntimeException("not implemented");
-	}
+//	public Enumeration<E> reverseObjectEnumerator() {
+//		throw new RuntimeException("not implemented");
+//	}
 	
 	public NSArray<E> sortedArrayUsingComparator(NSComparator comparator) 
 		throws NSComparator.ComparisonException {
@@ -418,7 +409,7 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding,
 		for (int i = 0; i < size(); i++) {
 			Object item = get(i);
 			if (item instanceof NSKeyValueCodingAdditions) {
-				Object value = ((NSKeyValueCodingAdditions)item).valueForKeyPath(keyPath);
+				Object value = ((NSKeyValueCodingAdditions)item).valueForKeyPath(keyAfterAggregate);
 				if (value != null)
 					result.add(value);
 			}
@@ -558,23 +549,23 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding,
 		super.clear();
 	}
 	
-	public Object superDotRemove(int index) {
+	protected Object superDotRemove(int index) {
 		return super.remove(index);
 	}
 	
-	public boolean superDotRemove(Object o) {
+	protected boolean superDotRemove(Object o) {
 		return super.remove(o);
 	}
 	
-	public boolean superDotRemoveAll(Collection c) {
+	protected boolean superDotRemoveAll(Collection c) {
 		return super.removeAll(c);
 	}
 	
-	public boolean superDotRetainAll(Collection c) {
+	protected boolean superDotRetainAll(Collection c) {
 		return super.retainAll(c);
 	}
 	
-	public Object superDotSet(int index, Object element) {
+	protected Object superDotSet(int index, Object element) {
 		return super.set(index, element);
 	}
 		

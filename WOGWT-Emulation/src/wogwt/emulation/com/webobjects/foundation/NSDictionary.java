@@ -112,9 +112,9 @@ public class NSDictionary<K,V> extends HashMap implements NSKeyValueCoding,
 		return new NSMutableDictionary<K, V>(this);
 	}
 	
-	public Enumeration<V> objectEnumerator() {
-		return allValues().objectEnumerator();
-	}
+//	public Enumeration<V> objectEnumerator() {
+//		return allValues().objectEnumerator();
+//	}
 	
 	public V objectForKey(Object key) {
 		return (V)get(key);

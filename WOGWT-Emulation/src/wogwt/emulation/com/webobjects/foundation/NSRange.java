@@ -16,14 +16,14 @@ public class NSRange extends Object implements Serializable, Cloneable {
 			throw new IllegalArgumentException("Invalid argument to NSRange.fromString");
 		
 		String str = string.trim();
-		str = str.substring(1, str.length()-2);
+		str = str.substring(1, str.length()-1);
 		String[] parts = str.split(",\\s*");
 		
 		return new NSRange(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
 	}
 	
-	private int location;
-	private int length;
+	protected int location;
+	protected int length;
 	
 	public NSRange() {
 		location = 0;
@@ -108,7 +108,7 @@ public class NSRange extends Object implements Serializable, Cloneable {
 	}
 	
 	public boolean isEmpty() {
-		return length == 0;
+		return length <= 0;
 	}
 	
 	public boolean isSubrangeOfRange(NSRange otherRange) {
@@ -120,7 +120,10 @@ public class NSRange extends Object implements Serializable, Cloneable {
 	}
 	
 	public int maxRange() {
-		return location + length;
+		if (length <= 0)
+			return location;
+		else
+			return location + length - 1;
 	}
 	
 	public NSRange rangeByIntersectingRange(NSRange otherRange) {

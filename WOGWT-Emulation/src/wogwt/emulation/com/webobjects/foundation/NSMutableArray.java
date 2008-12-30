@@ -9,6 +9,10 @@ public class NSMutableArray<E> extends NSArray {
 		super();
 	}
 	
+	public NSMutableArray(int capacity) {
+		super(capacity);
+	}
+	
 	public NSMutableArray(Collection<? extends E> collection)  {
 		super(collection);
 	}
@@ -23,10 +27,6 @@ public class NSMutableArray<E> extends NSArray {
 	
 	public NSMutableArray(E[] objects, NSRange range) {
 		super(objects, range);
-	}
-	
-	public NSMutableArray(int capacity) {
-		super(capacity);
 	}
 	
 	public NSMutableArray(List<? extends E> list, NSRange range, boolean ignoreNull) {
