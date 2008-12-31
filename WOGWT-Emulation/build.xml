@@ -5,7 +5,7 @@
 	    <delete file="../WOGWT/Libraries/wogwt-emulation.jar" quiet="true"/>	
 
 		<jar destfile="../WOGWT/Libraries/wogwt-emulation.jar"
-			basedir="src">
+			basedir="src" excludes="**/*Test*.java">
 		</jar>
 		
 		<jar destfile="../WOGWT/Libraries/wogwt-emulation.jar"

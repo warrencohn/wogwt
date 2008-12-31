@@ -8,7 +8,7 @@ import java.util.Set;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Random;
 
-public class NSSet<E> extends HashSet {
+public class NSSet<E> extends HashSet<E> {
 
 	public static final boolean CheckForNull = true;
 	public static final NSSet emptySet = new NSSet();
@@ -19,6 +19,10 @@ public class NSSet<E> extends HashSet {
 	
 	public NSSet() {
 		super();
+	}
+	
+	protected NSSet(int capacity) {
+		super(capacity);
 	}
 	
 	public NSSet(Collection<? extends E> collection) {
@@ -51,7 +55,7 @@ public class NSSet<E> extends HashSet {
 	
 	public NSSet(NSSet<? extends E> otherSet) {
 		super();
-		NSArray objects = otherSet.allObjects();
+		NSArray<? extends E> objects = otherSet.allObjects();
 		for (int i = 0; i < objects.size(); i++) {
 			super.add(objects.get(i));
 		}
@@ -70,12 +74,12 @@ public class NSSet<E> extends HashSet {
 	}
 	
 	@Override
-	public boolean add(Object o) {
+	public boolean add(E o) {
 		throw new UnsupportedOperationException("add" + UNSUPPORTED);
 	}
 	
 	@Override
-	public boolean addAll(Collection c) {
+	public boolean addAll(Collection<? extends E> c) {
 		throw new UnsupportedOperationException("addAll" + UNSUPPORTED);
 	}
 	
@@ -173,12 +177,12 @@ public class NSSet<E> extends HashSet {
 	}
 	
 	@Override
-	public boolean removeAll(Collection c) {
+	public boolean removeAll(Collection<?> c) {
 		throw new UnsupportedOperationException("removeAll" + UNSUPPORTED);
 	}
 	
 	@Override
-	public boolean retainAll(Collection c) {
+	public boolean retainAll(Collection<?> c) {
 		throw new UnsupportedOperationException("retainAll" + UNSUPPORTED);
 	}
 	
@@ -202,19 +206,19 @@ public class NSSet<E> extends HashSet {
 		return result;
 	}
 	
-	public NSSet<E> setByUnioningSet(NSSet<?> otherSet) {
+	public NSSet<E> setByUnioningSet(NSSet<? extends E> otherSet) {
 		NSSet<E> result = mutableClone();
 		result.addAll(otherSet);
 		return result;
 	}
 	
-	protected boolean superDotAdd(Object o) {
+	protected boolean superDotAdd(E o) {
 		if (o == null)
 			throw new IllegalArgumentException(NULL_NOT_ALLOWED);
 		return super.add(o);
 	}
 	
-	protected boolean superDotAddAll(Collection c) {
+	protected boolean superDotAddAll(Collection<? extends E> c) {
 		if (c.contains(null))
 			throw new IllegalArgumentException(NULL_NOT_ALLOWED);
 		return super.addAll(c);
@@ -228,11 +232,11 @@ public class NSSet<E> extends HashSet {
 		return super.remove(o);
 	}
 	
-	protected boolean superDotRemoveAll(Collection c) {
+	protected boolean superDotRemoveAll(Collection<?> c) {
 		return super.removeAll(c);
 	}
 	
-	protected boolean superDotRetainAll(Collection c) {
+	protected boolean superDotRetainAll(Collection<?> c) {
 		return super.retainAll(c);
 	}
 	

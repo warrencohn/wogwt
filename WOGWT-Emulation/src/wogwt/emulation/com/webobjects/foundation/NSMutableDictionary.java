@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Fully implemented except for NSKeyValueCodingAdditions
  */
-public class NSMutableDictionary<K,V> extends NSDictionary {
+public class NSMutableDictionary<K,V> extends NSDictionary<K,V> {
 
 	public NSMutableDictionary() {
 		super();
@@ -65,7 +65,7 @@ public class NSMutableDictionary<K,V> extends NSDictionary {
 		putAll(otherDictionary);
 	}
 	
-	public void setObjectForKey(Object object, Object key) {
+	public void setObjectForKey(V object, K key) {
 		put(key, object);
 	}
 	
@@ -80,7 +80,7 @@ public class NSMutableDictionary<K,V> extends NSDictionary {
 	}
 	
 	@Override
-	public Object put(Object key, Object value) {
+	public V put(K key, V value) {
 		return superDotPut(key, value);
 	}
 	
@@ -90,7 +90,7 @@ public class NSMutableDictionary<K,V> extends NSDictionary {
 	}
 	
 	@Override
-	public Object remove(Object key) {
+	public V remove(Object key) {
 		return superDotRemove(key);
 	}
 }
