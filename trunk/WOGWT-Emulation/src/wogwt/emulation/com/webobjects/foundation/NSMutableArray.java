@@ -3,7 +3,7 @@ package com.webobjects.foundation;
 import java.util.Collection;
 import java.util.List;
 
-public class NSMutableArray<E> extends NSArray {
+public class NSMutableArray<E> extends NSArray<E> {
 
 	public NSMutableArray() {
 		super();
@@ -37,11 +37,11 @@ public class NSMutableArray<E> extends NSArray {
 		super(otherArray);
 	}
 	
-	public void addObject(Object object) {
+	public void addObject(E object) {
 		add(object);
 	}
 	
-	public void addObjects(Object[] objects) {
+	public void addObjects(E[] objects) {
 		if (objects == null)
 			return;
 		for (int i = 0; i < objects.length; i++) {
@@ -127,11 +127,11 @@ public class NSMutableArray<E> extends NSArray {
 		removeObjectsInArray(objectsToRemove);
 	}
 	
-	public Object replaceObjectAtIndex(E object, int index) {
+	public E replaceObjectAtIndex(E object, int index) {
 		return set(index, object);
 	}
 	
-	public Object replaceObjectAtIndex(int index, E object) {
+	public E replaceObjectAtIndex(int index, E object) {
 		return set(index, object);
 	}
 	
@@ -173,12 +173,12 @@ public class NSMutableArray<E> extends NSArray {
 	}
 	
 	@Override
-	public boolean add(Object o) {
+	public boolean add(E o) {
 		return superDotAdd(o);
 	}
 	
 	@Override
-	public void add(int index, Object element) {
+	public void add(int index, E element) {
 		superDotAdd(index, element);
 	}
 	
@@ -203,7 +203,7 @@ public class NSMutableArray<E> extends NSArray {
 	}
 	
 	@Override
-	public Object remove(int index) {
+	public E remove(int index) {
 		return superDotRemove(index);
 	}
 	
@@ -223,7 +223,7 @@ public class NSMutableArray<E> extends NSArray {
 	}
 	
 	@Override
-	public Object set(int index, Object element) {
+	public E set(int index, E element) {
 		if (element == null)
 			throw new IllegalArgumentException(NULL_NOT_ALLOWED);
 		return superDotSet(index, element);

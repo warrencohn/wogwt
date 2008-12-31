@@ -3,7 +3,7 @@ package com.webobjects.foundation;
 import java.util.Collection;
 import java.util.Set;
 
-public class NSMutableSet<E> extends NSSet {
+public class NSMutableSet<E> extends NSSet<E> {
 
 	public NSMutableSet() {
 		super();
@@ -38,11 +38,11 @@ public class NSMutableSet<E> extends NSSet {
 		super(set, ignoreNull);
 	}
 	
-	public void addObject(Object object) {
+	public void addObject(E object) {
 		add(object);
 	}
 	
-	public void addObjectsFromArray(NSArray array) {
+	public void addObjectsFromArray(NSArray<? extends E> array) {
 		addAll(array);
 	}
 	
@@ -67,21 +67,21 @@ public class NSMutableSet<E> extends NSSet {
 		addAll(otherSet);
 	}
 	
-	public void subtractSet(NSSet<?> otherSet) {
+	public void subtractSet(NSSet<? extends E> otherSet) {
 		removeAll(otherSet);
 	}
 	
-	public void unionSet(NSSet<?> otherSet) {
+	public void unionSet(NSSet<? extends E> otherSet) {
 		addAll(otherSet);
 	}
 	
 	@Override
-	public boolean add(Object o) {
+	public boolean add(E o) {
 		return superDotAdd(o);
 	}
 	
 	@Override
-	public boolean addAll(Collection c) {
+	public boolean addAll(Collection<? extends E> c) {
 		return superDotAddAll(c);
 	}
 	
@@ -101,12 +101,12 @@ public class NSMutableSet<E> extends NSSet {
 	}
 	
 	@Override
-	public boolean removeAll(Collection c) {
+	public boolean removeAll(Collection<?> c) {
 		return superDotRemoveAll(c);
 	}
 	
 	@Override
-	public boolean retainAll(Collection c) {
+	public boolean retainAll(Collection<?> c) {
 		return superDotRetainAll(c);
 	}
 	

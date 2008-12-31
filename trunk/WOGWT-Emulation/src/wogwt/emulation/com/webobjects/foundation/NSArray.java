@@ -15,7 +15,7 @@ import java.util.Vector;
  * - makeObjectsPerformSelector
  * - NSCoding
  */
-public class NSArray<E> extends ArrayList implements NSKeyValueCoding, 
+public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding, 
 	NSKeyValueCodingAdditions {
 
 	public static interface Operator {
@@ -40,6 +40,10 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding,
 	
 	public NSArray() {
 		super();
+	}
+	
+	protected NSArray(int capacity) {
+		super(capacity);
 	}
 	
 	public NSArray(E object) {
@@ -521,13 +525,13 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding,
 		return new Vector(this);
 	}
 	
-	protected boolean superDotAdd(Object o) {
+	protected boolean superDotAdd(E o) {
 		if (o == null)
 			throw new IllegalArgumentException(NULL_NOT_ALLOWED);
 		return super.add(o);
 	}
 	
-	protected void superDotAdd(int index, Object element) {
+	protected void superDotAdd(int index, E element) {
 		if (element == null)
 			throw new IllegalArgumentException(NULL_NOT_ALLOWED);
 		super.add(index, element);
@@ -549,7 +553,7 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding,
 		super.clear();
 	}
 	
-	protected Object superDotRemove(int index) {
+	protected E superDotRemove(int index) {
 		return super.remove(index);
 	}
 	
@@ -565,17 +569,17 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding,
 		return super.retainAll(c);
 	}
 	
-	protected Object superDotSet(int index, Object element) {
+	protected E superDotSet(int index, E element) {
 		return super.set(index, element);
 	}
 		
 	@Override
-	public boolean add(Object o) {
+	public boolean add(E o) {
 		throw new UnsupportedOperationException("add" + UNSUPPORTED);
 	}
 	
 	@Override
-	public void add(int index, Object element) {
+	public void add(int index, E element) {
 		throw new UnsupportedOperationException("add" + UNSUPPORTED);
 	}
 	
@@ -595,7 +599,7 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding,
 	}
 	
 	@Override
-	public Object remove(int index) {
+	public E remove(int index) {
 		throw new UnsupportedOperationException("remove" + UNSUPPORTED);
 	}
 	
@@ -615,7 +619,7 @@ public class NSArray<E> extends ArrayList implements NSKeyValueCoding,
 	}
 	
 	@Override
-	public Object set(int index, Object element) {
+	public E set(int index, E element) {
 		throw new UnsupportedOperationException("set" + UNSUPPORTED);
 	}
 }

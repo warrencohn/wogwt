@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Fully implemented except for NSKeyValueCodingAdditions
  */
-public class NSDictionary<K,V> extends HashMap implements NSKeyValueCoding,
+public class NSDictionary<K,V> extends HashMap<K,V> implements NSKeyValueCoding,
 	NSKeyValueCodingAdditions {
 
 	public static final NSDictionary EmptyDictionary = new NSDictionary();
@@ -73,9 +73,9 @@ public class NSDictionary<K,V> extends HashMap implements NSKeyValueCoding,
 		
 		NSMutableArray<K> result = new NSMutableArray<K>();
 		
-		NSArray keys = allKeys();
+		NSArray<K> keys = allKeys();
 		for (int i = 0; i < keys.size(); i++) {
-			Object key = keys.get(i);
+			K key = (K)keys.get(i);
 			if (object.equals(get(key))) {
 				result.add(key);
 			}
@@ -126,7 +126,7 @@ public class NSDictionary<K,V> extends HashMap implements NSKeyValueCoding,
 	
 	public void takeValueForKey(Object value, String key) {
 		if (value != null)
-			superDotPut(key, value);
+			superDotPut((K)key, (V)value);
 		else
 			superDotRemove(key);
 	}
@@ -160,28 +160,28 @@ public class NSDictionary<K,V> extends HashMap implements NSKeyValueCoding,
 	
 	// TODO: not sure how this behaves in WO
 	public void takeValueForKeyPath(Object value, String keyPath) {
-		superDotPut(keyPath, value);
+		superDotPut((K)keyPath, (V)value);
 	}
 	
 	protected void superDotClear() {
 		super.clear();
 	}
 	
-	protected Object superDotPut(Object key, Object value) {
+	protected V superDotPut(K key, V value) {
 		if (key == null || value == null)
 			throw new IllegalArgumentException("Key or value may not be null");
 		else
 			return super.put(key, value);
 	}
 	
-	protected void superDotPutAll(Map m) {
+	protected void superDotPutAll(Map<? extends K, ? extends V> m) {
 		if (m.containsKey(null) || m.containsValue(null))
 			throw new IllegalArgumentException("Key or value may not be null");
 		else
 			super.putAll(m);
 	}
 	
-	protected Object superDotRemove(Object key) {
+	protected V superDotRemove(Object key) {
 		return super.remove(key);
 	}
 	
@@ -198,17 +198,17 @@ public class NSDictionary<K,V> extends HashMap implements NSKeyValueCoding,
 	}
 		
 	@Override
-	public Object put(Object key, Object value) {
+	public V put(K key, V value) {
 		throw new UnsupportedOperationException("put" + UNSUPPORTED);
 	}
 	
 	@Override
-	public void putAll(Map m) {
+	public void putAll(Map<? extends K, ? extends V> m) {
 		throw new UnsupportedOperationException("putAll" + UNSUPPORTED);
 	}
 	
 	@Override
-	public Object remove(Object key) {
+	public V remove(Object key) {
 		throw new UnsupportedOperationException("remove" + UNSUPPORTED);
 	}
 	
