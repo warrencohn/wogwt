@@ -1,15 +1,9 @@
 package test.com.webobjects.foundation;
 
-import junit.framework.TestCase;
-
 import com.webobjects.foundation.NSMutableRange;
 import com.webobjects.foundation.NSRange;
 
-public class TestNSMutableRange extends TestCase {
-
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
+public class TestNSMutableRange extends BaseTestCase {
 
 	public void testNSMutableRange() {
 		NSRange range = new NSRange();

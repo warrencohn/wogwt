@@ -3,17 +3,11 @@ package test.com.webobjects.foundation;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableDictionary;
 
-public class TestNSMutableDictionary extends TestCase {
-
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
+public class TestNSMutableDictionary extends BaseTestCase {
 
 	public void testNSMutableDictionary() {
 		NSMutableDictionary dict = new NSMutableDictionary();

@@ -2,9 +2,13 @@ package com.webobjects.foundation;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class NSTimestamp extends Timestamp {
 
+	public static final NSTimestamp DistantFuture = new NSTimestamp().timestampByAddingGregorianUnits(2922769, 0, 0, 0, 0, 0);
+	public static final NSTimestamp DistantPast = new NSTimestamp().timestampByAddingGregorianUnits(-2000, 0, 0, 0, 0, 0);
+	
 	private static final String UNSUPPORTED = " is not a supported operation of com.webobjects.foundation.NSTimestamp";
 
 	public NSTimestamp() {
@@ -21,12 +25,12 @@ public class NSTimestamp extends Timestamp {
 	
 	public NSTimestamp(long milliseconds, int nanoseconds) {
 		super(milliseconds);
-		int nanos = nanoseconds;
-    	if (nanoseconds == 0) {
-        	nanos = (int)(milliseconds % 1000);
-    		nanos = nanos * 1000000;
-    	}
-		super.setNanos(nanoseconds);
+		
+		if (nanoseconds > 0) {
+			long justMilliseconds = milliseconds % 1000;
+			long nanos = (justMilliseconds * 1000000) + nanoseconds;
+			super.setNanos((int)nanos);
+		}
 	}
 	
 	public NSTimestamp(long time, NSTimestamp date) {
@@ -34,7 +38,8 @@ public class NSTimestamp extends Timestamp {
 	}
 	
 	public NSTimestamp(Timestamp sqlTimestamp) {
-		this(sqlTimestamp.getTime(), sqlTimestamp.getNanos());
+		super(sqlTimestamp.getTime());
+		super.setNanos(sqlTimestamp.getNanos());
 	}
 	
 	public int compare(NSTimestamp ts) {
@@ -55,14 +60,24 @@ public class NSTimestamp extends Timestamp {
 
 	public NSTimestamp timestampByAddingGregorianUnits(int years, 
 			int months, int days, int hours, int minutes, int seconds)  {
-		Date result = new Date();
-		result.setYear(years);
-		result.setMonth(months);
-		result.setDate(days);
-		result.setHours(hours);
-		result.setMinutes(minutes);
-		result.setSeconds(seconds);
-		return new NSTimestamp(result);
+		
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTimeInMillis(getTime());
+		
+		if (seconds != 0)
+			cal.add(GregorianCalendar.SECOND, seconds);
+		if (minutes != 0)
+			cal.add(GregorianCalendar.MINUTE, minutes);
+		if (hours != 0)
+			cal.add(GregorianCalendar.HOUR, hours);
+		if (days != 0)
+			cal.add(GregorianCalendar.DATE, days);
+		if (months != 0)
+			cal.add(GregorianCalendar.MONTH, months);
+		if (years != 0)
+			cal.add(GregorianCalendar.YEAR, years);
+		
+		return new NSTimestamp(cal.getTime().getTime(), getNanos());
 	}
 	
 	@Override

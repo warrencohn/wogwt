@@ -2,21 +2,21 @@ package test.com.webobjects.foundation;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.NoSuchElementException;
 import java.util.Vector;
 
-import junit.framework.TestCase;
-
 import com.webobjects.foundation.NSArray;
+import com.webobjects.foundation.NSComparator;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSMutableDictionary;
 import com.webobjects.foundation.NSRange;
+import com.webobjects.foundation.NSTimestamp;
+import com.webobjects.foundation.NSComparator.ComparisonException;
 
-public class TestNSArray extends TestCase {
-
-	protected void setUp() throws Exception {
-	}
-
+public class TestNSArray extends BaseTestCase {
+	
 	public void testNSArray() {
 		NSArray array = new NSArray();
 		assertTrue(array.isEmpty());
@@ -177,6 +177,7 @@ public class TestNSArray extends TestCase {
 		NSArray array = new NSArray("abc");
 		NSArray clone = array.immutableClone();
 		assertEquals(clone, array);
+		assertEquals(NSArray.class, clone.getClass());
 	}
 
 	public void testIndexOfIdenticalObjectObject() {
@@ -260,8 +261,76 @@ public class TestNSArray extends TestCase {
 		assertEquals(strings[1], objects[0]);
 	}
 
-	public void testSortedArrayUsingComparator() {
-		// TODO: implement
+	public void testObjectEnumerator() {
+		NSArray array = new NSArray(new String[] {"abc", "def"});
+		Enumeration e = array.objectEnumerator();
+		assertTrue(e.hasMoreElements());
+		assertEquals("abc", e.nextElement());
+		assertEquals("def", e.nextElement());
+		assertFalse(e.hasMoreElements());
+		try {
+			e.nextElement();
+			fail("Expected NoSuchElementException");
+		} catch (NoSuchElementException ex) {} 
+	}
+	
+	public void testReverseObjectEnumerator() {
+		NSArray array = new NSArray(new String[] {"abc", "def"});
+		Enumeration e = array.reverseObjectEnumerator();
+		assertTrue(e.hasMoreElements());
+		assertEquals("def", e.nextElement());
+		assertEquals("abc", e.nextElement());
+		assertFalse(e.hasMoreElements());
+		try {
+			e.nextElement();
+			fail("Expected NoSuchElementException");
+		} catch (NoSuchElementException ex) {} 
+	}
+	
+	public void testSortedArrayUsingComparator() throws ComparisonException {
+		NSArray array = new NSArray(new String[] {"abc", "def"});
+		NSArray sorted;
+		
+		sorted = array.sortedArrayUsingComparator(NSComparator.AscendingStringComparator);
+		assertNotSame(array, sorted);
+		assertEquals("abc", sorted.get(0));
+		assertEquals("def", sorted.get(1));
+		
+		sorted = array.sortedArrayUsingComparator(NSComparator.DescendingStringComparator);
+		assertEquals("def", sorted.get(0));
+		assertEquals("abc", sorted.get(1));
+		
+		
+		array = new NSArray(new String[] {"abc", "DEF"});
+		sorted = array.sortedArrayUsingComparator(NSComparator.AscendingCaseInsensitiveStringComparator);
+		assertEquals("abc", sorted.get(0));
+		assertEquals("DEF", sorted.get(1));
+		
+		sorted = array.sortedArrayUsingComparator(NSComparator.DescendingCaseInsensitiveStringComparator);
+		assertEquals("DEF", sorted.get(0));
+		assertEquals("abc", sorted.get(1));
+		
+		
+		array = new NSArray(new Integer[] {1, 2});
+		sorted = array.sortedArrayUsingComparator(NSComparator.AscendingNumberComparator);
+		assertEquals(1, sorted.get(0));
+		assertEquals(2, sorted.get(1));
+		
+		sorted = array.sortedArrayUsingComparator(NSComparator.DescendingNumberComparator);
+		assertEquals(2, sorted.get(0));
+		assertEquals(1, sorted.get(1));
+		
+		
+		NSTimestamp earlierTime = new NSTimestamp();
+		NSTimestamp laterTime = earlierTime.timestampByAddingGregorianUnits(0,1,0,0,0,0);
+		array = new NSArray(new NSTimestamp[] {earlierTime, laterTime});
+		sorted = array.sortedArrayUsingComparator(NSComparator.AscendingTimestampComparator);
+		assertEquals(earlierTime, sorted.get(0));
+		assertEquals(laterTime, sorted.get(1));
+		
+		sorted = array.sortedArrayUsingComparator(NSComparator.DescendingTimestampComparator);
+		assertEquals(laterTime, sorted.get(0));
+		assertEquals(earlierTime, sorted.get(1));
 	}
 
 	public void testSubarrayWithRange() {

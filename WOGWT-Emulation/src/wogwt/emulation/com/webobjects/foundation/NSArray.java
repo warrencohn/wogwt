@@ -3,9 +3,12 @@ package com.webobjects.foundation;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Vector;
 
 /**
@@ -21,6 +24,8 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 	public static interface Operator {
 		public Object compute(NSArray values, String keyPath);
 	}
+	
+	public static final boolean IsEmulationClass = true;
 	
 	public static final String AverageOperatorName = "avg";
 	public static final String CountOperatorName = "count";
@@ -47,9 +52,7 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 	}
 	
 	public NSArray(E object) {
-		if (object == null)
-			throw new IllegalArgumentException(NULL_NOT_ALLOWED);
-		super.add(object);
+		superDotAdd(object);
 	}
 	
 	public NSArray(E[] objects) {
@@ -57,7 +60,7 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 			throw new IllegalArgumentException("objects may not be null");
 		for (int i = 0; i < objects.length; i++) {
 			if (objects[i] != null)
-				super.add(objects[i]);
+				superDotAdd(objects[i]);
 		}
 	}
 	
@@ -84,7 +87,7 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 		for (Iterator iterator = collection.iterator(); iterator.hasNext();) {
 			E e = (E) iterator.next();
 			if (e != null) {
-				super.add(e);
+				superDotAdd(e);
 			}
 		}
 	}
@@ -92,11 +95,7 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 	public NSArray(Collection<? extends E> collection)  {
 		for (Iterator iterator = collection.iterator(); iterator.hasNext();) {
 			E e = (E) iterator.next();
-			if (e != null) {
-				super.add(e);
-			} else {
-				throw new IllegalArgumentException(NULL_NOT_ALLOWED);
-			}
+			superDotAdd(e);
 		}
 	}
 	
@@ -106,13 +105,13 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 		if (range == null)
 			throw new IllegalArgumentException("range may not be null");
 		
-		for (int i = range.location; i <= range.maxRange(); i++) {
+		for (int i = range.location(); i <= range.maxRange(); i++) {
 			E element = (E)list.get(i);
 			if (element == null) {
 				if (!ignoreNull)
 					throw new IllegalArgumentException(NULL_NOT_ALLOWED);
 			} else {
-				super.add(element);
+				superDotAdd(element);
 			}
 		}
 	}
@@ -297,8 +296,8 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 		return equals(otherArray);
 	}
 	
+	// since reflection isn't available in GWT, we can't do this
 //	public void makeObjectsPerformSelector(NSSelector selector, Object[] parameters) {
-//	// TODO: implement
 //	throw new RuntimeException("not implemented");		
 //	}
 	
@@ -310,9 +309,9 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 		return (E)get(index);
 	}
 	
-//	public Enumeration<E> objectEnumerator() {
-//		throw new RuntimeException("not implemented");
-//	}
+	public Enumeration<E> objectEnumerator() {
+		return new ListEnumeration();
+	}
 	
 	public E[] objects() {
 		return (E[])toArray();
@@ -346,14 +345,15 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 //		throw new RuntimeException("not implemented");
 //	}
 	
-//	public Enumeration<E> reverseObjectEnumerator() {
-//		throw new RuntimeException("not implemented");
-//	}
+	public Enumeration<E> reverseObjectEnumerator() {
+		return new ListReverseEnumeration();
+	}
 	
 	public NSArray<E> sortedArrayUsingComparator(NSComparator comparator) 
 		throws NSComparator.ComparisonException {
-		// TODO: implement
-		throw new RuntimeException("not implemented");
+		NSArray result = mutableClone();
+		Collections.sort(result, (Comparator)comparator);
+		return result.immutableClone();
 	}
 	
 	public NSArray<E> subarrayWithRange(NSRange range) {
@@ -621,5 +621,47 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 	@Override
 	public E set(int index, E element) {
 		throw new UnsupportedOperationException("set" + UNSUPPORTED);
+	}
+	
+	private class ListEnumeration implements Enumeration<E> {
+		private int currentIndex = -1;
+		
+		public ListEnumeration() {
+			super();
+		}
+		
+		public boolean hasMoreElements() {
+			return currentIndex < size()-1;
+		}
+		
+		public E nextElement() {
+			if (hasMoreElements()) {
+				currentIndex++;
+				return get(currentIndex);
+			} else {
+				throw new NoSuchElementException();
+			}
+		}
+	}
+	
+	private class ListReverseEnumeration implements Enumeration<E> {
+		private int currentIndex = size();
+		
+		public ListReverseEnumeration() {
+			super();
+		}
+		
+		public boolean hasMoreElements() {
+			return currentIndex > 0;
+		}
+		
+		public E nextElement() {
+			if (hasMoreElements()) {
+				currentIndex--;
+				return get(currentIndex);
+			} else {
+				throw new NoSuchElementException();
+			}
+		}
 	}
 }

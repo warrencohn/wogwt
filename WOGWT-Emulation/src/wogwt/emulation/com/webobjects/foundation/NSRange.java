@@ -144,9 +144,41 @@ public class NSRange extends Object implements Serializable, Cloneable {
 		return new NSRange(start, end - start + 1);
 	}
 	
-//	public NSRange 	subtractRange(NSRange otherRange, NSMutableRange resultRange1, NSMutableRange resultRange2) {
-//		// TODO: implement
-//		throw new RuntimeException("not implemented");
-//	}
+	public void subtractRange(NSRange otherRange, NSMutableRange resultRange1, NSMutableRange resultRange2) {
+		NSRange intersection = rangeByIntersectingRange(otherRange);
+		
+		// no intersection, return the same range
+		if (intersection.isEmpty()) {
+			resultRange1.setLocation(location());
+			resultRange1.setLength(length());
+			
+			resultRange2.setLocation(0);
+			resultRange2.setLength(0);
+		
+		// total intersection, return empty range
+		} else if (intersection.location() == location() && intersection.length() == length()) {
+			resultRange1.setLocation(0);
+			resultRange1.setLength(0);
+			
+			resultRange2.setLocation(0);
+			resultRange2.setLength(0);
+		
+		// intersects from the start, single result with the remaining range
+		} else if (intersection.location() == location()) { 
+			resultRange1.setLocation(intersection.maxRange()+1);
+			resultRange1.setLength(length() - intersection.length());
+			
+			resultRange2.setLocation(0);
+			resultRange2.setLength(0);
+			
+		// intersects from the end, single result with the beginning range
+		} else {
+			resultRange1.setLocation(intersection.location-1);
+			resultRange1.setLength(length() - intersection.length());
+			
+			resultRange2.setLocation(0);
+			resultRange2.setLength(0);
+		}
+	}
 	
 }

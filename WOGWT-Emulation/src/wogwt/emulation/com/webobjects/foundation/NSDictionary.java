@@ -2,6 +2,7 @@ package com.webobjects.foundation;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -19,12 +20,17 @@ public class NSDictionary<K,V> extends HashMap<K,V> implements NSKeyValueCoding,
 		super();
 	}
 	
-	public NSDictionary(int capacity) {
+	protected NSDictionary(int capacity) {
 		super(capacity);
 	}
 	
 	public NSDictionary(Map<K,V> map) {
-		super(map);
+		super(map.size());
+		Iterator<K> iter = map.keySet().iterator();
+		while (iter.hasNext()) {
+			K key = (K)iter.next();
+			superDotPut(key, map.get(key));
+		}
 	}
 	
 	public NSDictionary(NSArray<V> objects, NSArray<K> keys) {
@@ -35,12 +41,17 @@ public class NSDictionary<K,V> extends HashMap<K,V> implements NSKeyValueCoding,
 			throw new IllegalArgumentException("number of keys does not match number of objects");
 		
 		for (int i = 0; i < keys.size(); i++) {
-			super.put(keys.get(i), objects.get(i));
+			superDotPut(keys.get(i), objects.get(i));
 		}
 	}
 	
 	public NSDictionary(NSDictionary<K,V> otherDictionary) {
-		super(otherDictionary);
+		super(otherDictionary.size());
+		Iterator<K> iter = otherDictionary.keySet().iterator();
+		while (iter.hasNext()) {
+			K key = (K)iter.next();
+			superDotPut(key, otherDictionary.get(key));
+		}
 	}
 	
 	public NSDictionary(V[] objects, K[] keys) {
@@ -51,14 +62,14 @@ public class NSDictionary<K,V> extends HashMap<K,V> implements NSKeyValueCoding,
 			throw new IllegalArgumentException("number of keys does not match number of objects");
 		
 		for (int i = 0; i < keys.length; i++) {
-			super.put(keys[i], objects[i]);
+			superDotPut(keys[i], objects[i]);
 		}
 	}
 	
 	public NSDictionary(V object, K key) {
 		super();
 		if (key != null && object != null)
-			super.put(key, object);
+			superDotPut(key, object);
 		else
 			throw new IllegalArgumentException("Object or key may not be null");
 	}
@@ -112,9 +123,13 @@ public class NSDictionary<K,V> extends HashMap<K,V> implements NSKeyValueCoding,
 		return new NSMutableDictionary<K, V>(this);
 	}
 	
-//	public Enumeration<V> objectEnumerator() {
-//		return allValues().objectEnumerator();
-//	}
+	public Enumeration<K> keyEnumerator() {
+		return allKeys().objectEnumerator();
+	}
+	
+	public Enumeration<V> objectEnumerator() {
+		return allValues().objectEnumerator();
+	}
 	
 	public V objectForKey(Object key) {
 		return (V)get(key);
@@ -158,7 +173,6 @@ public class NSDictionary<K,V> extends HashMap<K,V> implements NSKeyValueCoding,
 		}
 	}
 	
-	// TODO: not sure how this behaves in WO
 	public void takeValueForKeyPath(Object value, String keyPath) {
 		superDotPut((K)keyPath, (V)value);
 	}

@@ -11,7 +11,7 @@ import com.google.gwt.user.client.Random;
 public class NSSet<E> extends HashSet<E> {
 
 	public static final boolean CheckForNull = true;
-	public static final NSSet emptySet = new NSSet();
+	public static final NSSet EmptySet = new NSSet();
 	public static final boolean IgnoreNull = true;
 	
 	private static final String UNSUPPORTED = " is not a supported operation in com.webobjects.foundation.NSSet";
@@ -29,19 +29,19 @@ public class NSSet<E> extends HashSet<E> {
 		super();
 		for (Iterator iterator = collection.iterator(); iterator.hasNext();) {
 			E element = (E) iterator.next();
-			super.add(element);
+			superDotAdd(element);
 		}
 	}
 	
 	public NSSet(E object) {
 		super();
-		super.add(object);
+		superDotAdd(object);
 	}
 	
 	public NSSet(E[] objects) {
 		super();
 		for (int i = 0; i < objects.length; i++) {
-			super.add(objects[i]);
+			superDotAdd(objects[i]);
 		}
 	}
 	
@@ -49,7 +49,7 @@ public class NSSet<E> extends HashSet<E> {
 		super();
 		for (Iterator iterator = objects.iterator(); iterator.hasNext();) {
 			E element = (E) iterator.next();
-			super.add(element);
+			superDotAdd(element);
 		}
 	}
 	
@@ -57,7 +57,7 @@ public class NSSet<E> extends HashSet<E> {
 		super();
 		NSArray<? extends E> objects = otherSet.allObjects();
 		for (int i = 0; i < objects.size(); i++) {
-			super.add(objects.get(i));
+			superDotAdd(objects.get(i));
 		}
 	}
 	
@@ -68,7 +68,7 @@ public class NSSet<E> extends HashSet<E> {
 				if (!ignoreNull)
 					throw new IllegalArgumentException(NULL_NOT_ALLOWED);
 			} else {
-				super.add(e);
+				superDotAdd(e);
 			}
 		}
 	}
@@ -124,7 +124,7 @@ public class NSSet<E> extends HashSet<E> {
 	}
 	
 	public static <T> NSSet<T> emptySet() {
-		return emptySet;
+		return EmptySet;
 	}
 	
 	public HashSet<E> hashSet() {

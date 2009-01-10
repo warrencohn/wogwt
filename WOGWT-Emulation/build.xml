@@ -1,7 +1,9 @@
 
-<project basedir="." default="install" name="WOGWT-Emulation">
+<project basedir="." default="install" name="WOGWT-Emulation-Build">
 	
-	<target name="install">
+	<import file="build_eclipse.xml"/>
+	
+	<target name="install" depends="AllTests_Web_Mode">
 	    <delete file="../WOGWT/Libraries/wogwt-emulation.jar" quiet="true"/>	
 
 		<jar destfile="../WOGWT/Libraries/wogwt-emulation.jar"

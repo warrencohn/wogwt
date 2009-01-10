@@ -1,6 +1,8 @@
 package com.webobjects.foundation;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class NSMutableArray<E> extends NSArray<E> {
@@ -168,8 +170,7 @@ public class NSMutableArray<E> extends NSArray<E> {
 	}
 	
 	public void sortUsingComparator(NSComparator comparator) {
-		// TODO: implement
-		throw new RuntimeException("not implemented");
+		Collections.sort(this, (Comparator)comparator);
 	}
 	
 	@Override

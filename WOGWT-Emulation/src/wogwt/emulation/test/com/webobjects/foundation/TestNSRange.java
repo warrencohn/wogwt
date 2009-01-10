@@ -1,15 +1,9 @@
 package test.com.webobjects.foundation;
 
-import junit.framework.TestCase;
-
 import com.webobjects.foundation.NSMutableRange;
 import com.webobjects.foundation.NSRange;
 
-public class TestNSRange extends TestCase {
-
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
+public class TestNSRange extends BaseTestCase {
 
 	public void testNSRange() {
 		NSRange range = new NSRange();
@@ -129,6 +123,35 @@ public class TestNSRange extends TestCase {
 	public void testZeroRange() {
 		assertEquals(0, NSRange.ZeroRange.location());
 		assertEquals(0, NSRange.ZeroRange.length());
+	}
+	
+	public void testSubtractRange() {
+		NSMutableRange result1 = new NSMutableRange();
+		NSMutableRange result2 = new NSMutableRange();
+		
+		// no intersection
+		NSRange testRange = new NSRange(0, 2);
+		testRange.subtractRange(new NSRange(2, 2), result1, result2);
+		assertEquals(new NSMutableRange(0, 2), result1);
+		assertEquals(new NSMutableRange(0, 0), result2);
+		
+		// total intersection
+		testRange = new NSRange(1, 2);
+		testRange.subtractRange(new NSRange(0, 4), result1, result2);
+		assertEquals(new NSMutableRange(0, 0), result1);
+		assertEquals(new NSMutableRange(0, 0), result2);
+		
+		// start intersection
+		testRange = new NSRange(1, 2);
+		testRange.subtractRange(new NSRange(0, 2), result1, result2);
+		assertEquals(new NSMutableRange(2, 1), result1);
+		assertEquals(new NSMutableRange(0, 0), result2);
+		
+		// end intersection
+		testRange = new NSRange(1, 2);
+		testRange.subtractRange(new NSRange(2, 2), result1, result2);
+		assertEquals(new NSMutableRange(1, 1), result1);
+		assertEquals(new NSMutableRange(0, 0), result2);
 	}
 	
 	public void testFromString() {

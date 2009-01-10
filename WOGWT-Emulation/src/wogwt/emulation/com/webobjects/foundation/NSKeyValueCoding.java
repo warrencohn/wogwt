@@ -47,7 +47,6 @@ public interface NSKeyValueCoding {
 		
 		@Override
 		public String toString() {
-			// TODO: examine behavior in WO
 			return super.toString();
 		}
 	}
