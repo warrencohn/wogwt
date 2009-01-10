@@ -71,7 +71,7 @@
 							<pathelement path="@{gwthome}/gwt-dev-mac.jar" />
 							<pathelement path="@{gwthome}/gwt-log-2.5.2.jar" />
 							<pathelement path="@{gwthome}/wogwt.jar" />
-							<pathelement path="@{gwthome}/gwt-math-2.0.1.jar" />
+							<pathelement path="@{gwthome}/gwt-math-2.0.3.jar" />
 							<pathelement path="@{gwthome}/wogwt-emulation.jar" />
 						</classpath>
 						

@@ -1,5 +1,7 @@
 package wogwt;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.w3c.dom.Node;
@@ -13,10 +15,13 @@ import com.webobjects.appserver.WOResponse;
 import com.webobjects.eocontrol.EOEnterpriseObject;
 import com.webobjects.eocontrol.EOKeyGlobalID;
 import com.webobjects.foundation.NSArray;
+import com.webobjects.foundation.NSComparator;
 import com.webobjects.foundation.NSDictionary;
+import com.webobjects.foundation.NSKeyValueCodingAdditions;
 import com.webobjects.foundation.NSLog;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSMutableDictionary;
+import com.webobjects.foundation.NSComparator.ComparisonException;
 
 import er.extensions.foundation.ERXDictionaryUtilities;
 
@@ -94,32 +99,133 @@ public class WOGWTServerUtil {
 	/**
 	 * Converts regular EOs to their Client class versions.
 	 * @param serverEOs
+	 * @param keyPathsToSerialize a list of keys identifying relationships to include in the serialized objects
 	 * @return array of Client EOs
 	 */
-	public static NSArray toClientEOList(List<? extends WOGWTServerEO> serverEOs, List<String> relationshipsToSerialize) {
+	public static NSArray toClientEOList(List<? extends WOGWTServerEO> serverEOs, List<String> keyPathsToSerialize) {
 		NSMutableArray result = new NSMutableArray(serverEOs.size());	  
 
 		for (int i = 0; i < serverEOs.size(); i++) {
 			WOGWTServerEO eo = serverEOs.get(i);
-			if (relationshipsToSerialize == null)
+			if (keyPathsToSerialize == null)
 				result.add( eo.toClientEO() );
 			else
-				result.add( eo.toClientEO(relationshipsToSerialize) );
+				result.add( eo.toClientEO(keyPathsToSerialize) );
 		}
 		
 		return result.immutableClone();
 	}
 	
+	/** sorts keyPath Strings in order of increasing depth */
+	private static class KeyPathComparator extends NSComparator {
+		@Override
+		public int compare(Object left, Object right) throws ComparisonException {
+			if (left == null && right == null)
+				return 0;
+			else if (left != null && right == null)
+				return 1;
+			else if (right != null && left == null)
+				return -1;
+			else if (!(left instanceof String) || !(right instanceof String))
+				throw new ComparisonException("KeyPathComparator accepts only string arguments.");
+			else {
+				String[] leftParts = ((String)left).split("\\.");
+				String[] rightParts = ((String)right).split("\\.");
+				return new Integer(leftParts.length).compareTo(new Integer(rightParts.length));
+			}
+		}
+	}
+	
+	private static String restOfKeyPath(String keyPath) {
+		int dotIndex = keyPath.indexOf(NSKeyValueCodingAdditions.KeyPathSeparator);
+		if (dotIndex == -1 || keyPath.length()-1 <= dotIndex) {
+			return null;
+		} else {
+			return keyPath.substring(dotIndex+1);
+		}	
+	}
+	
+	/**
+	 * 
+	 * @param keyPaths assumes that these are already sorted in order of increasing depth.
+	 * @param key
+	 * @return
+	 */
+	private static List<String> keyPathsBelowGivenKey(List<String> keyPaths, String key) {
+		List<String> result = new ArrayList<String>();
+		
+		for (Iterator iterator = keyPaths.iterator(); iterator.hasNext();) {
+			String keyPath = (String) iterator.next();
+			if (keyPath.startsWith(key + ".")) {
+				result.add(restOfKeyPath(keyPath));
+			}
+		}
+
+		return result;
+	}
+	
+	private static List<String> addIntermediateKeyPaths(List<String> keyPaths) {
+		List<String> result = new ArrayList<String>();
+		result.addAll(keyPaths);
+		
+		for (Iterator iterator = keyPaths.iterator(); iterator.hasNext();) {
+			String keyPath = (String) iterator.next();
+			String[] parts = keyPath.split("\\.");
+			
+			for (int i = 0; i < parts.length; i++) {
+				String keyPathToAdd = "";
+				
+				// add all the preceding parts together
+				for (int j = 0; j < i; j++) {
+					keyPathToAdd += parts[j] + ".";
+				}
+				
+				keyPathToAdd += parts[i]; 
+				
+				if (!result.contains(keyPathToAdd)) {
+					result.add(keyPathToAdd);
+				}
+			}
+		}
+		
+		return result;
+	}
+	
+	public static void main(String[] args) {
+		List<String> keyPathsToSerialize = new ArrayList<String>();
+		keyPathsToSerialize.add("root.next.later");
+		keyPathsToSerialize.add("otherRoot.next");
+		keyPathsToSerialize.add("otherRoot");
+		NSArray<String> keyPaths = new NSArray<String>(addIntermediateKeyPaths(keyPathsToSerialize));
+		try {
+			keyPaths = keyPaths.sortedArrayUsingComparator(new KeyPathComparator());
+		} catch (ComparisonException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	/**
 	 * 
 	 * @param rootEO
-	 * @param relationshipsToSerialize
+	 * @param keyPathsToSerialize
 	 * @return a dictionary with a key for each relationship the client EO as the value
 	 */
-	public static NSDictionary<String, ? extends WOGWTClientEO> relationshipsToClientEOs(EOEnterpriseObject rootEO, List<String> relationshipsToSerialize) {
+	public static NSDictionary<String, ? extends WOGWTClientEO> _keyPathsToClientEOs(EOEnterpriseObject rootEO, List<String> keyPathsToSerialize) {
+		// sort the list so the keyPaths are in order of increasing depth
+		NSArray<String> keyPaths = new NSArray<String>(addIntermediateKeyPaths(keyPathsToSerialize));
+		try {
+			keyPaths = keyPaths.sortedArrayUsingComparator(new KeyPathComparator());
+		} catch (ComparisonException e) {
+			throw new RuntimeException(e);
+		}
+		
 		NSMutableDictionary result = new NSMutableDictionary();
-		for (int i = 0; i < relationshipsToSerialize.size(); i++) { 
-			String keyPath = relationshipsToSerialize.get(i);
+		for (int i = 0; i < keyPaths.size(); i++) { 
+			String keyPath = keyPaths.get(i);
+			
+			if (keyPath.indexOf('.') != -1) // skip paths, they are handled recursively
+				continue;
+		
 			Object value = rootEO.valueForKey(keyPath);
 
 			if (value != null && value instanceof NSArray) { // to-many relationship
@@ -128,13 +234,13 @@ public class WOGWTServerUtil {
 				NSMutableArray array = new NSMutableArray();
 				for (int j = 0; j < objects.count(); j++) {
 					WOGWTServerEO eo = (WOGWTServerEO)objects.objectAtIndex(j);
-					array.add(eo.toClientEO());
+					array.add(eo.toClientEO(keyPathsBelowGivenKey(keyPaths, keyPath)));
 				}
 				result.setObjectForKey(array.immutableClone(), keyPath);
 
 			} else if (value != null && value instanceof EOEnterpriseObject) { // to-one relationship
 				WOGWTServerEO serverEO = (WOGWTServerEO)value;
-				result.setObjectForKey(serverEO.toClientEO(), keyPath);
+				result.setObjectForKey(serverEO.toClientEO(keyPathsBelowGivenKey(keyPaths, keyPath)), keyPath);
 			}
 		}
 		return result.immutableClone();
