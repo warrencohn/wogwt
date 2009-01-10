@@ -1,27 +1,19 @@
 package test.com.webobjects.foundation;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-
-import junit.framework.TestCase;
+import java.util.NoSuchElementException;
 
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSDictionary;
+import com.webobjects.foundation.NSKeyValueCoding;
 import com.webobjects.foundation.NSMutableDictionary;
 
-public class TestNSDictionary extends TestCase {
-
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
+public class TestNSDictionary extends BaseTestCase {
 
 	public void testNSDictionary() {
 		NSDictionary dict = new NSDictionary();
-		assertTrue(dict.isEmpty());
-	}
-
-	public void testNSDictionaryInt() {
-		NSDictionary dict = new NSDictionary(5);
 		assertTrue(dict.isEmpty());
 	}
 
@@ -141,6 +133,32 @@ public class TestNSDictionary extends TestCase {
 		assertEquals(clone, dict);
 	}
 
+	public void testKeyEnumerator() {
+		NSDictionary dict = new NSDictionary("value", "key");	
+		Enumeration e = dict.keyEnumerator();
+		
+		assertTrue(e.hasMoreElements());
+		assertEquals("key", e.nextElement());
+		assertFalse(e.hasMoreElements());
+		try {
+			e.nextElement();
+			fail("Expected NoSuchElementException");
+		} catch (NoSuchElementException ex) {} 
+	}
+	
+	public void testObjectEnumerator() {
+		NSDictionary dict = new NSDictionary("value", "key");	
+		Enumeration e = dict.objectEnumerator();
+		
+		assertTrue(e.hasMoreElements());
+		assertEquals("value", e.nextElement());
+		assertFalse(e.hasMoreElements());
+		try {
+			e.nextElement();
+			fail("Expected NoSuchElementException");
+		} catch (NoSuchElementException ex) {} 
+	}
+	
 	public void testObjectForKey() {
 		NSDictionary dict = new NSDictionary("value", "key");
 		assertEquals("value", dict.objectForKey("key"));
@@ -224,4 +242,12 @@ public class TestNSDictionary extends TestCase {
 		}
 	}
 
+	public void testUnknownKeyException() {
+		NSDictionary dict = new NSDictionary("John", "name");
+		try {
+			throw new NSKeyValueCoding.UnknownKeyException("error", dict, "name");
+		} catch (NSKeyValueCoding.UnknownKeyException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }

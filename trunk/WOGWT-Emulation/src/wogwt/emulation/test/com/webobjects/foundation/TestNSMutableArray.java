@@ -3,17 +3,14 @@ package test.com.webobjects.foundation;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
-
 import com.webobjects.foundation.NSArray;
+import com.webobjects.foundation.NSComparator;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSRange;
+import com.webobjects.foundation.NSTimestamp;
+import com.webobjects.foundation.NSComparator.ComparisonException;
 
-public class TestNSMutableArray extends TestCase {
-
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
+public class TestNSMutableArray extends BaseTestCase {
 
 	public void testNSMutableArray() {
 		NSMutableArray array = new NSMutableArray();
@@ -199,11 +196,16 @@ public class TestNSMutableArray extends TestCase {
 
 	public void testRetainAllCollection() {
 		NSMutableArray array = new NSMutableArray();
+		array.add("abc");
+		array.add("def");
+		
 		List arrayList = new ArrayList();
 		arrayList.add("abc");
-		arrayList.add("def");
+
 		array.retainAll(arrayList);
-		// TODO: assert something
+		
+		assertEquals(1, array.size());
+		assertEquals("abc", array.get(0));
 	}
 
 	public void testSetIntObject() {
@@ -327,8 +329,48 @@ public class TestNSMutableArray extends TestCase {
 		assertEquals("abc", array.get(0));
 	}
 
-	public void testSortUsingComparator() {
-		// TODO: implement
+	public void testSortUsingComparator() throws ComparisonException {
+		NSMutableArray array = new NSMutableArray(new String[] {"abc", "def"});
+
+		array.sortUsingComparator(NSComparator.AscendingStringComparator);
+		assertEquals("abc", array.get(0));
+		assertEquals("def", array.get(1));
+		
+		array.sortUsingComparator(NSComparator.DescendingStringComparator);
+		assertEquals("def", array.get(0));
+		assertEquals("abc", array.get(1));
+		
+		
+		array = new NSMutableArray(new String[] {"abc", "DEF"});
+		array.sortUsingComparator(NSComparator.AscendingCaseInsensitiveStringComparator);
+		assertEquals("abc", array.get(0));
+		assertEquals("DEF", array.get(1));
+		
+		array.sortUsingComparator(NSComparator.DescendingCaseInsensitiveStringComparator);
+		assertEquals("DEF", array.get(0));
+		assertEquals("abc", array.get(1));
+		
+		
+		array = new NSMutableArray(new Integer[] {1, 2});
+		array.sortUsingComparator(NSComparator.AscendingNumberComparator);
+		assertEquals(1, array.get(0));
+		assertEquals(2, array.get(1));
+		
+		array.sortUsingComparator(NSComparator.DescendingNumberComparator);
+		assertEquals(2, array.get(0));
+		assertEquals(1, array.get(1));
+		
+		
+		NSTimestamp earlierTime = new NSTimestamp();
+		NSTimestamp laterTime = earlierTime.timestampByAddingGregorianUnits(0,1,0,0,0,0);
+		array = new NSMutableArray(new NSTimestamp[] {earlierTime, laterTime});
+		array.sortUsingComparator(NSComparator.AscendingTimestampComparator);
+		assertEquals(earlierTime, array.get(0));
+		assertEquals(laterTime, array.get(1));
+		
+		array.sortUsingComparator(NSComparator.DescendingTimestampComparator);
+		assertEquals(laterTime, array.get(0));
+		assertEquals(earlierTime, array.get(1));
 	}
 
 }

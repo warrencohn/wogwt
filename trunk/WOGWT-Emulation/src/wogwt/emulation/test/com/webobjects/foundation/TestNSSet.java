@@ -1,127 +1,264 @@
 package test.com.webobjects.foundation;
 
-import junit.framework.TestCase;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-public class TestNSSet extends TestCase {
+import com.webobjects.foundation.NSArray;
+import com.webobjects.foundation.NSMutableArray;
+import com.webobjects.foundation.NSMutableSet;
+import com.webobjects.foundation.NSSet;
 
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
 
-	public void testClear() {
-		fail("Not yet implemented");
-	}
+public class TestNSSet extends BaseTestCase {
 
 	public void testNSSet() {
-		fail("Not yet implemented");
+		NSSet set = new NSSet();
+		assertTrue(set.isEmpty());
 	}
 
 	public void testNSSetCollectionOfQextendsE() {
-		fail("Not yet implemented");
+		ArrayList list = new ArrayList();
+		list.add("abc");
+		list.add("abc");
+		
+		NSSet set = new NSSet(list);
+		assertEquals(1, set.size());
+		assertTrue(set.contains("abc"));
 	}
 
 	public void testNSSetE() {
-		fail("Not yet implemented");
+		NSSet set = new NSSet("abc");
+		assertTrue(set.contains("abc"));
 	}
 
 	public void testNSSetEArray() {
-		fail("Not yet implemented");
+		String[] strings = new String[] {"abc", "abc"};
+		NSSet set = new NSSet(strings);
+		assertEquals(1, set.size());
+		assertTrue(set.contains("abc"));
 	}
 
 	public void testNSSetNSArrayOfQextendsE() {
-		fail("Not yet implemented");
+		NSMutableArray list = new NSMutableArray();
+		list.add("abc");
+		list.add("abc");
+		
+		NSSet set = new NSSet(list);
+		assertEquals(1, set.size());
+		assertTrue(set.contains("abc"));
 	}
 
 	public void testNSSetNSSetOfQextendsE() {
-		fail("Not yet implemented");
+		NSSet set = new NSSet("abc");
+		NSSet copy = new NSSet(set);
+		assertEquals(1, copy.size());
+		assertTrue(copy.contains("abc"));
 	}
 
 	public void testNSSetSetOfQextendsEBoolean() {
-		fail("Not yet implemented");
-	}
-
-	public void testAddObject() {
-		fail("Not yet implemented");
-	}
-
-	public void testAddAllCollection() {
-		fail("Not yet implemented");
+		Set source = new HashSet();
+		source.add("abc");
+		source.add(null);
+		
+		NSSet set = new NSSet(source, true);
+		assertEquals(1, set.size());
+		assertTrue(set.contains("abc"));
+		
+		try {
+			set = new NSSet(source, false);
+			fail("IllegalArgumentException expected");
+		} catch (IllegalArgumentException e) {
+		}
 	}
 
 	public void testAllObjects() {
-		fail("Not yet implemented");
+		NSSet set = new NSSet(new String[] {"abc", "123"});
+		NSArray allObjects = set.allObjects();
+		assertEquals(2, allObjects.size());
+		assertTrue(allObjects.contains("abc"));
+		assertTrue(allObjects.contains("123"));
 	}
 
 	public void testAnyObject() {
-		fail("Not yet implemented");
-	}
-
-	public void testClone() {
-		fail("Not yet implemented");
+		NSSet set = new NSSet(new String[] {"abc"});
+		Object object = set.anyObject();
+		assertEquals("abc", object);
 	}
 
 	public void testContainsObject() {
-		fail("Not yet implemented");
+		NSSet set = new NSSet(new String[] {"abc"});
+		assertTrue(set.containsObject("abc"));
+		assertFalse(set.containsObject("123"));
 	}
 
 	public void testCount() {
-		fail("Not yet implemented");
+		NSSet set = new NSSet(new String[] {"abc"});
+		assertEquals(1, set.count());
+		
+		set = new NSSet(new String[] {"abc", "123", "abc"});
+		assertEquals(2, set.count());
 	}
 
 	public void testEmptySet() {
-		fail("Not yet implemented");
+		NSSet set = NSSet.emptySet();
+		assertTrue(set.isEmpty());
 	}
 
 	public void testHashSet() {
-		fail("Not yet implemented");
+		NSSet set = new NSSet(new String[] {"abc"});
+		NSSet hashSet = (NSSet) set.hashSet();
+		assertEquals(1, hashSet.size());
+		assertTrue(hashSet.contains("abc"));
+	}
+
+	public void testClone() {
+		NSSet set = new NSSet(new String[] {"abc", "123"});
+		NSSet clone = (NSSet) set.clone();
+		assertEquals(set, clone);
 	}
 
 	public void testImmutableClone() {
-		fail("Not yet implemented");
-	}
-
-	public void testIntersectsSet() {
-		fail("Not yet implemented");
-	}
-
-	public void testIsEqualToSet() {
-		fail("Not yet implemented");
-	}
-
-	public void testIsSubsetOfSet() {
-		fail("Not yet implemented");
-	}
-
-	public void testMember() {
-		fail("Not yet implemented");
+		NSSet set = new NSSet(new String[] {"abc", "123"});
+		NSSet clone = (NSSet) set.immutableClone();
+		assertEquals(set, clone);
+		assertEquals(NSSet.class, clone.getClass());
 	}
 
 	public void testMutableClone() {
-		fail("Not yet implemented");
+		NSSet set = new NSSet(new String[] {"abc"});
+		NSMutableSet clone = set.mutableClone();
+		assertEquals(1, clone.size());
+		assertTrue(clone.contains("abc"));
 	}
 
-	public void testRemoveObject() {
-		fail("Not yet implemented");
+	public void testIntersectsSet() {
+		NSSet set = new NSSet(new String[] {"abc", "123"});
+		NSSet set2 = new NSSet(new String[] {"abc"});
+		assertTrue(set.intersectsSet(set2));
+		
+		NSSet set3 = new NSSet(new String[] {"def"});
+		assertFalse(set.intersectsSet(set3));
 	}
 
-	public void testRemoveAllCollection() {
-		fail("Not yet implemented");
+	public void testIsEqualToSet() {
+		NSSet set = new NSSet(new String[] {"abc", "123"});
+		NSSet set2 = new NSSet(new String[] {"abc", "123"});
+		assertTrue(set.isEqualToSet(set2));
+		
+		NSSet set3 = new NSSet(new String[] {"abc"});
+		assertFalse(set.isEqualToSet(set3));
 	}
 
-	public void testRetainAllCollection() {
-		fail("Not yet implemented");
+	public void testIsSubsetOfSet() {
+		NSSet set = new NSSet(new String[] {"abc"});
+		NSSet set2 = new NSSet(new String[] {"abc", "123"});
+		assertTrue(set.isSubsetOfSet(set2));
+		assertFalse(set2.isSubsetOfSet(set));
+		
+		NSSet set3 = new NSSet(new String[] {"def"});
+		assertFalse(set.isSubsetOfSet(set3));
+	}
+
+	public void testMember() {
+		NSSet set = new NSSet(new String[] {"abc"});
+		assertTrue(set.member("abc"));
+		assertFalse(set.member("123"));
 	}
 
 	public void testSetByIntersectingSet() {
-		fail("Not yet implemented");
+		NSSet set = new NSSet(new String[] {"abc"});
+		NSSet set2 = new NSSet(new String[] {"abc", "123"});
+		
+		NSSet intersection = set.setByIntersectingSet(set2);
+		assertEquals(1, intersection.size());
+		assertTrue(intersection.contains("abc"));
+		
+		set2 = new NSSet(new String[] {"123"});
+		intersection = set.setByIntersectingSet(set2);
+		assertTrue(intersection.isEmpty());
 	}
 
 	public void testSetBySubtractingSet() {
-		fail("Not yet implemented");
+		NSSet set = new NSSet(new String[] {"abc", "123"});
+		NSSet set2 = new NSSet(new String[] {"123"});
+		
+		NSSet difference = set.setBySubtractingSet(set2);
+		assertEquals(1, difference.size());
+		assertTrue(difference.contains("abc"));
+		
+		set2 = new NSSet(new String[] {"def"});
+		difference = set.setBySubtractingSet(set2);
+		assertEquals(set, difference);
 	}
 
 	public void testSetByUnioningSet() {
-		fail("Not yet implemented");
+		NSSet set = new NSSet(new String[] {"abc", "123"});
+		NSSet set2 = new NSSet(new String[] {"def"});
+		
+		NSSet union = set.setByUnioningSet(set2);
+		assertEquals(3, union.size());
+		
+		set2 = new NSSet(new String[] {"abc"});
+		union = set.setByUnioningSet(set2);
+		assertEquals(set.size(), union.size());
+	}
+
+	public void testClear() {
+		try {
+			NSSet.EmptySet.clear();
+			fail("Clear should throw UnsupportedOperationException");
+		} catch (UnsupportedOperationException e) {
+		}
+	}
+
+	public void testAdd() {
+		try {
+			NSSet.EmptySet.add("abc");
+			fail("Add should throw UnsupportedOperationException");
+		} catch (UnsupportedOperationException e) {
+		}
+	}
+
+	public void testAddAllCollection() {
+		try {
+			HashSet set = new HashSet();
+			set.add("abc");
+			set.add("123");
+			NSSet.EmptySet.addAll(set);
+			fail("AddAll should throw UnsupportedOperationException");
+		} catch (UnsupportedOperationException e) {
+		}
+	}
+
+	public void testRemove() {
+		try {
+			NSSet.EmptySet.remove("abc");
+			fail("Clear should throw UnsupportedOperationException");
+		} catch (UnsupportedOperationException e) {
+		}
+	}
+
+	public void testRemoveAllCollection() {
+		try {
+			HashSet set = new HashSet();
+			set.add("abc");
+			set.add("123");
+			NSSet.EmptySet.removeAll(set);
+			fail("RemoveAll should throw UnsupportedOperationException");
+		} catch (UnsupportedOperationException e) {
+		}
+	}
+
+	public void testRetainAllCollection() {
+		try {
+			HashSet set = new HashSet();
+			set.add("abc");
+			set.add("123");
+			NSSet.EmptySet.retainAll(set);
+			fail("RetainAll should throw UnsupportedOperationException");
+		} catch (UnsupportedOperationException e) {
+		}
 	}
 
 }

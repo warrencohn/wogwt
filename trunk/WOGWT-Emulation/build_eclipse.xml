@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="WOGWT-Emulation">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="../../Applications/eclipse"/>
+    <property name="junit.output.dir" value="junit"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.5"/>
+    <property name="source" value="1.5"/>
+    <path id="WebObjects Frameworks.libraryclasspath">
+        <pathelement location="../../Library/Frameworks/JavaWOExtensions.framework/Resources/Java/JavaWOExtensions.jar"/>
+        <pathelement location="../../Library/Frameworks/WOGWT.framework/Resources/Java/ant-contrib-1.0b3.jar"/>
+        <pathelement location="../../Library/Frameworks/WOGWT.framework/Resources/Java/gwt-benchmark-viewer.jar"/>
+        <pathelement location="../../Library/Frameworks/WOGWT.framework/Resources/Java/gwt-dev-mac.jar"/>
+        <pathelement location="../../Library/Frameworks/WOGWT.framework/Resources/Java/gwt-log-2.5.2.jar"/>
+        <pathelement location="../../Library/Frameworks/WOGWT.framework/Resources/Java/gwt-math-2.0.1.jar"/>
+        <pathelement location="../../Library/Frameworks/WOGWT.framework/Resources/Java/gwt-math-server-2.0.1.jar"/>
+        <pathelement location="../../Library/Frameworks/WOGWT.framework/Resources/Java/gwt-servlet.jar"/>
+        <pathelement location="../../Library/Frameworks/WOGWT.framework/Resources/Java/gwt-user.jar"/>
+        <pathelement location="../../Library/Frameworks/WOGWT.framework/Resources/Java/Tidy.jar"/>
+        <pathelement location="../../Library/Frameworks/WOGWT.framework/Resources/Java/wogwt-emulation.jar"/>
+        <pathelement location="../../Library/Frameworks/WOGWT.framework/Resources/Java/wogwt.jar"/>
+        <pathelement location="../../System/Library/Frameworks/JavaEOAccess.framework/Resources/Java/javaeoaccess.jar"/>
+        <pathelement location="../../System/Library/Frameworks/JavaEOControl.framework/Resources/Java/javaeocontrol.jar"/>
+        <pathelement location="../../System/Library/Frameworks/JavaFoundation.framework/Resources/Java/javafoundation.jar"/>
+        <pathelement location="../../System/Library/Frameworks/JavaWebObjects.framework/Resources/Java/javawebobjects.jar"/>
+        <pathelement location="../../System/Library/Frameworks/JavaXML.framework/Resources/Java/javaxml.jar"/>
+    </path>
+    <path id="JUnit 3.libraryclasspath">
+        <pathelement location="${ECLIPSE_HOME}/plugins/org.junit_3.8.2.v200706111738/junit.jar"/>
+    </path>
+    <path id="WOGWT-Emulation.classpath">
+        <pathelement location="bin"/>
+        <path refid="WebObjects Frameworks.libraryclasspath"/>
+        <path refid="JUnit 3.libraryclasspath"/>
+    </path>
+    <path id="run.AllTests_Hosted_Mode.classpath">
+        <pathelement location="src"/>
+        <path refid="WOGWT-Emulation.classpath"/>
+    </path>
+    <path id="run.AllTests_Web_Mode.classpath">
+        <pathelement location="src"/>
+        <path refid="WOGWT-Emulation.classpath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src/wogwt/emulation" excludes="**/*.launch, **/*.java"/>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src" excludes="**/*.launch, **/*.java"/>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src/wogwt/emulation"/>
+            <classpath refid="WOGWT-Emulation.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src"/>
+            <exclude name="wogwt/emulation/"/>
+            <classpath refid="WOGWT-Emulation.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="AllTests_Hosted_Mode">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.com.webobjects.foundation.AllTests" todir="${junit.output.dir}"/>
+            <jvmarg line="-XstartOnFirstThread -Xmx256M -Dgwt.args=&quot;-out www-test&quot;"/>
+            <classpath refid="run.AllTests_Hosted_Mode.classpath"/>
+        </junit>
+    </target>
+    <target name="AllTests_Web_Mode">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="test.com.webobjects.foundation.AllTests" todir="${junit.output.dir}"/>
+            <jvmarg line="-XstartOnFirstThread -Xmx256M -Dgwt.args=&quot;-out www-test -web&quot;"/>
+            <classpath refid="run.AllTests_Web_Mode.classpath"/>
+        </junit>
+    </target>
+    <target name="junitreport">
+        <junitreport todir="${junit.output.dir}">
+            <fileset dir="${junit.output.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${junit.output.dir}"/>
+        </junitreport>
+    </target>
+</project>
