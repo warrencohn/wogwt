@@ -11,12 +11,13 @@ import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableDictionary;
 import com.webobjects.foundation.NSKeyValueCoding;
+import com.webobjects.foundation.NSKeyValueCodingAdditions;
 import com.webobjects.foundation.NSTimestamp;
 
 import wogwt.translatable.rpc.WOGWTClientEO;
 
 // This class can be serialized from server to client and back
-public abstract class _MovieClient implements IsSerializable, WOGWTClientEO, NSKeyValueCoding {
+public abstract class _MovieClient implements IsSerializable, WOGWTClientEO, NSKeyValueCoding, NSKeyValueCodingAdditions {
 	
 	// Attributes
 	public static final String CATEGORY_KEY = "category";
@@ -42,12 +43,12 @@ public abstract class _MovieClient implements IsSerializable, WOGWTClientEO, NSK
 	private BigDecimal revenue;
 	private String title;
 	private String trailerName;
-	private your.app.gwt.eo.PlotSummary plotSummary;
+	private your.app.gwt.eo.PlotSummaryClient plotSummary;
 	private your.app.gwt.eo.StudioClient studio;
-	private your.app.gwt.eo.Voting voting;
-	private NSArray<your.app.gwt.eo.Talent> directors;
-	private NSArray<your.app.gwt.eo.Review> reviews;
-	private NSArray<your.app.gwt.eo.MovieRole> roles;
+	private your.app.gwt.eo.VotingClient voting;
+	private NSArray<your.app.gwt.eo.TalentClient> directors;
+	private NSArray<your.app.gwt.eo.ReviewClient> reviews;
+	private NSArray<your.app.gwt.eo.MovieRoleClient> roles;
 
 	public _MovieClient() {
 		super();
@@ -123,9 +124,9 @@ public abstract class _MovieClient implements IsSerializable, WOGWTClientEO, NSK
 		revenue = (BigDecimal)map.get("revenue");
 		title = (String)map.get("title");
 		trailerName = (String)map.get("trailerName");
-		plotSummary = (your.app.gwt.eo.PlotSummary)map.get("plotSummary");
+		plotSummary = (your.app.gwt.eo.PlotSummaryClient)map.get("plotSummary");
 		studio = (your.app.gwt.eo.StudioClient)map.get("studio");
-		voting = (your.app.gwt.eo.Voting)map.get("voting");
+		voting = (your.app.gwt.eo.VotingClient)map.get("voting");
 		directors = (NSArray)map.get("directors");
 		reviews = (NSArray)map.get("reviews");
 		roles = (NSArray)map.get("roles");
@@ -186,11 +187,11 @@ public abstract class _MovieClient implements IsSerializable, WOGWTClientEO, NSK
 		else if ("trailerName".equals(key))
 			setTrailerName((String)value);
 		else if ("plotSummary".equals(key))
-			setPlotSummary((your.app.gwt.eo.PlotSummary)value);
+			setPlotSummary((your.app.gwt.eo.PlotSummaryClient)value);
 		else if ("studio".equals(key))
 			setStudio((your.app.gwt.eo.StudioClient)value);
 		else if ("voting".equals(key))
-			setVoting((your.app.gwt.eo.Voting)value);
+			setVoting((your.app.gwt.eo.VotingClient)value);
 		else if ("directors".equals(key))
 			setDirectors((NSArray)value);
 		else if ("reviews".equals(key))
@@ -199,6 +200,14 @@ public abstract class _MovieClient implements IsSerializable, WOGWTClientEO, NSK
 			setRoles((NSArray)value);
 		else
 			throw new RuntimeException(getClass().getName() + " does not has a key named '" + key + "'");
+	}
+	
+	public Object valueForKeyPath(String keyPath) {
+		return NSKeyValueCodingAdditions.DefaultImplementation.valueForKeyPath(this, keyPath);
+	}
+	
+	public void takeValueForKeyPath(Object value, String keyPath) {
+		NSKeyValueCodingAdditions.DefaultImplementation.takeValueForKeyPath(this, value, keyPath);
 	}
 	
 	public String entityName() {
@@ -273,11 +282,11 @@ public abstract class _MovieClient implements IsSerializable, WOGWTClientEO, NSK
 	}
 
 	// To One Relationships
-	public your.app.gwt.eo.PlotSummary plotSummary() {
+	public your.app.gwt.eo.PlotSummaryClient plotSummary() {
 		return plotSummary;
 	}
 	
-	public void setPlotSummary(your.app.gwt.eo.PlotSummary plotSummary) {
+	public void setPlotSummary(your.app.gwt.eo.PlotSummaryClient plotSummary) {
 		this.plotSummary =  plotSummary;
 	}
 	
@@ -289,36 +298,36 @@ public abstract class _MovieClient implements IsSerializable, WOGWTClientEO, NSK
 		this.studio =  studio;
 	}
 	
-	public your.app.gwt.eo.Voting voting() {
+	public your.app.gwt.eo.VotingClient voting() {
 		return voting;
 	}
 	
-	public void setVoting(your.app.gwt.eo.Voting voting) {
+	public void setVoting(your.app.gwt.eo.VotingClient voting) {
 		this.voting =  voting;
 	}
 	
 	//To Many Relationships
-	public NSArray<your.app.gwt.eo.Talent> directors() {
+	public NSArray<your.app.gwt.eo.TalentClient> directors() {
 		return directors;
 	}
 	
-	public void setDirectors(NSArray<your.app.gwt.eo.Talent> directors) {
+	public void setDirectors(NSArray<your.app.gwt.eo.TalentClient> directors) {
 		this.directors = directors;
 	}
 	
-	public NSArray<your.app.gwt.eo.Review> reviews() {
+	public NSArray<your.app.gwt.eo.ReviewClient> reviews() {
 		return reviews;
 	}
 	
-	public void setReviews(NSArray<your.app.gwt.eo.Review> reviews) {
+	public void setReviews(NSArray<your.app.gwt.eo.ReviewClient> reviews) {
 		this.reviews = reviews;
 	}
 	
-	public NSArray<your.app.gwt.eo.MovieRole> roles() {
+	public NSArray<your.app.gwt.eo.MovieRoleClient> roles() {
 		return roles;
 	}
 	
-	public void setRoles(NSArray<your.app.gwt.eo.MovieRole> roles) {
+	public void setRoles(NSArray<your.app.gwt.eo.MovieRoleClient> roles) {
 		this.roles = roles;
 	}
 	

@@ -23,7 +23,7 @@
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (talent); 
-        "_javaClientClassName" = "your.app.gwt.eo.TalentPhoto"; 
+        "_javaClientClassName" = "your.app.gwt.eo.TalentPhotoClient"; 
     }; 
     maxNumberOfInstancesToBatchFetch = 10; 
     name = TalentPhoto; 

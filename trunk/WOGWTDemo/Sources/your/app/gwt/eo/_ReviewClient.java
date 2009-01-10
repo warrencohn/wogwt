@@ -1,4 +1,4 @@
-// DO NOT EDIT.  Make changes to Voting.java instead.
+// DO NOT EDIT.  Make changes to ReviewClient.java instead.
 package your.app.gwt.eo;
 // this must be in the client package
 
@@ -11,29 +11,30 @@ import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableDictionary;
 import com.webobjects.foundation.NSKeyValueCoding;
+import com.webobjects.foundation.NSKeyValueCodingAdditions;
 import com.webobjects.foundation.NSTimestamp;
 
 import wogwt.translatable.rpc.WOGWTClientEO;
 
 // This class can be serialized from server to client and back
-public abstract class _Voting implements IsSerializable, WOGWTClientEO, NSKeyValueCoding {
+public abstract class _ReviewClient implements IsSerializable, WOGWTClientEO, NSKeyValueCoding, NSKeyValueCodingAdditions {
 	
 	// Attributes
-	public static final String NUMBER_OF_VOTES_KEY = "numberOfVotes";
-	public static final String RUNNING_AVERAGE_KEY = "runningAverage";
+	public static final String REVIEW_KEY = "review";
+	public static final String REVIEWER_KEY = "reviewer";
 
 	// Relationships
 	public static final String MOVIE_KEY = "movie";
 	
-	private Integer numberOfVotes;
-	private Double runningAverage;
+	private String review;
+	private String reviewer;
 	private your.app.gwt.eo.MovieClient movie;
 
-	public _Voting() {
+	public _ReviewClient() {
 		super();
 	}
 	
-	public _Voting(Map<String, ?> map) {
+	public _ReviewClient(Map<String, ?> map) {
 		super();
 		takeValuesFromMap( map );
 	}
@@ -48,8 +49,8 @@ public abstract class _Voting implements IsSerializable, WOGWTClientEO, NSKeyVal
 
 	public static NSArray<String> attributeKeys() {
 		NSArray<String> keys = new NSArray<String>( new String[] {
-			"numberOfVotes",			
-			"runningAverage"			
+			"review",			
+			"reviewer"			
 		});
 		return keys;
 	}
@@ -69,15 +70,15 @@ public abstract class _Voting implements IsSerializable, WOGWTClientEO, NSKeyVal
 	
 	public Map<String, ?> toMap() {
 		Map map = new HashMap();
-		map.put("numberOfVotes", numberOfVotes);
-		map.put("runningAverage", runningAverage);
+		map.put("review", review);
+		map.put("reviewer", reviewer);
 		map.put("movie", movie);
 		return map;
 	}
 
 	public void takeValuesFromMap(Map<String, ?> map) {
-		numberOfVotes = (Integer)map.get("numberOfVotes");
-		runningAverage = (Double)map.get("runningAverage");
+		review = (String)map.get("review");
+		reviewer = (String)map.get("reviewer");
 		movie = (your.app.gwt.eo.MovieClient)map.get("movie");
 		if (map.get( "primaryKeyValue" ) != null)
 			primaryKeyValue = (Integer)map.get( "primaryKeyValue" );
@@ -88,10 +89,10 @@ public abstract class _Voting implements IsSerializable, WOGWTClientEO, NSKeyVal
 			return primaryKeyValue();
 		else if ("entityName".equals(key))
 			return entityName();
-		else if ("numberOfVotes".equals(key))
-			return numberOfVotes();
-		else if ("runningAverage".equals(key))
-			return runningAverage();
+		else if ("review".equals(key))
+			return review();
+		else if ("reviewer".equals(key))
+			return reviewer();
 		else if ("movie".equals(key))
 			return movie();
 		else
@@ -101,35 +102,43 @@ public abstract class _Voting implements IsSerializable, WOGWTClientEO, NSKeyVal
 	public void takeValueForKey(Object value, String key) {
 		if ("primaryKeyValue".equals(key))
 			setPrimaryKeyValue((Integer)value);
-		else if ("numberOfVotes".equals(key))
-			setNumberOfVotes((Integer)value);
-		else if ("runningAverage".equals(key))
-			setRunningAverage((Double)value);
+		else if ("review".equals(key))
+			setReview((String)value);
+		else if ("reviewer".equals(key))
+			setReviewer((String)value);
 		else if ("movie".equals(key))
 			setMovie((your.app.gwt.eo.MovieClient)value);
 		else
 			throw new RuntimeException(getClass().getName() + " does not has a key named '" + key + "'");
 	}
 	
+	public Object valueForKeyPath(String keyPath) {
+		return NSKeyValueCodingAdditions.DefaultImplementation.valueForKeyPath(this, keyPath);
+	}
+	
+	public void takeValueForKeyPath(Object value, String keyPath) {
+		NSKeyValueCodingAdditions.DefaultImplementation.takeValueForKeyPath(this, value, keyPath);
+	}
+	
 	public String entityName() {
-		return "Voting";
+		return "Review";
 	}
 	
 	// Attributes
-	public Integer numberOfVotes() {
-		return numberOfVotes;
+	public String review() {
+		return review;
 	}
 	
-	public void setNumberOfVotes(Integer numberOfVotes) {
-		this.numberOfVotes = numberOfVotes;
+	public void setReview(String review) {
+		this.review = review;
 	}
 
-	public Double runningAverage() {
-		return runningAverage;
+	public String reviewer() {
+		return reviewer;
 	}
 	
-	public void setRunningAverage(Double runningAverage) {
-		this.runningAverage = runningAverage;
+	public void setReviewer(String reviewer) {
+		this.reviewer = reviewer;
 	}
 
 	private Integer primaryKeyValue;

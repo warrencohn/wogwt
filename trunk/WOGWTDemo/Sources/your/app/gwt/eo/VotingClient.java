@@ -4,13 +4,13 @@ package your.app.gwt.eo;
 import java.util.Map;
 
 //This class can be serialized from server to client and back
-public class PlotSummary extends _PlotSummary {
+public class VotingClient extends _VotingClient {
 
-	public PlotSummary() {	
+	public VotingClient() {	
 		super();
 	}
 	
-	public PlotSummary(Map map) {	
+	public VotingClient(Map map) {	
 		super(map);
 	}
 	  

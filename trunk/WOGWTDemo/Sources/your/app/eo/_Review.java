@@ -152,14 +152,14 @@ public abstract class _Review extends  ERXGenericRecord implements WOGWTServerEO
   }
 
   public WOGWTClientEO toClientEO() {
-    return new your.app.gwt.eo.Review( WOGWTServerUtil.eoToDictionary(this) ); 
+    return new your.app.gwt.eo.ReviewClient( WOGWTServerUtil.eoToDictionary(this) ); 
   }
 
-  public WOGWTClientEO toClientEO(List<String> relationshipsToSerialize) {
+  public WOGWTClientEO toClientEO(List<String> keyPathsToSerialize) {
     NSMutableDictionary data = WOGWTServerUtil.eoToDictionary(this).mutableClone();
 	data.addEntriesFromDictionary(
-			WOGWTServerUtil.relationshipsToClientEOs(this, relationshipsToSerialize));
-    your.app.gwt.eo.Review rec = new your.app.gwt.eo.Review( data ); 
+			WOGWTServerUtil._keyPathsToClientEOs(this, keyPathsToSerialize));
+    your.app.gwt.eo.ReviewClient rec = new your.app.gwt.eo.ReviewClient( data ); 
     return rec;
   }
 

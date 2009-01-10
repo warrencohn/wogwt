@@ -32,7 +32,7 @@
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (roleName, movie, talent); 
-        "_javaClientClassName" = "your.app.gwt.eo.MovieRole"; 
+        "_javaClientClassName" = "your.app.gwt.eo.MovieRoleClient"; 
     }; 
     maxNumberOfInstancesToBatchFetch = 10; 
     name = MovieRole; 

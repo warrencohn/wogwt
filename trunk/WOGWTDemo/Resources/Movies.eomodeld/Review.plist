@@ -39,7 +39,7 @@
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (reviewer, review, movie); 
-        "_javaClientClassName" = "your.app.gwt.eo.Review"; 
+        "_javaClientClassName" = "your.app.gwt.eo.ReviewClient"; 
     }; 
     name = Review; 
     primaryKeyAttributes = (reviewID); 

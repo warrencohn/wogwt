@@ -1,4 +1,4 @@
-// DO NOT EDIT.  Make changes to TalentPhoto.java instead.
+// DO NOT EDIT.  Make changes to PlotSummaryClient.java instead.
 package your.app.gwt.eo;
 // this must be in the client package
 
@@ -11,25 +11,28 @@ import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableDictionary;
 import com.webobjects.foundation.NSKeyValueCoding;
+import com.webobjects.foundation.NSKeyValueCodingAdditions;
 import com.webobjects.foundation.NSTimestamp;
 
 import wogwt.translatable.rpc.WOGWTClientEO;
 
 // This class can be serialized from server to client and back
-public abstract class _TalentPhoto implements IsSerializable, WOGWTClientEO, NSKeyValueCoding {
+public abstract class _PlotSummaryClient implements IsSerializable, WOGWTClientEO, NSKeyValueCoding, NSKeyValueCodingAdditions {
 	
 	// Attributes
+	public static final String SUMMARY_KEY = "summary";
 
 	// Relationships
-	public static final String TALENT_KEY = "talent";
+	public static final String MOVIE_KEY = "movie";
 	
-	private your.app.gwt.eo.Talent talent;
+	private String summary;
+	private your.app.gwt.eo.MovieClient movie;
 
-	public _TalentPhoto() {
+	public _PlotSummaryClient() {
 		super();
 	}
 	
-	public _TalentPhoto(Map<String, ?> map) {
+	public _PlotSummaryClient(Map<String, ?> map) {
 		super();
 		takeValuesFromMap( map );
 	}
@@ -44,13 +47,14 @@ public abstract class _TalentPhoto implements IsSerializable, WOGWTClientEO, NSK
 
 	public static NSArray<String> attributeKeys() {
 		NSArray<String> keys = new NSArray<String>( new String[] {
+			"summary"			
 		});
 		return keys;
 	}
 	
 	public static NSArray<String> toOneRelationshipKeys() {
 		NSArray<String> keys = new NSArray<String>( new String[] {	
-			"talent"			
+			"movie"			
 		});
 		return keys;
 	}
@@ -63,12 +67,14 @@ public abstract class _TalentPhoto implements IsSerializable, WOGWTClientEO, NSK
 	
 	public Map<String, ?> toMap() {
 		Map map = new HashMap();
-		map.put("talent", talent);
+		map.put("summary", summary);
+		map.put("movie", movie);
 		return map;
 	}
 
 	public void takeValuesFromMap(Map<String, ?> map) {
-		talent = (your.app.gwt.eo.Talent)map.get("talent");
+		summary = (String)map.get("summary");
+		movie = (your.app.gwt.eo.MovieClient)map.get("movie");
 		if (map.get( "primaryKeyValue" ) != null)
 			primaryKeyValue = (Integer)map.get( "primaryKeyValue" );
 	}
@@ -78,8 +84,10 @@ public abstract class _TalentPhoto implements IsSerializable, WOGWTClientEO, NSK
 			return primaryKeyValue();
 		else if ("entityName".equals(key))
 			return entityName();
-		else if ("talent".equals(key))
-			return talent();
+		else if ("summary".equals(key))
+			return summary();
+		else if ("movie".equals(key))
+			return movie();
 		else
 			throw new RuntimeException(getClass().getName() + " does not has a key named '" + key + "'");
 	}
@@ -87,17 +95,35 @@ public abstract class _TalentPhoto implements IsSerializable, WOGWTClientEO, NSK
 	public void takeValueForKey(Object value, String key) {
 		if ("primaryKeyValue".equals(key))
 			setPrimaryKeyValue((Integer)value);
-		else if ("talent".equals(key))
-			setTalent((your.app.gwt.eo.Talent)value);
+		else if ("summary".equals(key))
+			setSummary((String)value);
+		else if ("movie".equals(key))
+			setMovie((your.app.gwt.eo.MovieClient)value);
 		else
 			throw new RuntimeException(getClass().getName() + " does not has a key named '" + key + "'");
 	}
 	
+	public Object valueForKeyPath(String keyPath) {
+		return NSKeyValueCodingAdditions.DefaultImplementation.valueForKeyPath(this, keyPath);
+	}
+	
+	public void takeValueForKeyPath(Object value, String keyPath) {
+		NSKeyValueCodingAdditions.DefaultImplementation.takeValueForKeyPath(this, value, keyPath);
+	}
+	
 	public String entityName() {
-		return "TalentPhoto";
+		return "PlotSummary";
 	}
 	
 	// Attributes
+	public String summary() {
+		return summary;
+	}
+	
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
 	private Integer primaryKeyValue;
 
 	public Integer primaryKeyValue() {
@@ -109,12 +135,12 @@ public abstract class _TalentPhoto implements IsSerializable, WOGWTClientEO, NSK
 	}
 
 	// To One Relationships
-	public your.app.gwt.eo.Talent talent() {
-		return talent;
+	public your.app.gwt.eo.MovieClient movie() {
+		return movie;
 	}
 	
-	public void setTalent(your.app.gwt.eo.Talent talent) {
-		this.talent =  talent;
+	public void setMovie(your.app.gwt.eo.MovieClient movie) {
+		this.movie =  movie;
 	}
 	
 	//To Many Relationships
