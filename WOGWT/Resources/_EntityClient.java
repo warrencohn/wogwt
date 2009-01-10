@@ -11,12 +11,13 @@ import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableDictionary;
 import com.webobjects.foundation.NSKeyValueCoding;
+import com.webobjects.foundation.NSKeyValueCodingAdditions;
 import com.webobjects.foundation.NSTimestamp;
 
 import wogwt.translatable.rpc.WOGWTClientEO;
 
 // This class can be serialized from server to client and back
-public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSerializable, WOGWTClientEO, NSKeyValueCoding {
+public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSerializable, WOGWTClientEO, NSKeyValueCoding, NSKeyValueCodingAdditions {
 	
 	// Attributes
 #foreach ($attribute in $entity.sortedClientClassAttributes)
@@ -151,6 +152,14 @@ public abstract class ${entity.prefixClassNameWithoutPackage} implements IsSeria
 #end
 		else
 			throw new RuntimeException(getClass().getName() + " does not has a key named '" + key + "'");
+	}
+	
+	public Object valueForKeyPath(String keyPath) {
+		return NSKeyValueCodingAdditions.DefaultImplementation.valueForKeyPath(this, keyPath);
+	}
+	
+	public void takeValueForKeyPath(Object value, String keyPath) {
+		NSKeyValueCodingAdditions.DefaultImplementation.takeValueForKeyPath(this, value, keyPath);
 	}
 	
 	public String entityName() {

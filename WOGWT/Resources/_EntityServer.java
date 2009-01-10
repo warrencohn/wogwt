@@ -353,10 +353,10 @@ public abstract class ${entity.prefixClassNameWithoutPackage} extends #if ($enti
     return new ${entity.clientClassName}( WOGWTServerUtil.eoToDictionary(this) ); 
   }
 
-  public WOGWTClientEO toClientEO(List<String> relationshipsToSerialize) {
+  public WOGWTClientEO toClientEO(List<String> keyPathsToSerialize) {
     NSMutableDictionary data = WOGWTServerUtil.eoToDictionary(this).mutableClone();
 	data.addEntriesFromDictionary(
-			WOGWTServerUtil.relationshipsToClientEOs(this, relationshipsToSerialize));
+			WOGWTServerUtil._keyPathsToClientEOs(this, keyPathsToSerialize));
     ${entity.clientClassName} rec = new ${entity.clientClassName}( data ); 
     return rec;
   }
