@@ -1,5 +1,7 @@
 package your.app.gwt;
 
+import java.math.BigDecimal;
+
 import wogwt.translatable.WOGWTClientUtil;
 
 import com.allen_sauer.gwt.log.client.Log;
@@ -14,6 +16,9 @@ public class MainScript implements EntryPoint {
 		}
 		
 		Log.debug(getClass().getName() + ": onModuleLoad");
+		
+		BigDecimal b = new BigDecimal(5);
+		Log.debug(b.toString());
 	}
 	
 }

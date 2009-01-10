@@ -98,14 +98,14 @@ public abstract class _Director extends  ERXGenericRecord implements WOGWTServer
   }
 
   public WOGWTClientEO toClientEO() {
-    return new your.app.gwt.eo.Director( WOGWTServerUtil.eoToDictionary(this) ); 
+    return new your.app.gwt.eo.DirectorClient( WOGWTServerUtil.eoToDictionary(this) ); 
   }
 
-  public WOGWTClientEO toClientEO(List<String> relationshipsToSerialize) {
+  public WOGWTClientEO toClientEO(List<String> keyPathsToSerialize) {
     NSMutableDictionary data = WOGWTServerUtil.eoToDictionary(this).mutableClone();
 	data.addEntriesFromDictionary(
-			WOGWTServerUtil.relationshipsToClientEOs(this, relationshipsToSerialize));
-    your.app.gwt.eo.Director rec = new your.app.gwt.eo.Director( data ); 
+			WOGWTServerUtil._keyPathsToClientEOs(this, keyPathsToSerialize));
+    your.app.gwt.eo.DirectorClient rec = new your.app.gwt.eo.DirectorClient( data ); 
     return rec;
   }
 

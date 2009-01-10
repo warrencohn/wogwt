@@ -3,6 +3,8 @@ package your.app.gwt;
 import wogwt.translatable.WOGWTClientUtil;
 import wogwt.translatable.rpc.LogOnErrorAsyncCallback;
 import your.app.gwt.eo.MovieClient;
+import your.app.gwt.eo.MovieRoleClient;
+import your.app.gwt.eo.TalentClient;
 import your.app.gwt.rpc.EOService;
 
 import com.allen_sauer.gwt.log.client.Log;
@@ -79,9 +81,9 @@ public class RPCExampleScript implements EntryPoint {
 		
 		for (int row = 0; row < objects.size(); ++row) {
 			MovieClient eo = (MovieClient)objects.get(row);
+						
 			for (int col = 0; col < attributes.size(); ++col) {
 				String key = (String)attributes.get(col);
-				String value = null;
 				if (eo.valueForKey(key) != null) {
 					grid.setText(row+1, col, eo.valueForKey(key).toString());
 				}

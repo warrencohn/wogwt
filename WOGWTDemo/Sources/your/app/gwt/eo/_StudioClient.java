@@ -11,12 +11,13 @@ import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableDictionary;
 import com.webobjects.foundation.NSKeyValueCoding;
+import com.webobjects.foundation.NSKeyValueCodingAdditions;
 import com.webobjects.foundation.NSTimestamp;
 
 import wogwt.translatable.rpc.WOGWTClientEO;
 
 // This class can be serialized from server to client and back
-public abstract class _StudioClient implements IsSerializable, WOGWTClientEO, NSKeyValueCoding {
+public abstract class _StudioClient implements IsSerializable, WOGWTClientEO, NSKeyValueCoding, NSKeyValueCodingAdditions {
 	
 	// Attributes
 	public static final String BUDGET_KEY = "budget";
@@ -109,6 +110,14 @@ public abstract class _StudioClient implements IsSerializable, WOGWTClientEO, NS
 			setMovies((NSArray)value);
 		else
 			throw new RuntimeException(getClass().getName() + " does not has a key named '" + key + "'");
+	}
+	
+	public Object valueForKeyPath(String keyPath) {
+		return NSKeyValueCodingAdditions.DefaultImplementation.valueForKeyPath(this, keyPath);
+	}
+	
+	public void takeValueForKeyPath(Object value, String keyPath) {
+		NSKeyValueCodingAdditions.DefaultImplementation.takeValueForKeyPath(this, value, keyPath);
 	}
 	
 	public String entityName() {

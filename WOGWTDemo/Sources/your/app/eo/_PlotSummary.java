@@ -139,14 +139,14 @@ public abstract class _PlotSummary extends  ERXGenericRecord implements WOGWTSer
   }
 
   public WOGWTClientEO toClientEO() {
-    return new your.app.gwt.eo.PlotSummary( WOGWTServerUtil.eoToDictionary(this) ); 
+    return new your.app.gwt.eo.PlotSummaryClient( WOGWTServerUtil.eoToDictionary(this) ); 
   }
 
-  public WOGWTClientEO toClientEO(List<String> relationshipsToSerialize) {
+  public WOGWTClientEO toClientEO(List<String> keyPathsToSerialize) {
     NSMutableDictionary data = WOGWTServerUtil.eoToDictionary(this).mutableClone();
 	data.addEntriesFromDictionary(
-			WOGWTServerUtil.relationshipsToClientEOs(this, relationshipsToSerialize));
-    your.app.gwt.eo.PlotSummary rec = new your.app.gwt.eo.PlotSummary( data ); 
+			WOGWTServerUtil._keyPathsToClientEOs(this, keyPathsToSerialize));
+    your.app.gwt.eo.PlotSummaryClient rec = new your.app.gwt.eo.PlotSummaryClient( data ); 
     return rec;
   }
 

@@ -152,14 +152,14 @@ public abstract class _Voting extends  ERXGenericRecord implements WOGWTServerEO
   }
 
   public WOGWTClientEO toClientEO() {
-    return new your.app.gwt.eo.Voting( WOGWTServerUtil.eoToDictionary(this) ); 
+    return new your.app.gwt.eo.VotingClient( WOGWTServerUtil.eoToDictionary(this) ); 
   }
 
-  public WOGWTClientEO toClientEO(List<String> relationshipsToSerialize) {
+  public WOGWTClientEO toClientEO(List<String> keyPathsToSerialize) {
     NSMutableDictionary data = WOGWTServerUtil.eoToDictionary(this).mutableClone();
 	data.addEntriesFromDictionary(
-			WOGWTServerUtil.relationshipsToClientEOs(this, relationshipsToSerialize));
-    your.app.gwt.eo.Voting rec = new your.app.gwt.eo.Voting( data ); 
+			WOGWTServerUtil._keyPathsToClientEOs(this, keyPathsToSerialize));
+    your.app.gwt.eo.VotingClient rec = new your.app.gwt.eo.VotingClient( data ); 
     return rec;
   }
 

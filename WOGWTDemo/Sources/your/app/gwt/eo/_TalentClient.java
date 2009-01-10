@@ -1,4 +1,4 @@
-// DO NOT EDIT.  Make changes to Talent.java instead.
+// DO NOT EDIT.  Make changes to TalentClient.java instead.
 package your.app.gwt.eo;
 // this must be in the client package
 
@@ -11,12 +11,13 @@ import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableDictionary;
 import com.webobjects.foundation.NSKeyValueCoding;
+import com.webobjects.foundation.NSKeyValueCodingAdditions;
 import com.webobjects.foundation.NSTimestamp;
 
 import wogwt.translatable.rpc.WOGWTClientEO;
 
 // This class can be serialized from server to client and back
-public abstract class _Talent implements IsSerializable, WOGWTClientEO, NSKeyValueCoding {
+public abstract class _TalentClient implements IsSerializable, WOGWTClientEO, NSKeyValueCoding, NSKeyValueCodingAdditions {
 	
 	// Attributes
 	public static final String FIRST_NAME_KEY = "firstName";
@@ -29,15 +30,15 @@ public abstract class _Talent implements IsSerializable, WOGWTClientEO, NSKeyVal
 	
 	private String firstName;
 	private String lastName;
-	private your.app.gwt.eo.TalentPhoto photo;
+	private your.app.gwt.eo.TalentPhotoClient photo;
 	private NSArray<your.app.gwt.eo.MovieClient> moviesDirected;
-	private NSArray<your.app.gwt.eo.MovieRole> roles;
+	private NSArray<your.app.gwt.eo.MovieRoleClient> roles;
 
-	public _Talent() {
+	public _TalentClient() {
 		super();
 	}
 	
-	public _Talent(Map<String, ?> map) {
+	public _TalentClient(Map<String, ?> map) {
 		super();
 		takeValuesFromMap( map );
 	}
@@ -86,7 +87,7 @@ public abstract class _Talent implements IsSerializable, WOGWTClientEO, NSKeyVal
 	public void takeValuesFromMap(Map<String, ?> map) {
 		firstName = (String)map.get("firstName");
 		lastName = (String)map.get("lastName");
-		photo = (your.app.gwt.eo.TalentPhoto)map.get("photo");
+		photo = (your.app.gwt.eo.TalentPhotoClient)map.get("photo");
 		moviesDirected = (NSArray)map.get("moviesDirected");
 		roles = (NSArray)map.get("roles");
 		if (map.get( "primaryKeyValue" ) != null)
@@ -120,13 +121,21 @@ public abstract class _Talent implements IsSerializable, WOGWTClientEO, NSKeyVal
 		else if ("lastName".equals(key))
 			setLastName((String)value);
 		else if ("photo".equals(key))
-			setPhoto((your.app.gwt.eo.TalentPhoto)value);
+			setPhoto((your.app.gwt.eo.TalentPhotoClient)value);
 		else if ("moviesDirected".equals(key))
 			setMoviesDirected((NSArray)value);
 		else if ("roles".equals(key))
 			setRoles((NSArray)value);
 		else
 			throw new RuntimeException(getClass().getName() + " does not has a key named '" + key + "'");
+	}
+	
+	public Object valueForKeyPath(String keyPath) {
+		return NSKeyValueCodingAdditions.DefaultImplementation.valueForKeyPath(this, keyPath);
+	}
+	
+	public void takeValueForKeyPath(Object value, String keyPath) {
+		NSKeyValueCodingAdditions.DefaultImplementation.takeValueForKeyPath(this, value, keyPath);
 	}
 	
 	public String entityName() {
@@ -161,11 +170,11 @@ public abstract class _Talent implements IsSerializable, WOGWTClientEO, NSKeyVal
 	}
 
 	// To One Relationships
-	public your.app.gwt.eo.TalentPhoto photo() {
+	public your.app.gwt.eo.TalentPhotoClient photo() {
 		return photo;
 	}
 	
-	public void setPhoto(your.app.gwt.eo.TalentPhoto photo) {
+	public void setPhoto(your.app.gwt.eo.TalentPhotoClient photo) {
 		this.photo =  photo;
 	}
 	
@@ -178,11 +187,11 @@ public abstract class _Talent implements IsSerializable, WOGWTClientEO, NSKeyVal
 		this.moviesDirected = moviesDirected;
 	}
 	
-	public NSArray<your.app.gwt.eo.MovieRole> roles() {
+	public NSArray<your.app.gwt.eo.MovieRoleClient> roles() {
 		return roles;
 	}
 	
-	public void setRoles(NSArray<your.app.gwt.eo.MovieRole> roles) {
+	public void setRoles(NSArray<your.app.gwt.eo.MovieRoleClient> roles) {
 		this.roles = roles;
 	}
 	

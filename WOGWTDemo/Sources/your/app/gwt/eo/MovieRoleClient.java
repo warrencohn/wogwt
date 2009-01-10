@@ -4,13 +4,13 @@ package your.app.gwt.eo;
 import java.util.Map;
 
 //This class can be serialized from server to client and back
-public class Talent extends _Talent {
+public class MovieRoleClient extends _MovieRoleClient {
 
-	public Talent() {	
+	public MovieRoleClient() {	
 		super();
 	}
 	
-	public Talent(Map map) {	
+	public MovieRoleClient(Map map) {	
 		super(map);
 	}
 	  

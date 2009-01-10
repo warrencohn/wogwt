@@ -139,14 +139,14 @@ public abstract class _TalentPhoto extends  ERXGenericRecord implements WOGWTSer
   }
 
   public WOGWTClientEO toClientEO() {
-    return new your.app.gwt.eo.TalentPhoto( WOGWTServerUtil.eoToDictionary(this) ); 
+    return new your.app.gwt.eo.TalentPhotoClient( WOGWTServerUtil.eoToDictionary(this) ); 
   }
 
-  public WOGWTClientEO toClientEO(List<String> relationshipsToSerialize) {
+  public WOGWTClientEO toClientEO(List<String> keyPathsToSerialize) {
     NSMutableDictionary data = WOGWTServerUtil.eoToDictionary(this).mutableClone();
 	data.addEntriesFromDictionary(
-			WOGWTServerUtil.relationshipsToClientEOs(this, relationshipsToSerialize));
-    your.app.gwt.eo.TalentPhoto rec = new your.app.gwt.eo.TalentPhoto( data ); 
+			WOGWTServerUtil._keyPathsToClientEOs(this, keyPathsToSerialize));
+    your.app.gwt.eo.TalentPhotoClient rec = new your.app.gwt.eo.TalentPhotoClient( data ); 
     return rec;
   }
 

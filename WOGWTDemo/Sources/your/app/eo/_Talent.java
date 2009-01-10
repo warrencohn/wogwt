@@ -325,14 +325,14 @@ public abstract class _Talent extends  ERXGenericRecord implements WOGWTServerEO
   }
 
   public WOGWTClientEO toClientEO() {
-    return new your.app.gwt.eo.Talent( WOGWTServerUtil.eoToDictionary(this) ); 
+    return new your.app.gwt.eo.TalentClient( WOGWTServerUtil.eoToDictionary(this) ); 
   }
 
-  public WOGWTClientEO toClientEO(List<String> relationshipsToSerialize) {
+  public WOGWTClientEO toClientEO(List<String> keyPathsToSerialize) {
     NSMutableDictionary data = WOGWTServerUtil.eoToDictionary(this).mutableClone();
 	data.addEntriesFromDictionary(
-			WOGWTServerUtil.relationshipsToClientEOs(this, relationshipsToSerialize));
-    your.app.gwt.eo.Talent rec = new your.app.gwt.eo.Talent( data ); 
+			WOGWTServerUtil._keyPathsToClientEOs(this, keyPathsToSerialize));
+    your.app.gwt.eo.TalentClient rec = new your.app.gwt.eo.TalentClient( data ); 
     return rec;
   }
 

@@ -1,4 +1,4 @@
-// DO NOT EDIT.  Make changes to MovieRole.java instead.
+// DO NOT EDIT.  Make changes to MovieRoleClient.java instead.
 package your.app.gwt.eo;
 // this must be in the client package
 
@@ -11,12 +11,13 @@ import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableDictionary;
 import com.webobjects.foundation.NSKeyValueCoding;
+import com.webobjects.foundation.NSKeyValueCodingAdditions;
 import com.webobjects.foundation.NSTimestamp;
 
 import wogwt.translatable.rpc.WOGWTClientEO;
 
 // This class can be serialized from server to client and back
-public abstract class _MovieRole implements IsSerializable, WOGWTClientEO, NSKeyValueCoding {
+public abstract class _MovieRoleClient implements IsSerializable, WOGWTClientEO, NSKeyValueCoding, NSKeyValueCodingAdditions {
 	
 	// Attributes
 	public static final String ROLE_NAME_KEY = "roleName";
@@ -27,13 +28,13 @@ public abstract class _MovieRole implements IsSerializable, WOGWTClientEO, NSKey
 	
 	private String roleName;
 	private your.app.gwt.eo.MovieClient movie;
-	private your.app.gwt.eo.Talent talent;
+	private your.app.gwt.eo.TalentClient talent;
 
-	public _MovieRole() {
+	public _MovieRoleClient() {
 		super();
 	}
 	
-	public _MovieRole(Map<String, ?> map) {
+	public _MovieRoleClient(Map<String, ?> map) {
 		super();
 		takeValuesFromMap( map );
 	}
@@ -78,7 +79,7 @@ public abstract class _MovieRole implements IsSerializable, WOGWTClientEO, NSKey
 	public void takeValuesFromMap(Map<String, ?> map) {
 		roleName = (String)map.get("roleName");
 		movie = (your.app.gwt.eo.MovieClient)map.get("movie");
-		talent = (your.app.gwt.eo.Talent)map.get("talent");
+		talent = (your.app.gwt.eo.TalentClient)map.get("talent");
 		if (map.get( "primaryKeyValue" ) != null)
 			primaryKeyValue = (Integer)map.get( "primaryKeyValue" );
 	}
@@ -106,9 +107,17 @@ public abstract class _MovieRole implements IsSerializable, WOGWTClientEO, NSKey
 		else if ("movie".equals(key))
 			setMovie((your.app.gwt.eo.MovieClient)value);
 		else if ("talent".equals(key))
-			setTalent((your.app.gwt.eo.Talent)value);
+			setTalent((your.app.gwt.eo.TalentClient)value);
 		else
 			throw new RuntimeException(getClass().getName() + " does not has a key named '" + key + "'");
+	}
+	
+	public Object valueForKeyPath(String keyPath) {
+		return NSKeyValueCodingAdditions.DefaultImplementation.valueForKeyPath(this, keyPath);
+	}
+	
+	public void takeValueForKeyPath(Object value, String keyPath) {
+		NSKeyValueCodingAdditions.DefaultImplementation.takeValueForKeyPath(this, value, keyPath);
 	}
 	
 	public String entityName() {
@@ -143,11 +152,11 @@ public abstract class _MovieRole implements IsSerializable, WOGWTClientEO, NSKey
 		this.movie =  movie;
 	}
 	
-	public your.app.gwt.eo.Talent talent() {
+	public your.app.gwt.eo.TalentClient talent() {
 		return talent;
 	}
 	
-	public void setTalent(your.app.gwt.eo.Talent talent) {
+	public void setTalent(your.app.gwt.eo.TalentClient talent) {
 		this.talent =  talent;
 	}
 	

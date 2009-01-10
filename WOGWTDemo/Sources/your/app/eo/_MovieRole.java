@@ -167,14 +167,14 @@ public abstract class _MovieRole extends  ERXGenericRecord implements WOGWTServe
   }
 
   public WOGWTClientEO toClientEO() {
-    return new your.app.gwt.eo.MovieRole( WOGWTServerUtil.eoToDictionary(this) ); 
+    return new your.app.gwt.eo.MovieRoleClient( WOGWTServerUtil.eoToDictionary(this) ); 
   }
 
-  public WOGWTClientEO toClientEO(List<String> relationshipsToSerialize) {
+  public WOGWTClientEO toClientEO(List<String> keyPathsToSerialize) {
     NSMutableDictionary data = WOGWTServerUtil.eoToDictionary(this).mutableClone();
 	data.addEntriesFromDictionary(
-			WOGWTServerUtil.relationshipsToClientEOs(this, relationshipsToSerialize));
-    your.app.gwt.eo.MovieRole rec = new your.app.gwt.eo.MovieRole( data ); 
+			WOGWTServerUtil._keyPathsToClientEOs(this, keyPathsToSerialize));
+    your.app.gwt.eo.MovieRoleClient rec = new your.app.gwt.eo.MovieRoleClient( data ); 
     return rec;
   }
 

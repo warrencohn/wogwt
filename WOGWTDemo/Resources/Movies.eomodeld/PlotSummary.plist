@@ -23,7 +23,7 @@
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (summary, movie); 
-        "_javaClientClassName" = "your.app.gwt.eo.PlotSummary"; 
+        "_javaClientClassName" = "your.app.gwt.eo.PlotSummaryClient"; 
     }; 
     maxNumberOfInstancesToBatchFetch = 10; 
     name = PlotSummary; 
