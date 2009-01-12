@@ -3,6 +3,7 @@
 	<!-- Inherit the core Web Toolkit stuff.  -->
 	<inherits name="com.google.gwt.user.User"/>
 	<inherits name="com.google.gwt.http.HTTP"/>
+	<inherits name="com.google.gwt.xml.XML"/>
 	<inherits name="wogwt.emulation.WOGWTEmulation"/>
 	<!-- Add gwt-log support, default level `DEBUG` -->
     <inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
