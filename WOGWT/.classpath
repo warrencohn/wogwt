@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="Libraries/gwt-log-2.5.2.jar"/>
 	<classpathentry kind="lib" path="Libraries/Tidy.jar" sourcepath="Libraries/Tidy.jar"/>
 	<classpathentry kind="lib" path="Libraries/gwt-math-server-2.0.3.jar"/>
+	<classpathentry kind="lib" path="Libraries/commons-io-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
