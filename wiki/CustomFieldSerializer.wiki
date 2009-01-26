@@ -11,6 +11,8 @@ This is not about WOGWT in particular, but for anyone who wants to customize the
 A CustomFieldSerializer class for com.webobjects.foundation.NSRange would look like this:
 
 {{{
+package com.webobjects.foundation;
+
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.rpc.SerializationStreamWriter;
@@ -69,6 +71,13 @@ NSRange has two instance variables:
 So the CustomFieldSerializer looks like this:
 
 {{{
+package com.webobjects.foundation;
+
+import com.google.gwt.user.client.rpc.SerializationException;
+import com.google.gwt.user.client.rpc.SerializationStreamReader;
+import com.google.gwt.user.client.rpc.SerializationStreamWriter;
+import com.webobjects.foundation.NSRange;
+
 public final class NSRange_CustomFieldSerializer {
 
     public static void deserialize(SerializationStreamReader streamReader, NSRange instance)
