@@ -8,7 +8,7 @@ This is not about WOGWT in particular, but for anyone who wants to customize the
 
 = Details =
 
-A CustomFieldSerializer class for 'com.webobjects.foundation.NSRange' would look like this:
+A CustomFieldSerializer class for `com.webobjects.foundation.NSRange` would look like this:
 
 {{{
 package com.webobjects.foundation;
@@ -38,7 +38,7 @@ public final class NSRange_CustomFieldSerializer {
 }
 }}}
 
-The class needs to be in the same package as the class it is serializing ('com.webobjects.foundation') OR in the package 'com.google.gwt.user.client.rpc.core.com.webobjects.foundation'.
+The class needs to be in the same package as the class it is serializing (`com.webobjects.foundation`) OR in the package `com.google.gwt.user.client.rpc.core.com.webobjects.foundation`.
 
 Things to notice about this class:
   * The class is named with the name of the class being serialized plus "_CustomFieldSerializer"
