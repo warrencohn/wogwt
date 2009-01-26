@@ -41,7 +41,7 @@ public final class NSRange_CustomFieldSerializer {
 The class needs to be in the same package as the class it is serializing (`com.webobjects.foundation`) OR in the package `com.google.gwt.user.client.rpc.core.com.webobjects.foundation`.
 
 Things to notice about this class:
-  * The class is named with the name of the class being serialized plus "_CustomFieldSerializer"
+  * The class is named with the name of the class being serialized plus "*_CustomFieldSerializer"
   * The seralize and deserialize methods are required
   * The instantiate method is optional.  If you don't provide it, then GWT will invoke the zero-arg constructor for the class.
 
