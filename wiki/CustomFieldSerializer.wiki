@@ -8,7 +8,7 @@ This is not about WOGWT in particular, but for anyone who wants to customize the
 
 = Details =
 
-A CustomerFieldSerializer class for com.webobjects.foundation.NSRange would look like this:
+A CustomFieldSerializer class for com.webobjects.foundation.NSRange would look like this:
 
 {{{
 import com.google.gwt.user.client.rpc.SerializationException;
@@ -45,7 +45,7 @@ Things to notice about this class:
 
 The methods are called in this order: serialize, instantiate, deseralize.
 
-The CustomerFieldSerializer class is two-way:
+The CustomFieldSerializer class is two-way:
   * it is invoked to transfer an object from the server to the client
     * serialize (on the server)
     * instantiate (on the client)
