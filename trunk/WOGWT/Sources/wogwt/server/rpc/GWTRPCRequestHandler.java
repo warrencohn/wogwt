@@ -2,6 +2,7 @@ package wogwt.server.rpc;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
@@ -130,12 +131,19 @@ public class GWTRPCRequestHandler extends WORequestHandler /*implements Serializ
 		
 		try {
 			RPCRequest rpcRequest = RPC.decodeRequest(payload);	
+			
+			log.debug("request: " + rpcRequest.getMethod() + " " + Arrays.toString(rpcRequest.getParameters()));
+			
 			Object serviceObject = createServiceObject(context, rpcRequest);
 		
-			return RPC.invokeAndEncodeResponse(
+			String result = RPC.invokeAndEncodeResponse(
 					serviceObject, 
 					rpcRequest.getMethod(), 
 					rpcRequest.getParameters());
+			
+			log.debug("response: " + result);
+			
+			return result;
 			
 		} catch (IncompatibleRemoteServiceException e) {
 			log.error(e.getMessage(), e);
