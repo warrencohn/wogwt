@@ -110,7 +110,7 @@ In this case, NSRange is immutable, so we do all the reading from the stream in 
 
 ----
 
-A CustomFieldSerializer relates one-to-one to a serializable class.  Each serializable class must have a it's own specific CustomFieldSerializer.  So suppose you have a base class `ParentClass` and two descendants `ChildClassOne` and `ChildClassTwo`.  You also have a class called `ParentClass_CustomFieldSerializer`.  Even if the child classes introduce no additional fields and can be serialized the same way as `ParentClass`, you still must define an explicit `ChildClassOne_CustomFieldSerializer` and a `ChildClassTwo_CustomFieldSerializer`.  However, you can stick the implementation of the methods in a common class and call that, so this allows for some code sharing, but you will still end up with a lot of classes.
+A CustomFieldSerializer relates one-to-one to a serializable class.  Each serializable class must have it's own specific CustomFieldSerializer.  So suppose you have a base class `ParentClass` and two descendants `ChildClassOne` and `ChildClassTwo`.  You also have a class called `ParentClass_CustomFieldSerializer`.  Even if the child classes introduce no additional fields and can be serialized the same way as `ParentClass`, you still must define an explicit `ChildClassOne_CustomFieldSerializer` and a `ChildClassTwo_CustomFieldSerializer`.  However, you can stick the implementation of the methods in a common class and call that, so this allows for some code sharing, but you will still end up with a lot of classes.
 
 ----
 
