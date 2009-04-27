@@ -42,8 +42,6 @@
 
   	<source path=""/>
 
-	<servlet class="er.extensions.jspservlet.ERXServletAdaptor" path="/WOGWTDemo/WebObjects"/>
-
 	<entry-point class="your.app.gwt.MainScript"/>
 	<entry-point class="your.app.gwt.UpdateLinkScript"/>
 	<entry-point class="your.app.gwt.PeriodicUpdateScript"/>
@@ -57,5 +55,6 @@
 	<entry-point class="your.app.gwt.TreeExampleScript"/>
 	<entry-point class="your.app.gwt.AutoCompletionExampleScript"/>
 	<entry-point class="your.app.gwt.DialogExampleScript"/>
+	<entry-point class="your.app.gwt.ImageBundleExampleScript"/>
 	
 </module>

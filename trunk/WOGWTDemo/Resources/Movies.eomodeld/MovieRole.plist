@@ -26,13 +26,13 @@
         }
     ); 
     attributesUsedForLocking = (talentID, movieID, roleName); 
-    className = "your.app.eo.MovieRole"; 
+    className = "your.app.gwt.eo.MovieRole"; 
     classProperties = (roleName, movie, talent); 
     externalName = "MOVIE_ROLE"; 
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (roleName, movie, talent); 
-        "_javaClientClassName" = "your.app.gwt.eo.MovieRoleClient"; 
+        "_javaClientClassName" = "your.app.gwt.eo.MovieRole_CustomFieldSerializer"; 
     }; 
     maxNumberOfInstancesToBatchFetch = 10; 
     name = MovieRole; 

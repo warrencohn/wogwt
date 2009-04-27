@@ -20,7 +20,7 @@ public class DynamicUIScript implements EntryPoint {
 		
 		Hyperlink gwtCreatedLink = new Hyperlink();
 		gwtCreatedLink.setText("Count");
-		gwtCreatedLink.addClickListener(
+		gwtCreatedLink.addClickHandler(
 				new UpdateOnClickListener("countAction", "countContainer", null));
 		RootPanel.get("linkContainer").add(gwtCreatedLink);
 	}

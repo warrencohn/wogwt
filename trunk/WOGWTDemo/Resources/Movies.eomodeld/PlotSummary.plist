@@ -17,13 +17,13 @@
         }
     ); 
     attributesUsedForLocking = (movieID); 
-    className = "your.app.eo.PlotSummary"; 
+    className = "your.app.gwt.eo.PlotSummary"; 
     classProperties = (summary, movie); 
     externalName = "PLOT_SUMMARY"; 
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (summary, movie); 
-        "_javaClientClassName" = "your.app.gwt.eo.PlotSummaryClient"; 
+        "_javaClientClassName" = "your.app.gwt.eo.PlotSummary_CustomFieldSerializer"; 
     }; 
     maxNumberOfInstancesToBatchFetch = 10; 
     name = PlotSummary; 

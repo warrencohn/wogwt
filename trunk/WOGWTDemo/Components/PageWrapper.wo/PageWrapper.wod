@@ -60,3 +60,7 @@ DialogExample : WOHyperlink {
 CompileTimeIDChecking : WOHyperlink {
 	pageName = "CompileTimeIDChecking";
 }
+
+ImageBundleLink : WOHyperlink {
+	pageName = "ImageBundleExample";
+}

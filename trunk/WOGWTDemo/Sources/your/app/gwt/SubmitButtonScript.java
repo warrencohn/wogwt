@@ -19,10 +19,10 @@ public class SubmitButtonScript implements EntryPoint {
 		Log.debug(getClass().getName() + ": onModuleLoad");
 		
 		Button helloButton = Button.wrap(DOM.getElementById("helloButton"));
-		helloButton.addClickListener(new SubmitOnClickListener("formOutsideContainer"));
+		helloButton.addClickHandler(new SubmitOnClickListener("formOutsideContainer"));
 															    
 		Button goodbyeButton = Button.wrap(DOM.getElementById("goodbyeButton"));
-		goodbyeButton.addClickListener(new SubmitOnClickListener("formOutsideContainer"));
+		goodbyeButton.addClickHandler(new SubmitOnClickListener("formOutsideContainer"));
 	}
 	
 }

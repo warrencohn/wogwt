@@ -2,9 +2,7 @@ package your.app.gwt;
 
 import wogwt.translatable.WOGWTClientUtil;
 import wogwt.translatable.rpc.LogOnErrorAsyncCallback;
-import your.app.gwt.eo.MovieClient;
-import your.app.gwt.eo.MovieRoleClient;
-import your.app.gwt.eo.TalentClient;
+import your.app.gwt.eo.Movie;
 import your.app.gwt.rpc.EOService;
 
 import com.allen_sauer.gwt.log.client.Log;
@@ -15,6 +13,7 @@ import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.webobjects.eocontrol.EOEnterpriseObject;
 import com.webobjects.foundation.NSArray;
 
 public class RPCExampleScript implements EntryPoint {
@@ -32,6 +31,8 @@ public class RPCExampleScript implements EntryPoint {
 		
 		Log.debug(getClass().getName() + ": onModuleLoad");
 		
+		Log.setUncaughtExceptionHandler();
+		
 		final RootPanel panel = RootPanel.get(gridContainerID);
 		
 		Anchor link = new Anchor("Load");
@@ -40,7 +41,12 @@ public class RPCExampleScript implements EntryPoint {
 				if (grid != null)
 					grid.setVisible(false);
 				img.setVisible(true);
-				loadData();
+				try {
+					loadData();
+				} catch (Exception e) {
+					e.printStackTrace();
+					Log.error(e.getMessage());
+				}
 			}
 		});
 		
@@ -51,20 +57,35 @@ public class RPCExampleScript implements EntryPoint {
 		panel.add(img);
 	}
 	
-	public void loadData() {
+	public void loadData() {		
+//		EOService.Util.getInstance().aMovie(
+//				new LogOnErrorAsyncCallback<Movie>() {
+//					@Override
+//					public void onSuccess(Movie response) {
+//						populateScreen(new NSArray(response));
+//					}
+//				}
+//		);
+		
 		EOService.Util.getInstance().allMovies(
-				new LogOnErrorAsyncCallback<NSArray<MovieClient>>() {
-					public void onSuccess(NSArray<MovieClient> response) {
+				new LogOnErrorAsyncCallback<NSArray<Movie>>() {
+					public void onSuccess(NSArray<Movie> response) {
 						populateScreen(response);
 					}
 				}
 		);
+
 	}
 	
-	public void populateScreen(NSArray<MovieClient> objects) {
+	public void populateScreen(NSArray<? extends EOEnterpriseObject> objects) {
 		RootPanel panel = RootPanel.get(gridContainerID);
 
-		NSArray<String> attributes = MovieClient.attributeKeys();
+		NSArray<String> attributes;
+		if (!objects.isEmpty()) {
+			attributes = objects.get(0).attributeKeys();
+		} else {
+			attributes = NSArray.EmptyArray;
+		}
 
 		boolean createGrid = (grid == null);
 		if (createGrid) {
@@ -80,7 +101,7 @@ public class RPCExampleScript implements EntryPoint {
 		grid.getRowFormatter().addStyleName(0, "header");
 		
 		for (int row = 0; row < objects.size(); ++row) {
-			MovieClient eo = (MovieClient)objects.get(row);
+			EOEnterpriseObject eo = objects.get(row);
 						
 			for (int col = 0; col < attributes.size(); ++col) {
 				String key = (String)attributes.get(col);

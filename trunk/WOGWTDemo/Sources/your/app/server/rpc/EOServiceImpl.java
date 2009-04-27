@@ -1,16 +1,15 @@
 package your.app.server.rpc;
 
-import wogwt.WOGWTServerUtil;
 import wogwt.server.rpc.WOGWTRpcService;
-import your.app.eo.Movie;
-import your.app.eo.MovieRole;
-import your.app.eo.Studio;
-import your.app.gwt.eo.MovieClient;
-import your.app.gwt.eo.StudioClient;
+import your.app.gwt.eo.Movie;
+import your.app.gwt.eo.Studio;
 import your.app.gwt.rpc.EOService;
 
 import com.webobjects.appserver.WOContext;
+import com.webobjects.eoaccess.EOUtilities;
 import com.webobjects.foundation.NSArray;
+
+import er.extensions.eof.ERXBatchFetchUtilities;
 
 
 public class EOServiceImpl extends WOGWTRpcService implements EOService {
@@ -19,20 +18,16 @@ public class EOServiceImpl extends WOGWTRpcService implements EOService {
 		super(context);
 	}
 	
-	public NSArray<MovieClient> allMovies() {
-		NSArray<Movie> eos = Movie.fetchAllMovies(editingContext());
-		NSArray result = WOGWTServerUtil.toClientEOList(eos, 
-				new NSArray<String>(new String[] {
-						Movie.STUDIO_KEY,
-						Movie.ROLES_KEY + "." + MovieRole.TALENT_KEY}));
-		return result;
+	public NSArray<Movie> allMovies() {
+		NSArray<Movie> eos = EOUtilities.objectsForEntityNamed(editingContext(), Movie.ENTITY_NAME);
+		ERXBatchFetchUtilities.batchFetch(eos, Movie.STUDIO_KEY);
+		return eos;
 	}
 		
-	public NSArray<StudioClient> allStudios() {
-		NSArray<Studio> eos = Studio.fetchAllStudios(editingContext());
-		NSArray result = WOGWTServerUtil.toClientEOList(eos, 
-				new NSArray<String>(new String[] {
-						Studio.MOVIES_KEY}));
-		return result;
+	public NSArray<Studio> allStudios() {
+		NSArray<Studio> eos = EOUtilities.objectsForEntityNamed(editingContext(), Studio.ENTITY_NAME);
+		ERXBatchFetchUtilities.batchFetch(eos, Studio.MOVIES_KEY);
+		return eos;
 	}
+
 }

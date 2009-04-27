@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+	<context-param>
+		<param-name>WOAppMode</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>WOClasspath</param-name>
+		<param-value>
+			WOAINSTALLROOT/WOGWTDemo.woa/Contents/Resources/Java/your/app/Application.class
+			WOAINSTALLROOT/WOGWTDemo.woa/Contents/Resources/Java
+		</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>WOApplicationClass</param-name>
+		<param-value>your.app.Application</param-value>
+	</context-param>
+	
+    <context-param>
+      <param-name>org.mortbay.jetty.servlet.SessionURL</param-name>
+      <param-value>none</param-value>
+    </context-param> 
+    
+	<servlet>
+		<servlet-name>woServlet</servlet-name>
+		<servlet-class>er.extensions.jspservlet.ERXServletAdaptor</servlet-class>
+	</servlet>
+  
+	<servlet-mapping>
+		<servlet-name>woServlet</servlet-name>
+		<url-pattern>/your.app.gwt.Application/WOGWTDemo/WebObjects/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>remoteLoggerServiceImpl</servlet-name>
+		<servlet-class>com.allen_sauer.gwt.log.server.RemoteLoggerServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>remoteLoggerServiceImpl</servlet-name>
+		<url-pattern>/your.app.gwt.Application/gwt-log</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

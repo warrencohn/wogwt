@@ -1,4 +1,4 @@
-#Fri Dec 12 22:00:55 CST 2008
+#Tue Jan 13 12:58:03 CST 2009
 eclipse.preferences.version=1
 encoding//Components/AutoCompletionExample.wo=UTF-8
 encoding//Components/AutoCompletionExample.wo/AutoCompletionExample.html=UTF-8
@@ -16,6 +16,10 @@ encoding//Components/DynamicUI.wo=UTF-8
 encoding//Components/DynamicUI.wo/DynamicUI.html=UTF-8
 encoding//Components/DynamicUI.wo/DynamicUI.wod=UTF-8
 encoding//Components/DynamicUI.wo/DynamicUI.woo=UTF-8
+encoding//Components/ImageBundleExample.wo=UTF-8
+encoding//Components/ImageBundleExample.wo/ImageBundleExample.html=UTF-8
+encoding//Components/ImageBundleExample.wo/ImageBundleExample.wod=UTF-8
+encoding//Components/ImageBundleExample.wo/ImageBundleExample.woo=UTF-8
 encoding//Components/PageWrapper.wo=UTF-8
 encoding//Components/PageWrapper.wo/PageWrapper.html=UTF-8
 encoding//Components/PageWrapper.wo/PageWrapper.wod=UTF-8
@@ -64,6 +68,7 @@ encoding//Sources/your/app/components/AutoCompletionExample.java=UTF-8
 encoding//Sources/your/app/components/CompileTimeIDChecking.java=UTF-8
 encoding//Sources/your/app/components/DialogExample.java=UTF-8
 encoding//Sources/your/app/components/DynamicUI.java=UTF-8
+encoding//Sources/your/app/components/ImageBundleExample.java=UTF-8
 encoding//Sources/your/app/components/PageWrapper.java=UTF-8
 encoding//Sources/your/app/components/PeriodicUpdate.java=UTF-8
 encoding//Sources/your/app/components/RPCExample.java=UTF-8
