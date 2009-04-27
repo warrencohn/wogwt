@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class NSRange extends Object implements Serializable, Cloneable {
 	
-	public static final NSRange ZeroRange = new NSRange();
+	public static final transient NSRange ZeroRange = new NSRange();
 	
 	/** 
 	 * 

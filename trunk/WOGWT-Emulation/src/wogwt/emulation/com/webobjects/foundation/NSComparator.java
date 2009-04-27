@@ -4,9 +4,9 @@ import java.util.Comparator;
 
 public abstract class NSComparator implements Comparator {
 
-	public static final int OrderedAscending = -1;
-	public static final int OrderedSame = 0;
-	public static final int OrderedDescending = 1;
+	public static final transient int OrderedAscending = -1;
+	public static final transient int OrderedSame = 0;
+	public static final transient int OrderedDescending = 1;
 
 	public NSComparator() {
 		super();
@@ -18,7 +18,7 @@ public abstract class NSComparator implements Comparator {
 	 */
 	public abstract int compare (Object object1, Object object2);
 	
-	private static final NSComparator AscendingComparableComparator = new NSComparator() {
+	private static final transient NSComparator AscendingComparableComparator = new NSComparator() {
 		public int compare(Object object1, Object object2) {
 			if (object1 == null && object2 == null)
 				return OrderedSame;
@@ -38,7 +38,7 @@ public abstract class NSComparator implements Comparator {
 		}
 	};
 	
-	private static final NSComparator DescendingComparableComparator = new NSComparator() {
+	private static final transient NSComparator DescendingComparableComparator = new NSComparator() {
 		public int compare(Object object1, Object object2) {
 			if (object1 == null && object2 == null)
 				return OrderedSame;
@@ -58,16 +58,16 @@ public abstract class NSComparator implements Comparator {
 		}
 	};
 	
-	public static final NSComparator AscendingStringComparator = AscendingComparableComparator;	
-	public static final NSComparator DescendingStringComparator = DescendingComparableComparator;
+	public static final transient NSComparator AscendingStringComparator = AscendingComparableComparator;	
+	public static final transient NSComparator DescendingStringComparator = DescendingComparableComparator;
 	
-	public static final NSComparator AscendingNumberComparator = AscendingComparableComparator;
-	public static final NSComparator DescendingNumberComparator = DescendingComparableComparator;
+	public static final transient NSComparator AscendingNumberComparator = AscendingComparableComparator;
+	public static final transient NSComparator DescendingNumberComparator = DescendingComparableComparator;
 	
-	public static final NSComparator AscendingTimestampComparator = AscendingComparableComparator;
-	public static final NSComparator DescendingTimestampComparator = DescendingComparableComparator;
+	public static final transient NSComparator AscendingTimestampComparator = AscendingComparableComparator;
+	public static final transient NSComparator DescendingTimestampComparator = DescendingComparableComparator;
 	
-	public static final NSComparator AscendingCaseInsensitiveStringComparator = new NSComparator() {
+	public static final transient NSComparator AscendingCaseInsensitiveStringComparator = new NSComparator() {
 		public int compare(Object object1, Object object2) {
 			if (object1 == null && object2 == null)
 				return OrderedSame;
@@ -87,7 +87,7 @@ public abstract class NSComparator implements Comparator {
 		}
 	};
 	
-	public static final NSComparator DescendingCaseInsensitiveStringComparator = new NSComparator() {
+	public static final transient NSComparator DescendingCaseInsensitiveStringComparator = new NSComparator() {
 		public int compare(Object object1, Object object2) {
 			if (object1 == null && object2 == null)
 				return OrderedSame;

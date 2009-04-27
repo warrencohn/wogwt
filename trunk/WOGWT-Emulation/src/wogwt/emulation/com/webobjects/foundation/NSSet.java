@@ -10,12 +10,12 @@ import com.google.gwt.user.client.Random;
 
 public class NSSet<E> extends HashSet<E> {
 
-	public static final boolean CheckForNull = true;
-	public static final NSSet EmptySet = new NSSet();
-	public static final boolean IgnoreNull = true;
+	public static final transient boolean CheckForNull = true;
+	public static final transient NSSet EmptySet = new NSSet();
+	public static final transient boolean IgnoreNull = true;
 	
-	private static final String UNSUPPORTED = " is not a supported operation in com.webobjects.foundation.NSSet";
-	protected static final String NULL_NOT_ALLOWED = "Attempt to insert null into an NSArray.";
+	private static final transient String UNSUPPORTED = " is not a supported operation in com.webobjects.foundation.NSSet";
+	protected static final transient String NULL_NOT_ALLOWED = "Attempt to insert null into an NSArray.";
 	
 	public NSSet() {
 		super();

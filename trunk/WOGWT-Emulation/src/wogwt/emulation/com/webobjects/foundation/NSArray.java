@@ -25,23 +25,23 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 		public Object compute(NSArray values, String keyPath);
 	}
 	
-	public static final boolean IsEmulationClass = true;
+	public static final transient boolean IsEmulationClass = true;
 	
-	public static final String AverageOperatorName = "avg";
-	public static final String CountOperatorName = "count";
-	public static final String MaximumOperatorName = "max";
-	public static final String MinimumOperatorName = "min";
-	public static final String SumOperatorName = "sum";
+	public static final transient String AverageOperatorName = "avg";
+	public static final transient String CountOperatorName = "count";
+	public static final transient String MaximumOperatorName = "max";
+	public static final transient String MinimumOperatorName = "min";
+	public static final transient String SumOperatorName = "sum";
 	
-	public static int NotFound = -1;
+	public static final transient int NotFound = -1;
 	
-	public static NSArray EmptyArray = new NSArray();
+	public static final transient NSArray EmptyArray = new NSArray();
 	
-	public static final boolean CheckForNull = true;
-	public static final boolean IgnoreNull = true;
+	public static final transient boolean CheckForNull = true;
+	public static final transient boolean IgnoreNull = true;
 	
-	private static final String UNSUPPORTED = " is not a supported operation in com.webobjects.foundation.NSArray";
-	protected static final String NULL_NOT_ALLOWED = "Attempt to insert null into an NSArray.";
+	private static final transient String UNSUPPORTED = " is not a supported operation in com.webobjects.foundation.NSArray";
+	protected static final transient String NULL_NOT_ALLOWED = "Attempt to insert null into an NSArray.";
 	
 	public NSArray() {
 		super();
@@ -294,6 +294,14 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 	
 	public boolean isEqualToArray(NSArray otherArray) {
 		return equals(otherArray);
+	}
+	
+	public E lastObject() {
+		if (isEmpty()) {
+			return null;
+		} else {
+			return get(size()-1);
+		}
 	}
 	
 	// since reflection isn't available in GWT, we can't do this

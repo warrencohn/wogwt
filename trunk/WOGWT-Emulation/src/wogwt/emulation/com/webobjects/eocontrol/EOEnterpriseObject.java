@@ -4,12 +4,10 @@ import java.io.Serializable;
 
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSDictionary;
-import com.webobjects.foundation.NSKeyValueCoding;
-import com.webobjects.foundation.NSKeyValueCodingAdditions;
 
-public interface EOEnterpriseObject extends EODeferredFaulting, 
-	EOKeyValueCoding, EOKeyValueCodingAdditions, NSKeyValueCoding, 
-	NSKeyValueCoding.ErrorHandling, NSKeyValueCodingAdditions, Serializable {
+public interface EOEnterpriseObject extends 
+	Serializable, EOKeyValueCodingAdditions, 
+	EORelationshipManipulation, EOValidation, EODeferredFaulting {
 
 	public void addObjectToPropertyWithKey(Object eo, String key);
 	
@@ -50,8 +48,6 @@ public interface EOEnterpriseObject extends EODeferredFaulting,
 	public void removeObjectFromPropertyWithKey(Object eo, String key);
 	
 	public NSDictionary<String, Object> snapshot();
-	
-
 	
 	public NSArray<String> toManyRelationshipKeys();
 	
