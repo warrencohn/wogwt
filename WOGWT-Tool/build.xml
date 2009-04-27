@@ -1,0 +1,18 @@
+
+<project basedir="." default="install" name="WOGWT-Tool">
+	
+	<target name="install">
+	    <delete file="../WOGWT/Libraries/wogwt-tool.jar" quiet="true"/>	
+
+		<jar destfile="../WOGWT/Libraries/wogwt-tool.jar"
+			basedir="src">
+		</jar>
+		
+		<jar destfile="../WOGWT/Resources/wogwt-tool.jar"
+			basedir="bin" update="true" manifest="manifest">
+		</jar>
+		
+		<copy file="commons-io-1.4.jar" todir="../WOGWT/Resources/"/>
+	</target>
+	
+</project>
