@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class NSData implements Serializable, Cloneable {
 
-	public static final NSData EmptyData = new NSData();
+	public static final transient NSData EmptyData = new NSData();
 	
 	private byte[] _bytes;
 	private NSRange _range;

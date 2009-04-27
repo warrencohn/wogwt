@@ -6,10 +6,10 @@ import java.util.GregorianCalendar;
 
 public class NSTimestamp extends Timestamp {
 
-	public static final NSTimestamp DistantFuture = new NSTimestamp().timestampByAddingGregorianUnits(2922769, 0, 0, 0, 0, 0);
-	public static final NSTimestamp DistantPast = new NSTimestamp().timestampByAddingGregorianUnits(-2000, 0, 0, 0, 0, 0);
+	public static final transient NSTimestamp DistantFuture = new NSTimestamp().timestampByAddingGregorianUnits(2922769, 0, 0, 0, 0, 0);
+	public static final transient NSTimestamp DistantPast = new NSTimestamp().timestampByAddingGregorianUnits(-2000, 0, 0, 0, 0, 0);
 	
-	private static final String UNSUPPORTED = " is not a supported operation of com.webobjects.foundation.NSTimestamp";
+	private static final transient String UNSUPPORTED = " is not a supported operation of com.webobjects.foundation.NSTimestamp";
 
 	public NSTimestamp() {
 		this(new Date().getTime());
@@ -61,6 +61,8 @@ public class NSTimestamp extends Timestamp {
 	public NSTimestamp timestampByAddingGregorianUnits(int years, 
 			int months, int days, int hours, int minutes, int seconds)  {
 		
+		int savedNanos = getNanos();
+		
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTimeInMillis(getTime());
 		
@@ -77,7 +79,7 @@ public class NSTimestamp extends Timestamp {
 		if (years != 0)
 			cal.add(GregorianCalendar.YEAR, years);
 		
-		return new NSTimestamp(cal.getTime().getTime(), getNanos());
+		return new NSTimestamp(cal.getTime().getTime(), savedNanos);
 	}
 	
 	@Override

@@ -11,10 +11,10 @@ import java.util.Map;
 public class NSDictionary<K,V> extends HashMap<K,V> implements NSKeyValueCoding,
 	NSKeyValueCodingAdditions {
 
-	public static final NSDictionary EmptyDictionary = new NSDictionary();
+	public static final transient NSDictionary EmptyDictionary = new NSDictionary();
 	
-	public static final boolean CheckForNull = true;
-	public static final boolean IgnoreNull = true;
+	public static final transient boolean CheckForNull = true;
+	public static final transient boolean IgnoreNull = true;
 	
 	public NSDictionary() {
 		super();

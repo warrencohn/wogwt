@@ -1,8 +1,8 @@
 package com.webobjects.eocontrol;
 
-import com.webobjects.foundation.NSValidation.ValidationException;
+import com.webobjects.foundation.NSValidation;
 
-public interface EOValidation {
+public interface EOValidation extends NSValidation {
 
 	public void validateClientUpdate() throws ValidationException;
 	public void validateForDelete() throws ValidationException;
