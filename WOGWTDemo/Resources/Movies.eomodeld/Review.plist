@@ -2,7 +2,7 @@
     attributes = (
         {
             columnName = "MOVIE_ID"; 
-            externalType = long; 
+            externalType = bigint; 
             name = movieID; 
             precision = 9; 
             valueClassName = NSNumber; 
@@ -11,13 +11,13 @@
         {
             allowsNull = Y; 
             columnName = REVIEW; 
-            externalType = object; 
+            externalType = "long varchar"; 
             name = review; 
             valueClassName = NSString; 
         }, 
         {
             columnName = "REVIEW_ID"; 
-            externalType = long; 
+            externalType = bigint; 
             name = reviewID; 
             precision = 9; 
             valueClassName = NSNumber; 
@@ -33,13 +33,13 @@
         }
     ); 
     attributesUsedForLocking = (reviewID, movieID, reviewer); 
-    className = "your.app.eo.Review"; 
+    className = "your.app.gwt.eo.Review"; 
     classProperties = (reviewer, review, movie); 
     externalName = REVIEW; 
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (reviewer, review, movie); 
-        "_javaClientClassName" = "your.app.gwt.eo.ReviewClient"; 
+        "_javaClientClassName" = "your.app.gwt.eo.Review_CustomFieldSerializer"; 
     }; 
     name = Review; 
     primaryKeyAttributes = (reviewID); 

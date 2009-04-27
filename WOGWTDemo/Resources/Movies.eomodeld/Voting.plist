@@ -29,13 +29,13 @@
         }
     ); 
     attributesUsedForLocking = (movieID, numberOfVotes); 
-    className = "your.app.eo.Voting"; 
+    className = "your.app.gwt.eo.Voting"; 
     classProperties = (numberOfVotes, movie, runningAverage); 
     externalName = VOTING; 
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (numberOfVotes, movie, runningAverage); 
-        "_javaClientClassName" = "your.app.gwt.eo.VotingClient"; 
+        "_javaClientClassName" = "your.app.gwt.eo.Voting_CustomFieldSerializer"; 
     }; 
     name = Voting; 
     primaryKeyAttributes = (movieID); 

@@ -146,15 +146,15 @@
         username = ""; 
     }; 
     entities = (
-        {className = "your.app.eo.Director"; name = Director; }, 
-        {className = "your.app.eo.Movie"; name = Movie; }, 
-        {className = "your.app.eo.MovieRole"; name = MovieRole; }, 
-        {className = "your.app.eo.PlotSummary"; name = PlotSummary; }, 
-        {className = "your.app.eo.Review"; name = Review; }, 
-        {className = "your.app.eo.Studio"; name = Studio; }, 
-        {className = "your.app.eo.Talent"; name = Talent; }, 
-        {className = "your.app.eo.TalentPhoto"; name = TalentPhoto; }, 
-        {className = "your.app.eo.Voting"; name = Voting; }
+        {className = "your.app.gwt.eo.Director"; name = Director; }, 
+        {className = "your.app.gwt.eo.Movie"; name = Movie; }, 
+        {className = "your.app.gwt.eo.MovieRole"; name = MovieRole; }, 
+        {className = "your.app.gwt.eo.PlotSummary"; name = PlotSummary; }, 
+        {className = "your.app.gwt.eo.Review"; name = Review; }, 
+        {className = "your.app.gwt.eo.Studio"; name = Studio; }, 
+        {className = "your.app.gwt.eo.Talent"; name = Talent; }, 
+        {className = "your.app.gwt.eo.TalentPhoto"; name = TalentPhoto; }, 
+        {className = "your.app.gwt.eo.Voting"; name = Voting; }
     ); 
     userInfo = {
         "_EntityModeler" = {

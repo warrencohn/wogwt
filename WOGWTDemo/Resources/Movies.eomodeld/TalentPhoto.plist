@@ -17,13 +17,13 @@
         }
     ); 
     attributesUsedForLocking = (talentID); 
-    className = "your.app.eo.TalentPhoto"; 
+    className = "your.app.gwt.eo.TalentPhoto"; 
     classProperties = (photo, talent); 
     externalName = "TALENT_PHOTO"; 
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (talent); 
-        "_javaClientClassName" = "your.app.gwt.eo.TalentPhotoClient"; 
+        "_javaClientClassName" = "your.app.gwt.eo.TalentPhoto_CustomFieldSerializer"; 
     }; 
     maxNumberOfInstancesToBatchFetch = 10; 
     name = TalentPhoto; 

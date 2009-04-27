@@ -13,9 +13,9 @@ public class PeriodicUpdateScript implements EntryPoint {
 		if (!WOGWTClientUtil.hostPageNameEquals("PeriodicUpdate")) {
 			return;
 		}
-		
+
 		Log.debug(getClass().getName() + ": onModuleLoad");
-		
+
 		PeriodicUpdater periodicUpdater = new PeriodicUpdater("periodicContainer", 2000);
 	}
 

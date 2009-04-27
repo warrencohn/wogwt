@@ -2,7 +2,7 @@ package your.app.gwt;
 
 import wogwt.translatable.WOGWTClientUtil;
 import wogwt.translatable.rpc.LogOnErrorAsyncCallback;
-import your.app.gwt.eo.MovieClient;
+import your.app.gwt.eo.Movie;
 import your.app.gwt.rpc.EOService;
 
 import com.allen_sauer.gwt.log.client.Log;
@@ -23,12 +23,12 @@ public class AutoCompletionExampleScript implements EntryPoint {
 		Log.debug(getClass().getName() + ": onModuleLoad");
 		
 		EOService.Util.getInstance().allMovies(
-				new LogOnErrorAsyncCallback<NSArray<MovieClient>>() {
-					public void onSuccess(NSArray<MovieClient> response) {
+				new LogOnErrorAsyncCallback<NSArray<Movie>>() {
+					public void onSuccess(NSArray<Movie> response) {
 						final MultiWordSuggestOracle oracle = new MultiWordSuggestOracle();
 						final SuggestBox box = new SuggestBox(oracle);
 						
-						NSArray<String> titles = (NSArray<String>) response.valueForKey(MovieClient.TITLE_KEY);
+						NSArray<String> titles = (NSArray<String>) response.valueForKey(Movie.TITLE_KEY);
 						oracle.addAll(titles);
 						
 						RootPanel.get("container").add(box);

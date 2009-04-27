@@ -41,7 +41,7 @@ public class RichTextExampleScript implements EntryPoint {
 	    textArea.setWidth("100%");
 	    toolbar.setWidth("100%");
 	    panel.setWidth("100%");
-	    DOM.setStyleAttribute(panel.getElement(), "margin-right", "4px");
+	    DOM.setStyleAttribute(panel.getElement(), "marginRight", "4px");
 
 	    panel.setWidth("32em");
 

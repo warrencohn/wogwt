@@ -5,8 +5,10 @@ import wogwt.server.rpc.GWTRPCRequestHandler;
 
 import com.webobjects.appserver.WORequest;
 import com.webobjects.appserver.WOResponse;
+import com.webobjects.appserver._private.WOComponentRequestHandler;
 import com.webobjects.foundation._NSUtilities;
 
+import er.ajax.AjaxUtils;
 import er.extensions.appserver.ERXApplication;
 
 public class Application extends ERXApplication {
@@ -20,10 +22,21 @@ public class Application extends ERXApplication {
 		
 		registerRequestHandler(new GWTRPCRequestHandler(), GWTRPCRequestHandler.KEY);
 
+		if(!isWO54()) {
+		    System.setProperty("er.extensions.ERXAjaxApplication.allowContextPageResponse", "true");
+		    registerRequestHandler(new WOComponentRequestHandler() {
+		        @Override
+		        public WOResponse handleRequest(WORequest request) {
+		            AjaxUtils.updateMutableUserInfoWithAjaxInfo(request);
+		            return super.handleRequest(request);
+		        }
+		    }, "ja");
+		}
+		
 		// needed for proper class loading in GWT's Hosted Mode shell
 		_NSUtilities.setClassForName( your.app.components.Main.class, "Main" );
 
-		setPageCacheSize(5);
+		setPageCacheSize(3);
 	}
 
     public WOResponse dispatchRequest(WORequest request) {

@@ -84,7 +84,7 @@
         trailerName, 
         rated
     ); 
-    className = "your.app.eo.Movie"; 
+    className = "your.app.gwt.eo.Movie"; 
     classProperties = (
         category, 
         dateReleased, 
@@ -117,7 +117,7 @@
             voting, 
             rated
         ); 
-        "_javaClientClassName" = "your.app.gwt.eo.MovieClient"; 
+        "_javaClientClassName" = "your.app.gwt.eo.Movie_CustomFieldSerializer"; 
     }; 
     maxNumberOfInstancesToBatchFetch = 10; 
     name = Movie; 

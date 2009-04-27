@@ -22,7 +22,7 @@ public class CompileTimeIDCheckingScript implements EntryPoint {
 		Log.debug(getClass().getName() + ": onModuleLoad");
 		
 		Anchor anchor = Anchor.wrap(DOM.getElementById(UPDATE_LINK_ID));
-		anchor.addClickListener(new UpdateOnClickListener(CONTAINER_ID));
+		anchor.addClickHandler(new UpdateOnClickListener(CONTAINER_ID));
 	}
 	
 }

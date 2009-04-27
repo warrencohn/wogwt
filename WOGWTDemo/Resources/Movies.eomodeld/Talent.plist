@@ -24,13 +24,13 @@
         }
     ); 
     attributesUsedForLocking = (talentID, firstName, lastName); 
-    className = "your.app.eo.Talent"; 
+    className = "your.app.gwt.eo.Talent"; 
     classProperties = (firstName, lastName, roles, moviesDirected, photo); 
     externalName = TALENT; 
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (firstName, lastName, roles, moviesDirected, photo); 
-        "_javaClientClassName" = "your.app.gwt.eo.TalentClient"; 
+        "_javaClientClassName" = "your.app.gwt.eo.Talent_CustomFieldSerializer"; 
     }; 
     maxNumberOfInstancesToBatchFetch = 10; 
     name = Talent; 
