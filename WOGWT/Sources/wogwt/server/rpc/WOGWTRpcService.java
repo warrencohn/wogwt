@@ -5,6 +5,8 @@ import com.webobjects.appserver.WOContext;
 import com.webobjects.appserver.WOSession;
 import com.webobjects.eocontrol.EOEditingContext;
 
+import er.extensions.appserver.ERXWOContext;
+
 /**
  * Base class for all GWT RPC Service classes.
  * Subclasses should implement the WOContext constructor.
@@ -49,7 +51,7 @@ public class WOGWTRpcService {
 	 * the request handler
 	 */
 	public EOEditingContext editingContext() {
-		return (EOEditingContext) context().userInfoForKey(EDITING_CONTEXT_KEY);
+		return (EOEditingContext) ERXWOContext.contextDictionary().valueForKey(EDITING_CONTEXT_KEY);
 	}
 	
 }

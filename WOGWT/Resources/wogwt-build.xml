@@ -27,7 +27,7 @@
 		<attribute name="forceBuild" default="false"/>
 		<!-- classpath element id for adding third-party jars to the compiler classpath -->
 		<attribute name="classpathRefid" default="empty.path"/>
-		<attribute name="gwtHome" default="${wo.wolocalroot}/Library/Frameworks/WOGWT.framework/Resources/Java" />
+		<attribute name="gwtHome" default="/Library/Frameworks/WOGWT.framework/Resources/Java" />
 
 		<sequential>
 			<gwt-uptodate property="gwtGenerate.notRequired" 
@@ -46,7 +46,7 @@
 				<istrue value="@{useTreeLogger}"/>
 			</condition>
 			
-			<condition property="assertArg" value="-ea" else="">
+			<condition property="assertArg" value="-ea" else=" ">
 				<istrue value="@{enableAssert}"/>
 			</condition>
 				
@@ -62,7 +62,7 @@
 					<istrue value="@{forceBuild}"/>
 				</or>
 				<then>
-					<java classname="com.google.gwt.dev.GWTCompiler" fork="true">
+					<java classname="com.google.gwt.dev.Compiler" fork="true">
 						<classpath refid="@{classpathRefid}" />
 						<classpath>
 							<pathelement location="@{srcDir}" />
@@ -70,6 +70,7 @@
 							<pathelement path="@{gwthome}/gwt-user.jar" />
 							<pathelement path="@{gwthome}/gwt-dev-mac.jar" />
 							<pathelement path="@{gwthome}/gwt-log-2.5.2.jar" />
+							<pathelement path="@{gwthome}/gwt-incubator.jar" />
 							<pathelement path="@{gwthome}/wogwt.jar" />
 							<pathelement path="@{gwthome}/gwt-math-2.0.3.jar" />
 							<pathelement path="@{gwthome}/wogwt-emulation.jar" />
@@ -83,15 +84,15 @@
 						<jvmarg line="-Xverify:none" />
 						<arg value="-logLevel" />
 						<arg value="@{logLevel}" />
-						<arg value="${genDirArg}" />
-						<arg value="@{genDir}" />
-						<arg value="-out" />
+						<!--<arg value="${genDirArg}" />
+						<arg value="@{genDir}" />-->
+						<arg value="-war" />
 						<arg value="@{outputDir}" />
-						<arg value="${treeLogger}" />
+						<!--<arg value="${treeLogger}" />-->
 						<arg value="-style" />
 						<arg value="@{style}" />
-						<arg value="${assertArg}" />
-						<arg value="${validateOnlyArg}" />
+						<!--<arg value="${assertArg}" />-->
+						<!--<arg value="${validateOnlyArg}" />-->
 						<arg value="@{module}" />
 					</java>
 				</then>
@@ -106,7 +107,7 @@
 		<attribute name="module" />
 		<attribute name="srcdir" default="Sources"/>
 		<attribute name="output" default="WebServerResources"/>
-		<attribute name="gwthome" default="${wo.wolocalroot}/Library/Frameworks/WOGWT.framework/Resources/Java" />
+		<attribute name="gwthome" default="/Library/Frameworks/WOGWT.framework/Resources/Java" />
 		<sequential>
 
 			<path id="module.package" path="@{srcdir}/@{module}"/>

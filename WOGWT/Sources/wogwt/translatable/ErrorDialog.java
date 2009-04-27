@@ -1,5 +1,7 @@
 package wogwt.translatable;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -29,8 +31,8 @@ public class ErrorDialog extends DialogBox {
 		
 		Button okButton = new Button("OK");
 		okButton.setWidth("100px");
-		okButton.addClickListener(new ClickListener() {
-			public void onClick(Widget sender) {
+		okButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
 				ErrorDialog.this.hide();
 			}
 		});

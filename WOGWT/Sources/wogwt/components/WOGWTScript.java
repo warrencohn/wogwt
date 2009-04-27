@@ -82,7 +82,7 @@ public class WOGWTScript extends WOComponent {
     	
     	String queryString = null;
     	if (context.hasSession()) {
-    		queryString = WOContext.SessionIDBindingKey + "=" + context.session().sessionID();
+    		queryString = "wosid" + "=" + context.session().sessionID();
     	}
     	String rpcUrl = context.urlWithRequestHandlerKey(GWTRPCRequestHandler.KEY, null, queryString);
     	
@@ -99,7 +99,7 @@ public class WOGWTScript extends WOComponent {
     			"WOGWT.directActionBaseUrl='" + directActionUrl + "';\n" +
     			"WOGWT.resourceUrl='" + resourceUrl + "';\n" + 
     			"WOGWT.componentRequestHandlerKey='" + application().componentRequestHandlerKey() + "';\n" +
-    			"WOGWT.ajaxRequestHandlerKey='" + application().ajaxRequestHandlerKey() + "';\n"
+    			"WOGWT.ajaxRequestHandlerKey='ja';\n"
     			);
     	
     	

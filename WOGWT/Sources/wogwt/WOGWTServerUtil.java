@@ -9,14 +9,17 @@ import org.w3c.dom.Node;
 import wogwt.server.rpc.WOGWTServerEO;
 import wogwt.translatable.WOGWTClientUtil;
 import wogwt.translatable.rpc.WOGWTClientEO;
+import wogwt.translatable.rpc.WOGWTSerializableEO;
 
 import com.webobjects.appserver.WORequest;
 import com.webobjects.appserver.WOResponse;
 import com.webobjects.eocontrol.EOEnterpriseObject;
+import com.webobjects.eocontrol.EOFaultHandler;
 import com.webobjects.eocontrol.EOKeyGlobalID;
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSComparator;
 import com.webobjects.foundation.NSDictionary;
+import com.webobjects.foundation.NSKeyValueCoding;
 import com.webobjects.foundation.NSKeyValueCodingAdditions;
 import com.webobjects.foundation.NSLog;
 import com.webobjects.foundation.NSMutableArray;
@@ -245,4 +248,5 @@ public class WOGWTServerUtil {
 		}
 		return result.immutableClone();
 	}
+	
 }

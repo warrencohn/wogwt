@@ -12,6 +12,7 @@ import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.History;
 
 /** 
  * This class will do an ajax request to the url specified by the updateContainer's
@@ -92,7 +93,7 @@ public class Updater {
 	 * returns an empty Map by default.
 	 */
 	protected Map<String, String> getFormValues() {
-		return new HashMap(0);
+		return new HashMap<String, String>(0);
 	}
 	
 	/**
@@ -142,6 +143,7 @@ public class Updater {
 				// the updateContainer is missing and the response is an entire page - probably an error page,
 				// so replace the whole page with the response
 				Document.get().getBody().setInnerHTML(response.getText());
+				History.newItem("updateError");
 			} else {
 				Log.error("the update container " + getUpdateContainerID() + " is missing.");
 			}

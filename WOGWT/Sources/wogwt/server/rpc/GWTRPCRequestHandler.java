@@ -20,6 +20,7 @@ import com.webobjects.appserver.WOResponse;
 import com.webobjects.appserver.WOSession;
 import com.webobjects.eocontrol.EOEditingContext;
 
+import er.extensions.appserver.ERXWOContext;
 import er.extensions.eof.ERXEC;
 
 /**
@@ -85,7 +86,7 @@ public class GWTRPCRequestHandler extends WORequestHandler /*implements Serializ
 		WOContext context = application.createContextForRequest(request);
 		WOResponse response = application.createResponseInContext(context);
 
-		String wosid = request.stringFormValueForKey(WOContext.SessionIDBindingKey);
+		String wosid = request.stringFormValueForKey("wosid");
 		if (wosid == null) {
 			wosid = request.cookieValueForKey("wosid");
 		}
@@ -100,7 +101,7 @@ public class GWTRPCRequestHandler extends WORequestHandler /*implements Serializ
 			EOEditingContext ec = editingContext();
 			ec.lock();
 			try {
-				context.setUserInfoForKey(ec, WOGWTRpcService.EDITING_CONTEXT_KEY);
+				ERXWOContext.contextDictionary().takeValueForKey(ec, WOGWTRpcService.EDITING_CONTEXT_KEY);
 				response.setContent(processCall(request.contentString(), context));
 				return response;
 				

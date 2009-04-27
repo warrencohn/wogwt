@@ -3,8 +3,9 @@ package wogwt.translatable.http;
 import wogwt.translatable.WOGWTClientUtil;
 
 import com.allen_sauer.gwt.log.client.Log;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.Widget;
 
 /** 
@@ -16,7 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
  * with the response.
  *
  */
-public class UpdateOnClickListener extends Updater implements ClickListener {
+public class UpdateOnClickListener extends Updater implements ClickHandler {
 
 	private Widget eventSender;
 	
@@ -53,17 +54,17 @@ public class UpdateOnClickListener extends Updater implements ClickListener {
 		super(actionName, updateContainerID, callback);
 	}
 	
-	public void onClick(Widget sender) {
-		Log.debug("onClick: " + sender.getElement().getId());
+	public void onClick(ClickEvent event) {
+		Log.debug("onClick: " + ((Widget)event.getSource()).getElement().getId());
 		
-		eventSender = sender;
+		eventSender = (Widget)event.getSource();
 		try {
 			fireUpdate();
 		} finally {
 			eventSender = null;
 			if (Event.getCurrentEvent() != null)
 				Event.getCurrentEvent().preventDefault();
-		}
+		}		
 	}
 	
 	@Override
