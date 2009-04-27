@@ -36,7 +36,7 @@ public class SingleFieldSubmitOnChangeListener extends SubmitOnChangeListener {
 	 * @return the form values to be submitted.  Only the sending event's element value is sent.
 	 */
 	protected Map<String, String> getFormValues() {
-		HashMap<String, String> formValues = new HashMap();
+		HashMap<String, String> formValues = new HashMap<String, String>();
 		
 		Element senderElement = ((Widget)getSender()).getElement();
 		String name = senderElement.getAttribute("name");

@@ -4,8 +4,11 @@ import wogwt.translatable.WOGWTClientUtil;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.dom.client.FormElement;
-import com.google.gwt.user.client.ui.ChangeListener;
-import com.google.gwt.user.client.ui.KeyboardListener;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -14,7 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  * Also see SingleFieldSubmitOnChangeListener to do an ajax submit that sends only a single form value.
  */
-public class SubmitOnChangeListener extends SubmitUpdater implements ChangeListener, KeyboardListener {
+public class SubmitOnChangeListener extends SubmitUpdater implements ChangeHandler, KeyUpHandler {
 
 	private Widget eventSender;
 	
@@ -30,22 +33,16 @@ public class SubmitOnChangeListener extends SubmitUpdater implements ChangeListe
 		super(updateContainerID, callback);
 	}
 	
-	public void onChange(Widget sender) {
-		Log.debug("onChange: " + sender.getElement().getId());
-		handleEvent(sender);
-	}
-	
-	public void onKeyDown(Widget sender, char keyCode, int modifiers) {
-	}
-	
-	public void onKeyPress(Widget sender, char keyCode, int modifiers) {
-	}
-	
-	public void onKeyUp(Widget sender, char keyCode, int modifiers) {
-		Log.debug("onKeyUp: " + sender.getElement().getId());
-		handleEvent(sender);
+	public void onChange(ChangeEvent event) {
+		Log.debug("onChange: " + Element.as(event.getNativeEvent().getEventTarget()).getId());
+		handleEvent((Widget)event.getSource());		
 	}
 
+	public void onKeyUp(KeyUpEvent event) {
+		Log.debug("onKeyUp: " + Element.as(event.getNativeEvent().getEventTarget()).getId());
+		handleEvent((Widget)event.getSource());	
+	}
+	
 	private void handleEvent(Widget sender) {
 		eventSender = sender;
 		try {
@@ -72,4 +69,5 @@ public class SubmitOnChangeListener extends SubmitUpdater implements ChangeListe
 	protected FormElement getForm() {
 		return WOGWTClientUtil.formContainingElement(eventSender.getElement());
 	}
+
 }
