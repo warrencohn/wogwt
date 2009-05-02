@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.webobjects.eocontrol.EOEnterpriseObject;
+import com.webobjects.eocontrol.*;
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
@@ -275,4 +275,58 @@ public abstract class _Voting
 		return result.immutableClone();
 	}
 		
+	public static Voting createVoting(EOEditingContext editingContext, your.app.gwt.eo.Movie movie) {
+		Voting eo = (Voting) new Voting(); editingContext.insertObject(eo);    
+		eo.setMovieRelationship(movie);
+		return eo;
+	}
+
+	public static NSArray<Voting> fetchAllVotings(EOEditingContext editingContext) {
+		return _Voting.fetchAllVotings(editingContext, null);
+	}
+
+	public static NSArray<Voting> fetchAllVotings(EOEditingContext editingContext, NSArray<EOSortOrdering> sortOrderings) {
+		return _Voting.fetchVotings(editingContext, null, sortOrderings);
+	}
+
+	public static NSArray<Voting> fetchVotings(EOEditingContext editingContext, EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings) {
+		EOFetchSpecification fetchSpec = new EOFetchSpecification(Voting.ENTITY_NAME, qualifier, sortOrderings);
+		fetchSpec.setIsDeep(true);
+		NSArray<Voting> eoObjects = (NSArray<Voting>)editingContext.objectsWithFetchSpecification(fetchSpec);
+		return eoObjects;
+	}
+
+	public static Voting fetchVoting(EOEditingContext editingContext, String keyName, Object value) {
+		return _Voting.fetchVoting(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static Voting fetchVoting(EOEditingContext editingContext, EOQualifier qualifier) {
+		NSArray<Voting> eoObjects = _Voting.fetchVotings(editingContext, qualifier, null);
+		Voting eoObject;
+		int count = eoObjects.count();
+		if (count == 0) {
+			eoObject = null;
+		}
+		else if (count == 1) {
+			eoObject = (Voting)eoObjects.objectAtIndex(0);
+		}
+		else {
+			throw new IllegalStateException("There was more than one Voting that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+	public static Voting fetchRequiredVoting(EOEditingContext editingContext, String keyName, Object value) {
+		return _Voting.fetchRequiredVoting(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static Voting fetchRequiredVoting(EOEditingContext editingContext, EOQualifier qualifier) {
+		Voting eoObject = _Voting.fetchVoting(editingContext, qualifier);
+		if (eoObject == null) {
+			throw new NoSuchElementException("There was no Voting that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+
 }

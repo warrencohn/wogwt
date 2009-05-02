@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.webobjects.eocontrol.EOEnterpriseObject;
+import com.webobjects.eocontrol.*;
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
@@ -73,54 +73,132 @@ public abstract class _Talent
 		}
 	}
   
-	public NSArray<your.app.gwt.eo.Movie> moviesDirected() {
-		return (NSArray<your.app.gwt.eo.Movie>)storedValueForKey("moviesDirected");
-	}
-	
+  public NSArray<your.app.gwt.eo.Movie> moviesDirected() {
+    return (NSArray<your.app.gwt.eo.Movie>)storedValueForKey("moviesDirected");
+  }
+
 	public void setMoviesDirected(NSArray<your.app.gwt.eo.Movie> aValue) {
 		takeStoredValueForKey(aValue, "moviesDirected");
 	}
-	
-	public void addToMoviesDirected(your.app.gwt.eo.Movie object) {
-		includeObjectIntoPropertyWithKey(object, "moviesDirected");
-	}
 
-	public void removeFromMoviesDirected(your.app.gwt.eo.Movie object) {
-		excludeObjectFromPropertyWithKey(object, "moviesDirected");
-	}
+  public NSArray<your.app.gwt.eo.Movie> moviesDirected(EOQualifier qualifier) {
+    return moviesDirected(qualifier, null);
+  }
 
-	public void addToMoviesDirectedRelationship(your.app.gwt.eo.Movie object) {
-		addObjectToBothSidesOfRelationshipWithKey(object, "moviesDirected");
-	}
+  public NSArray<your.app.gwt.eo.Movie> moviesDirected(EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings) {
+    NSArray<your.app.gwt.eo.Movie> results;
 
-	public void removeFromMoviesDirectedRelationship(your.app.gwt.eo.Movie object) {
-		removeObjectFromBothSidesOfRelationshipWithKey(object, "moviesDirected");
-	}
-	
-	public NSArray<your.app.gwt.eo.MovieRole> roles() {
-		return (NSArray<your.app.gwt.eo.MovieRole>)storedValueForKey("roles");
-	}
-	
+    results = moviesDirected();
+    if (qualifier != null) {
+      results = (NSArray<your.app.gwt.eo.Movie>)EOQualifier.filteredArrayWithQualifier(results, qualifier);
+    }
+    if (sortOrderings != null) {
+      results = (NSArray<your.app.gwt.eo.Movie>)EOSortOrdering.sortedArrayUsingKeyOrderArray(results, sortOrderings);
+    }
+
+    return results;
+  }
+  
+  public void addToMoviesDirected(your.app.gwt.eo.Movie object) {
+    includeObjectIntoPropertyWithKey(object, "moviesDirected");
+  }
+
+  public void removeFromMoviesDirected(your.app.gwt.eo.Movie object) {
+    excludeObjectFromPropertyWithKey(object, "moviesDirected");
+  }
+
+  public void addToMoviesDirectedRelationship(your.app.gwt.eo.Movie object) {
+    addObjectToBothSidesOfRelationshipWithKey(object, "moviesDirected");
+  }
+
+  public void removeFromMoviesDirectedRelationship(your.app.gwt.eo.Movie object) {
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "moviesDirected");
+  }
+
+  public your.app.gwt.eo.Movie createMoviesDirectedRelationship() {
+    EOEnterpriseObject eo = new your.app.gwt.eo.Movie();
+    editingContext().insertObject(eo);
+    addObjectToBothSidesOfRelationshipWithKey(eo, "moviesDirected");
+    return (your.app.gwt.eo.Movie) eo;
+  }
+
+  public void deleteMoviesDirectedRelationship(your.app.gwt.eo.Movie object) {
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "moviesDirected");
+    editingContext().deleteObject(object);
+  }
+
+  public void deleteAllMoviesDirectedRelationships() {
+    Enumeration objects = moviesDirected().immutableClone().objectEnumerator();
+    while (objects.hasMoreElements()) {
+      deleteMoviesDirectedRelationship((your.app.gwt.eo.Movie)objects.nextElement());
+    }
+  }
+
+  public NSArray<your.app.gwt.eo.MovieRole> roles() {
+    return (NSArray<your.app.gwt.eo.MovieRole>)storedValueForKey("roles");
+  }
+
 	public void setRoles(NSArray<your.app.gwt.eo.MovieRole> aValue) {
 		takeStoredValueForKey(aValue, "roles");
 	}
-	
-	public void addToRoles(your.app.gwt.eo.MovieRole object) {
-		includeObjectIntoPropertyWithKey(object, "roles");
-	}
 
-	public void removeFromRoles(your.app.gwt.eo.MovieRole object) {
-		excludeObjectFromPropertyWithKey(object, "roles");
-	}
+  public NSArray<your.app.gwt.eo.MovieRole> roles(EOQualifier qualifier) {
+    return roles(qualifier, null, false);
+  }
 
-	public void addToRolesRelationship(your.app.gwt.eo.MovieRole object) {
-		addObjectToBothSidesOfRelationshipWithKey(object, "roles");
-	}
+  public NSArray<your.app.gwt.eo.MovieRole> roles(EOQualifier qualifier, boolean fetch) {
+    return roles(qualifier, null, fetch);
+  }
 
-	public void removeFromRolesRelationship(your.app.gwt.eo.MovieRole object) {
-		removeObjectFromBothSidesOfRelationshipWithKey(object, "roles");
-	}
-	
+  public NSArray<your.app.gwt.eo.MovieRole> roles(EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings, boolean fetch) {
+    NSArray<your.app.gwt.eo.MovieRole> results;
+
+    results = roles();
+    if (qualifier != null) {
+      results = (NSArray<your.app.gwt.eo.MovieRole>)EOQualifier.filteredArrayWithQualifier(results, qualifier);
+    }
+    if (sortOrderings != null) {
+      results = (NSArray<your.app.gwt.eo.MovieRole>)EOSortOrdering.sortedArrayUsingKeyOrderArray(results, sortOrderings);
+    }
+
+    return results;
+  }
+  
+  public void addToRoles(your.app.gwt.eo.MovieRole object) {
+    includeObjectIntoPropertyWithKey(object, "roles");
+  }
+
+  public void removeFromRoles(your.app.gwt.eo.MovieRole object) {
+    excludeObjectFromPropertyWithKey(object, "roles");
+  }
+
+  public void addToRolesRelationship(your.app.gwt.eo.MovieRole object) {
+    addObjectToBothSidesOfRelationshipWithKey(object, "roles");
+  }
+
+  public void removeFromRolesRelationship(your.app.gwt.eo.MovieRole object) {
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "roles");
+  }
+
+  public your.app.gwt.eo.MovieRole createRolesRelationship() {
+    EOEnterpriseObject eo = new your.app.gwt.eo.MovieRole();
+    editingContext().insertObject(eo);
+    addObjectToBothSidesOfRelationshipWithKey(eo, "roles");
+    return (your.app.gwt.eo.MovieRole) eo;
+  }
+
+  public void deleteRolesRelationship(your.app.gwt.eo.MovieRole object) {
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "roles");
+    editingContext().deleteObject(object);
+  }
+
+  public void deleteAllRolesRelationships() {
+    Enumeration objects = roles().immutableClone().objectEnumerator();
+    while (objects.hasMoreElements()) {
+      deleteRolesRelationship((your.app.gwt.eo.MovieRole)objects.nextElement());
+    }
+  }
+
 	@Override
 	public NSArray<String> attributeKeys() {
 		NSArray<String> result = super.attributeKeys();
@@ -399,4 +477,61 @@ public abstract class _Talent
 		return result.immutableClone();
 	}
 		
+	public static Talent createTalent(EOEditingContext editingContext, String firstName
+, String lastName
+) {
+		Talent eo = (Talent) new Talent(); editingContext.insertObject(eo);    
+		eo.setFirstName(firstName);
+		eo.setLastName(lastName);
+		return eo;
+	}
+
+	public static NSArray<Talent> fetchAllTalents(EOEditingContext editingContext) {
+		return _Talent.fetchAllTalents(editingContext, null);
+	}
+
+	public static NSArray<Talent> fetchAllTalents(EOEditingContext editingContext, NSArray<EOSortOrdering> sortOrderings) {
+		return _Talent.fetchTalents(editingContext, null, sortOrderings);
+	}
+
+	public static NSArray<Talent> fetchTalents(EOEditingContext editingContext, EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings) {
+		EOFetchSpecification fetchSpec = new EOFetchSpecification(Talent.ENTITY_NAME, qualifier, sortOrderings);
+		fetchSpec.setIsDeep(true);
+		NSArray<Talent> eoObjects = (NSArray<Talent>)editingContext.objectsWithFetchSpecification(fetchSpec);
+		return eoObjects;
+	}
+
+	public static Talent fetchTalent(EOEditingContext editingContext, String keyName, Object value) {
+		return _Talent.fetchTalent(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static Talent fetchTalent(EOEditingContext editingContext, EOQualifier qualifier) {
+		NSArray<Talent> eoObjects = _Talent.fetchTalents(editingContext, qualifier, null);
+		Talent eoObject;
+		int count = eoObjects.count();
+		if (count == 0) {
+			eoObject = null;
+		}
+		else if (count == 1) {
+			eoObject = (Talent)eoObjects.objectAtIndex(0);
+		}
+		else {
+			throw new IllegalStateException("There was more than one Talent that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+	public static Talent fetchRequiredTalent(EOEditingContext editingContext, String keyName, Object value) {
+		return _Talent.fetchRequiredTalent(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static Talent fetchRequiredTalent(EOEditingContext editingContext, EOQualifier qualifier) {
+		Talent eoObject = _Talent.fetchTalent(editingContext, qualifier);
+		if (eoObject == null) {
+			throw new NoSuchElementException("There was no Talent that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+
 }

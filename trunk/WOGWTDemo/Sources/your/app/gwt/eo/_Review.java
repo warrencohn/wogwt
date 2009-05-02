@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.webobjects.eocontrol.EOEnterpriseObject;
+import com.webobjects.eocontrol.*;
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
@@ -275,4 +275,58 @@ public abstract class _Review
 		return result.immutableClone();
 	}
 		
+	public static Review createReview(EOEditingContext editingContext, your.app.gwt.eo.Movie movie) {
+		Review eo = (Review) new Review(); editingContext.insertObject(eo);    
+		eo.setMovieRelationship(movie);
+		return eo;
+	}
+
+	public static NSArray<Review> fetchAllReviews(EOEditingContext editingContext) {
+		return _Review.fetchAllReviews(editingContext, null);
+	}
+
+	public static NSArray<Review> fetchAllReviews(EOEditingContext editingContext, NSArray<EOSortOrdering> sortOrderings) {
+		return _Review.fetchReviews(editingContext, null, sortOrderings);
+	}
+
+	public static NSArray<Review> fetchReviews(EOEditingContext editingContext, EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings) {
+		EOFetchSpecification fetchSpec = new EOFetchSpecification(Review.ENTITY_NAME, qualifier, sortOrderings);
+		fetchSpec.setIsDeep(true);
+		NSArray<Review> eoObjects = (NSArray<Review>)editingContext.objectsWithFetchSpecification(fetchSpec);
+		return eoObjects;
+	}
+
+	public static Review fetchReview(EOEditingContext editingContext, String keyName, Object value) {
+		return _Review.fetchReview(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static Review fetchReview(EOEditingContext editingContext, EOQualifier qualifier) {
+		NSArray<Review> eoObjects = _Review.fetchReviews(editingContext, qualifier, null);
+		Review eoObject;
+		int count = eoObjects.count();
+		if (count == 0) {
+			eoObject = null;
+		}
+		else if (count == 1) {
+			eoObject = (Review)eoObjects.objectAtIndex(0);
+		}
+		else {
+			throw new IllegalStateException("There was more than one Review that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+	public static Review fetchRequiredReview(EOEditingContext editingContext, String keyName, Object value) {
+		return _Review.fetchRequiredReview(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static Review fetchRequiredReview(EOEditingContext editingContext, EOQualifier qualifier) {
+		Review eoObject = _Review.fetchReview(editingContext, qualifier);
+		if (eoObject == null) {
+			throw new NoSuchElementException("There was no Review that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+
 }

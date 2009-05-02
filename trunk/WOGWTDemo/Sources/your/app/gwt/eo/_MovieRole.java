@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.webobjects.eocontrol.EOEnterpriseObject;
+import com.webobjects.eocontrol.*;
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
@@ -286,4 +286,59 @@ public abstract class _MovieRole
 		return result.immutableClone();
 	}
 		
+	public static MovieRole createMovieRole(EOEditingContext editingContext, your.app.gwt.eo.Movie movie, your.app.gwt.eo.Talent talent) {
+		MovieRole eo = (MovieRole) new MovieRole(); editingContext.insertObject(eo);    
+		eo.setMovieRelationship(movie);
+		eo.setTalentRelationship(talent);
+		return eo;
+	}
+
+	public static NSArray<MovieRole> fetchAllMovieRoles(EOEditingContext editingContext) {
+		return _MovieRole.fetchAllMovieRoles(editingContext, null);
+	}
+
+	public static NSArray<MovieRole> fetchAllMovieRoles(EOEditingContext editingContext, NSArray<EOSortOrdering> sortOrderings) {
+		return _MovieRole.fetchMovieRoles(editingContext, null, sortOrderings);
+	}
+
+	public static NSArray<MovieRole> fetchMovieRoles(EOEditingContext editingContext, EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings) {
+		EOFetchSpecification fetchSpec = new EOFetchSpecification(MovieRole.ENTITY_NAME, qualifier, sortOrderings);
+		fetchSpec.setIsDeep(true);
+		NSArray<MovieRole> eoObjects = (NSArray<MovieRole>)editingContext.objectsWithFetchSpecification(fetchSpec);
+		return eoObjects;
+	}
+
+	public static MovieRole fetchMovieRole(EOEditingContext editingContext, String keyName, Object value) {
+		return _MovieRole.fetchMovieRole(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static MovieRole fetchMovieRole(EOEditingContext editingContext, EOQualifier qualifier) {
+		NSArray<MovieRole> eoObjects = _MovieRole.fetchMovieRoles(editingContext, qualifier, null);
+		MovieRole eoObject;
+		int count = eoObjects.count();
+		if (count == 0) {
+			eoObject = null;
+		}
+		else if (count == 1) {
+			eoObject = (MovieRole)eoObjects.objectAtIndex(0);
+		}
+		else {
+			throw new IllegalStateException("There was more than one MovieRole that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+	public static MovieRole fetchRequiredMovieRole(EOEditingContext editingContext, String keyName, Object value) {
+		return _MovieRole.fetchRequiredMovieRole(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static MovieRole fetchRequiredMovieRole(EOEditingContext editingContext, EOQualifier qualifier) {
+		MovieRole eoObject = _MovieRole.fetchMovieRole(editingContext, qualifier);
+		if (eoObject == null) {
+			throw new NoSuchElementException("There was no MovieRole that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+
 }
