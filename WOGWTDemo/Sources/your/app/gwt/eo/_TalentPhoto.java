@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.webobjects.eocontrol.EOEnterpriseObject;
+import com.webobjects.eocontrol.*;
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
@@ -229,4 +229,58 @@ public abstract class _TalentPhoto
 		return result.immutableClone();
 	}
 		
+	public static TalentPhoto createTalentPhoto(EOEditingContext editingContext, your.app.gwt.eo.Talent talent) {
+		TalentPhoto eo = (TalentPhoto) new TalentPhoto(); editingContext.insertObject(eo);    
+		eo.setTalentRelationship(talent);
+		return eo;
+	}
+
+	public static NSArray<TalentPhoto> fetchAllTalentPhotos(EOEditingContext editingContext) {
+		return _TalentPhoto.fetchAllTalentPhotos(editingContext, null);
+	}
+
+	public static NSArray<TalentPhoto> fetchAllTalentPhotos(EOEditingContext editingContext, NSArray<EOSortOrdering> sortOrderings) {
+		return _TalentPhoto.fetchTalentPhotos(editingContext, null, sortOrderings);
+	}
+
+	public static NSArray<TalentPhoto> fetchTalentPhotos(EOEditingContext editingContext, EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings) {
+		EOFetchSpecification fetchSpec = new EOFetchSpecification(TalentPhoto.ENTITY_NAME, qualifier, sortOrderings);
+		fetchSpec.setIsDeep(true);
+		NSArray<TalentPhoto> eoObjects = (NSArray<TalentPhoto>)editingContext.objectsWithFetchSpecification(fetchSpec);
+		return eoObjects;
+	}
+
+	public static TalentPhoto fetchTalentPhoto(EOEditingContext editingContext, String keyName, Object value) {
+		return _TalentPhoto.fetchTalentPhoto(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static TalentPhoto fetchTalentPhoto(EOEditingContext editingContext, EOQualifier qualifier) {
+		NSArray<TalentPhoto> eoObjects = _TalentPhoto.fetchTalentPhotos(editingContext, qualifier, null);
+		TalentPhoto eoObject;
+		int count = eoObjects.count();
+		if (count == 0) {
+			eoObject = null;
+		}
+		else if (count == 1) {
+			eoObject = (TalentPhoto)eoObjects.objectAtIndex(0);
+		}
+		else {
+			throw new IllegalStateException("There was more than one TalentPhoto that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+	public static TalentPhoto fetchRequiredTalentPhoto(EOEditingContext editingContext, String keyName, Object value) {
+		return _TalentPhoto.fetchRequiredTalentPhoto(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static TalentPhoto fetchRequiredTalentPhoto(EOEditingContext editingContext, EOQualifier qualifier) {
+		TalentPhoto eoObject = _TalentPhoto.fetchTalentPhoto(editingContext, qualifier);
+		if (eoObject == null) {
+			throw new NoSuchElementException("There was no TalentPhoto that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+
 }

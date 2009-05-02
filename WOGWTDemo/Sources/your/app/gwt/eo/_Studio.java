@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.webobjects.eocontrol.EOEnterpriseObject;
+import com.webobjects.eocontrol.*;
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
@@ -54,30 +54,71 @@ public abstract class _Studio
 		takeStoredValueForKey(value, "name");
 	}
 	
-	public NSArray<your.app.gwt.eo.Movie> movies() {
-		return (NSArray<your.app.gwt.eo.Movie>)storedValueForKey("movies");
-	}
-	
+  public NSArray<your.app.gwt.eo.Movie> movies() {
+    return (NSArray<your.app.gwt.eo.Movie>)storedValueForKey("movies");
+  }
+
 	public void setMovies(NSArray<your.app.gwt.eo.Movie> aValue) {
 		takeStoredValueForKey(aValue, "movies");
 	}
-	
-	public void addToMovies(your.app.gwt.eo.Movie object) {
-		includeObjectIntoPropertyWithKey(object, "movies");
-	}
 
-	public void removeFromMovies(your.app.gwt.eo.Movie object) {
-		excludeObjectFromPropertyWithKey(object, "movies");
-	}
+  public NSArray<your.app.gwt.eo.Movie> movies(EOQualifier qualifier) {
+    return movies(qualifier, null, false);
+  }
 
-	public void addToMoviesRelationship(your.app.gwt.eo.Movie object) {
-		addObjectToBothSidesOfRelationshipWithKey(object, "movies");
-	}
+  public NSArray<your.app.gwt.eo.Movie> movies(EOQualifier qualifier, boolean fetch) {
+    return movies(qualifier, null, fetch);
+  }
 
-	public void removeFromMoviesRelationship(your.app.gwt.eo.Movie object) {
-		removeObjectFromBothSidesOfRelationshipWithKey(object, "movies");
-	}
-	
+  public NSArray<your.app.gwt.eo.Movie> movies(EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings, boolean fetch) {
+    NSArray<your.app.gwt.eo.Movie> results;
+
+    results = movies();
+    if (qualifier != null) {
+      results = (NSArray<your.app.gwt.eo.Movie>)EOQualifier.filteredArrayWithQualifier(results, qualifier);
+    }
+    if (sortOrderings != null) {
+      results = (NSArray<your.app.gwt.eo.Movie>)EOSortOrdering.sortedArrayUsingKeyOrderArray(results, sortOrderings);
+    }
+
+    return results;
+  }
+  
+  public void addToMovies(your.app.gwt.eo.Movie object) {
+    includeObjectIntoPropertyWithKey(object, "movies");
+  }
+
+  public void removeFromMovies(your.app.gwt.eo.Movie object) {
+    excludeObjectFromPropertyWithKey(object, "movies");
+  }
+
+  public void addToMoviesRelationship(your.app.gwt.eo.Movie object) {
+    addObjectToBothSidesOfRelationshipWithKey(object, "movies");
+  }
+
+  public void removeFromMoviesRelationship(your.app.gwt.eo.Movie object) {
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "movies");
+  }
+
+  public your.app.gwt.eo.Movie createMoviesRelationship() {
+    EOEnterpriseObject eo = new your.app.gwt.eo.Movie();
+    editingContext().insertObject(eo);
+    addObjectToBothSidesOfRelationshipWithKey(eo, "movies");
+    return (your.app.gwt.eo.Movie) eo;
+  }
+
+  public void deleteMoviesRelationship(your.app.gwt.eo.Movie object) {
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "movies");
+    editingContext().deleteObject(object);
+  }
+
+  public void deleteAllMoviesRelationships() {
+    Enumeration objects = movies().immutableClone().objectEnumerator();
+    while (objects.hasMoreElements()) {
+      deleteMoviesRelationship((your.app.gwt.eo.Movie)objects.nextElement());
+    }
+  }
+
 	@Override
 	public NSArray<String> attributeKeys() {
 		NSArray<String> result = super.attributeKeys();
@@ -298,4 +339,80 @@ public abstract class _Studio
 		return result.immutableClone();
 	}
 		
+	public static Studio createStudio(EOEditingContext editingContext, java.math.BigDecimal budget
+, String name
+) {
+		Studio eo = (Studio) new Studio(); editingContext.insertObject(eo);    
+		eo.setBudget(budget);
+		eo.setName(name);
+		return eo;
+	}
+
+	public static NSArray<Studio> fetchAllStudios(EOEditingContext editingContext) {
+		return _Studio.fetchAllStudios(editingContext, null);
+	}
+
+	public static NSArray<Studio> fetchAllStudios(EOEditingContext editingContext, NSArray<EOSortOrdering> sortOrderings) {
+		return _Studio.fetchStudios(editingContext, null, sortOrderings);
+	}
+
+	public static NSArray<Studio> fetchStudios(EOEditingContext editingContext, EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings) {
+		EOFetchSpecification fetchSpec = new EOFetchSpecification(Studio.ENTITY_NAME, qualifier, sortOrderings);
+		fetchSpec.setIsDeep(true);
+		NSArray<Studio> eoObjects = (NSArray<Studio>)editingContext.objectsWithFetchSpecification(fetchSpec);
+		return eoObjects;
+	}
+
+	public static Studio fetchStudio(EOEditingContext editingContext, String keyName, Object value) {
+		return _Studio.fetchStudio(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static Studio fetchStudio(EOEditingContext editingContext, EOQualifier qualifier) {
+		NSArray<Studio> eoObjects = _Studio.fetchStudios(editingContext, qualifier, null);
+		Studio eoObject;
+		int count = eoObjects.count();
+		if (count == 0) {
+			eoObject = null;
+		}
+		else if (count == 1) {
+			eoObject = (Studio)eoObjects.objectAtIndex(0);
+		}
+		else {
+			throw new IllegalStateException("There was more than one Studio that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+	public static Studio fetchRequiredStudio(EOEditingContext editingContext, String keyName, Object value) {
+		return _Studio.fetchRequiredStudio(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static Studio fetchRequiredStudio(EOEditingContext editingContext, EOQualifier qualifier) {
+		Studio eoObject = _Studio.fetchStudio(editingContext, qualifier);
+		if (eoObject == null) {
+			throw new NoSuchElementException("There was no Studio that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+	public static EOFetchSpecification RawFetchAllStudiosFetchSpec() {
+        return EOFetchSpecification.fetchSpecificationNamed("RawFetchAllStudios", Studio.ENTITY_NAME);
+	}
+	
+	public static EOFetchSpecification bindRawFetchAllStudios() {
+	    EOFetchSpecification spec = EOFetchSpecification.fetchSpecificationNamed("RawFetchAllStudios", Studio.ENTITY_NAME);
+	    return spec;
+	} 
+
+	/**
+	 * RAW ROW KEY PATHS:
+     * name
+     * studioID
+	 */
+	public static NSArray<NSDictionary> objectsForRawFetchAllStudios(EOEditingContext ec) {
+        EOFetchSpecification spec = bindRawFetchAllStudios();
+        return ec.objectsWithFetchSpecification(spec);        
+	}
+	
+
 }

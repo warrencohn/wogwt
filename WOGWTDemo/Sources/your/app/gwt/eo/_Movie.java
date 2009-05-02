@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.webobjects.eocontrol.EOEnterpriseObject;
+import com.webobjects.eocontrol.*;
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
@@ -159,78 +159,195 @@ public abstract class _Movie
 		}
 	}
   
-	public NSArray<your.app.gwt.eo.Talent> directors() {
-		return (NSArray<your.app.gwt.eo.Talent>)storedValueForKey("directors");
-	}
-	
+  public NSArray<your.app.gwt.eo.Talent> directors() {
+    return (NSArray<your.app.gwt.eo.Talent>)storedValueForKey("directors");
+  }
+
 	public void setDirectors(NSArray<your.app.gwt.eo.Talent> aValue) {
 		takeStoredValueForKey(aValue, "directors");
 	}
-	
-	public void addToDirectors(your.app.gwt.eo.Talent object) {
-		includeObjectIntoPropertyWithKey(object, "directors");
-	}
 
-	public void removeFromDirectors(your.app.gwt.eo.Talent object) {
-		excludeObjectFromPropertyWithKey(object, "directors");
-	}
+  public NSArray<your.app.gwt.eo.Talent> directors(EOQualifier qualifier) {
+    return directors(qualifier, null);
+  }
 
-	public void addToDirectorsRelationship(your.app.gwt.eo.Talent object) {
-		addObjectToBothSidesOfRelationshipWithKey(object, "directors");
-	}
+  public NSArray<your.app.gwt.eo.Talent> directors(EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings) {
+    NSArray<your.app.gwt.eo.Talent> results;
 
-	public void removeFromDirectorsRelationship(your.app.gwt.eo.Talent object) {
-		removeObjectFromBothSidesOfRelationshipWithKey(object, "directors");
-	}
-	
-	public NSArray<your.app.gwt.eo.Review> reviews() {
-		return (NSArray<your.app.gwt.eo.Review>)storedValueForKey("reviews");
-	}
-	
+    results = directors();
+    if (qualifier != null) {
+      results = (NSArray<your.app.gwt.eo.Talent>)EOQualifier.filteredArrayWithQualifier(results, qualifier);
+    }
+    if (sortOrderings != null) {
+      results = (NSArray<your.app.gwt.eo.Talent>)EOSortOrdering.sortedArrayUsingKeyOrderArray(results, sortOrderings);
+    }
+
+    return results;
+  }
+  
+  public void addToDirectors(your.app.gwt.eo.Talent object) {
+    includeObjectIntoPropertyWithKey(object, "directors");
+  }
+
+  public void removeFromDirectors(your.app.gwt.eo.Talent object) {
+    excludeObjectFromPropertyWithKey(object, "directors");
+  }
+
+  public void addToDirectorsRelationship(your.app.gwt.eo.Talent object) {
+    addObjectToBothSidesOfRelationshipWithKey(object, "directors");
+  }
+
+  public void removeFromDirectorsRelationship(your.app.gwt.eo.Talent object) {
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "directors");
+  }
+
+  public your.app.gwt.eo.Talent createDirectorsRelationship() {
+    EOEnterpriseObject eo = new your.app.gwt.eo.Talent();
+    editingContext().insertObject(eo);
+    addObjectToBothSidesOfRelationshipWithKey(eo, "directors");
+    return (your.app.gwt.eo.Talent) eo;
+  }
+
+  public void deleteDirectorsRelationship(your.app.gwt.eo.Talent object) {
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "directors");
+    editingContext().deleteObject(object);
+  }
+
+  public void deleteAllDirectorsRelationships() {
+    Enumeration objects = directors().immutableClone().objectEnumerator();
+    while (objects.hasMoreElements()) {
+      deleteDirectorsRelationship((your.app.gwt.eo.Talent)objects.nextElement());
+    }
+  }
+
+  public NSArray<your.app.gwt.eo.Review> reviews() {
+    return (NSArray<your.app.gwt.eo.Review>)storedValueForKey("reviews");
+  }
+
 	public void setReviews(NSArray<your.app.gwt.eo.Review> aValue) {
 		takeStoredValueForKey(aValue, "reviews");
 	}
-	
-	public void addToReviews(your.app.gwt.eo.Review object) {
-		includeObjectIntoPropertyWithKey(object, "reviews");
-	}
 
-	public void removeFromReviews(your.app.gwt.eo.Review object) {
-		excludeObjectFromPropertyWithKey(object, "reviews");
-	}
+  public NSArray<your.app.gwt.eo.Review> reviews(EOQualifier qualifier) {
+    return reviews(qualifier, null, false);
+  }
 
-	public void addToReviewsRelationship(your.app.gwt.eo.Review object) {
-		addObjectToBothSidesOfRelationshipWithKey(object, "reviews");
-	}
+  public NSArray<your.app.gwt.eo.Review> reviews(EOQualifier qualifier, boolean fetch) {
+    return reviews(qualifier, null, fetch);
+  }
 
-	public void removeFromReviewsRelationship(your.app.gwt.eo.Review object) {
-		removeObjectFromBothSidesOfRelationshipWithKey(object, "reviews");
-	}
-	
-	public NSArray<your.app.gwt.eo.MovieRole> roles() {
-		return (NSArray<your.app.gwt.eo.MovieRole>)storedValueForKey("roles");
-	}
-	
+  public NSArray<your.app.gwt.eo.Review> reviews(EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings, boolean fetch) {
+    NSArray<your.app.gwt.eo.Review> results;
+
+    results = reviews();
+    if (qualifier != null) {
+      results = (NSArray<your.app.gwt.eo.Review>)EOQualifier.filteredArrayWithQualifier(results, qualifier);
+    }
+    if (sortOrderings != null) {
+      results = (NSArray<your.app.gwt.eo.Review>)EOSortOrdering.sortedArrayUsingKeyOrderArray(results, sortOrderings);
+    }
+
+    return results;
+  }
+  
+  public void addToReviews(your.app.gwt.eo.Review object) {
+    includeObjectIntoPropertyWithKey(object, "reviews");
+  }
+
+  public void removeFromReviews(your.app.gwt.eo.Review object) {
+    excludeObjectFromPropertyWithKey(object, "reviews");
+  }
+
+  public void addToReviewsRelationship(your.app.gwt.eo.Review object) {
+    addObjectToBothSidesOfRelationshipWithKey(object, "reviews");
+  }
+
+  public void removeFromReviewsRelationship(your.app.gwt.eo.Review object) {
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "reviews");
+  }
+
+  public your.app.gwt.eo.Review createReviewsRelationship() {
+    EOEnterpriseObject eo = new your.app.gwt.eo.Review();
+    editingContext().insertObject(eo);
+    addObjectToBothSidesOfRelationshipWithKey(eo, "reviews");
+    return (your.app.gwt.eo.Review) eo;
+  }
+
+  public void deleteReviewsRelationship(your.app.gwt.eo.Review object) {
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "reviews");
+  }
+
+  public void deleteAllReviewsRelationships() {
+    Enumeration objects = reviews().immutableClone().objectEnumerator();
+    while (objects.hasMoreElements()) {
+      deleteReviewsRelationship((your.app.gwt.eo.Review)objects.nextElement());
+    }
+  }
+
+  public NSArray<your.app.gwt.eo.MovieRole> roles() {
+    return (NSArray<your.app.gwt.eo.MovieRole>)storedValueForKey("roles");
+  }
+
 	public void setRoles(NSArray<your.app.gwt.eo.MovieRole> aValue) {
 		takeStoredValueForKey(aValue, "roles");
 	}
-	
-	public void addToRoles(your.app.gwt.eo.MovieRole object) {
-		includeObjectIntoPropertyWithKey(object, "roles");
-	}
 
-	public void removeFromRoles(your.app.gwt.eo.MovieRole object) {
-		excludeObjectFromPropertyWithKey(object, "roles");
-	}
+  public NSArray<your.app.gwt.eo.MovieRole> roles(EOQualifier qualifier) {
+    return roles(qualifier, null, false);
+  }
 
-	public void addToRolesRelationship(your.app.gwt.eo.MovieRole object) {
-		addObjectToBothSidesOfRelationshipWithKey(object, "roles");
-	}
+  public NSArray<your.app.gwt.eo.MovieRole> roles(EOQualifier qualifier, boolean fetch) {
+    return roles(qualifier, null, fetch);
+  }
 
-	public void removeFromRolesRelationship(your.app.gwt.eo.MovieRole object) {
-		removeObjectFromBothSidesOfRelationshipWithKey(object, "roles");
-	}
-	
+  public NSArray<your.app.gwt.eo.MovieRole> roles(EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings, boolean fetch) {
+    NSArray<your.app.gwt.eo.MovieRole> results;
+
+    results = roles();
+    if (qualifier != null) {
+      results = (NSArray<your.app.gwt.eo.MovieRole>)EOQualifier.filteredArrayWithQualifier(results, qualifier);
+    }
+    if (sortOrderings != null) {
+      results = (NSArray<your.app.gwt.eo.MovieRole>)EOSortOrdering.sortedArrayUsingKeyOrderArray(results, sortOrderings);
+    }
+
+    return results;
+  }
+  
+  public void addToRoles(your.app.gwt.eo.MovieRole object) {
+    includeObjectIntoPropertyWithKey(object, "roles");
+  }
+
+  public void removeFromRoles(your.app.gwt.eo.MovieRole object) {
+    excludeObjectFromPropertyWithKey(object, "roles");
+  }
+
+  public void addToRolesRelationship(your.app.gwt.eo.MovieRole object) {
+    addObjectToBothSidesOfRelationshipWithKey(object, "roles");
+  }
+
+  public void removeFromRolesRelationship(your.app.gwt.eo.MovieRole object) {
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "roles");
+  }
+
+  public your.app.gwt.eo.MovieRole createRolesRelationship() {
+    EOEnterpriseObject eo = new your.app.gwt.eo.MovieRole();
+    editingContext().insertObject(eo);
+    addObjectToBothSidesOfRelationshipWithKey(eo, "roles");
+    return (your.app.gwt.eo.MovieRole) eo;
+  }
+
+  public void deleteRolesRelationship(your.app.gwt.eo.MovieRole object) {
+    removeObjectFromBothSidesOfRelationshipWithKey(object, "roles");
+  }
+
+  public void deleteAllRolesRelationships() {
+    Enumeration objects = roles().immutableClone().objectEnumerator();
+    while (objects.hasMoreElements()) {
+      deleteRolesRelationship((your.app.gwt.eo.MovieRole)objects.nextElement());
+    }
+  }
+
 	@Override
 	public NSArray<String> attributeKeys() {
 		NSArray<String> result = super.attributeKeys();
@@ -685,4 +802,129 @@ public abstract class _Movie
 		return result.immutableClone();
 	}
 		
+	public static Movie createMovie(EOEditingContext editingContext, String title
+) {
+		Movie eo = (Movie) new Movie(); editingContext.insertObject(eo);    
+		eo.setTitle(title);
+		return eo;
+	}
+
+	public static NSArray<Movie> fetchAllMovies(EOEditingContext editingContext) {
+		return _Movie.fetchAllMovies(editingContext, null);
+	}
+
+	public static NSArray<Movie> fetchAllMovies(EOEditingContext editingContext, NSArray<EOSortOrdering> sortOrderings) {
+		return _Movie.fetchMovies(editingContext, null, sortOrderings);
+	}
+
+	public static NSArray<Movie> fetchMovies(EOEditingContext editingContext, EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings) {
+		EOFetchSpecification fetchSpec = new EOFetchSpecification(Movie.ENTITY_NAME, qualifier, sortOrderings);
+		fetchSpec.setIsDeep(true);
+		NSArray<Movie> eoObjects = (NSArray<Movie>)editingContext.objectsWithFetchSpecification(fetchSpec);
+		return eoObjects;
+	}
+
+	public static Movie fetchMovie(EOEditingContext editingContext, String keyName, Object value) {
+		return _Movie.fetchMovie(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static Movie fetchMovie(EOEditingContext editingContext, EOQualifier qualifier) {
+		NSArray<Movie> eoObjects = _Movie.fetchMovies(editingContext, qualifier, null);
+		Movie eoObject;
+		int count = eoObjects.count();
+		if (count == 0) {
+			eoObject = null;
+		}
+		else if (count == 1) {
+			eoObject = (Movie)eoObjects.objectAtIndex(0);
+		}
+		else {
+			throw new IllegalStateException("There was more than one Movie that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+	public static Movie fetchRequiredMovie(EOEditingContext editingContext, String keyName, Object value) {
+		return _Movie.fetchRequiredMovie(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static Movie fetchRequiredMovie(EOEditingContext editingContext, EOQualifier qualifier) {
+		Movie eoObject = _Movie.fetchMovie(editingContext, qualifier);
+		if (eoObject == null) {
+			throw new NoSuchElementException("There was no Movie that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+	public static EOFetchSpecification DeepFetchOneMovieFetchSpec() {
+        return EOFetchSpecification.fetchSpecificationNamed("DeepFetchOneMovie", Movie.ENTITY_NAME);
+	}
+	
+	public static EOFetchSpecification QualifierVariableFetchSpec() {
+        return EOFetchSpecification.fetchSpecificationNamed("QualifierVariable", Movie.ENTITY_NAME);
+	}
+	
+	public static EOFetchSpecification RawFetchAllMoviesFetchSpec() {
+        return EOFetchSpecification.fetchSpecificationNamed("RawFetchAllMovies", Movie.ENTITY_NAME);
+	}
+	
+	public static EOFetchSpecification bindDeepFetchOneMovie(Integer myMovieBinding) {
+	    EOFetchSpecification spec = EOFetchSpecification.fetchSpecificationNamed("DeepFetchOneMovie", Movie.ENTITY_NAME);
+	    	
+	    NSMutableDictionary bindings = new NSMutableDictionary();
+	    if (myMovieBinding != null)
+	        bindings.setObjectForKey(myMovieBinding, "myMovie");
+	    spec = spec.fetchSpecificationWithQualifierBindings(bindings);
+	    
+	    return spec;
+	} 
+
+	public static EOFetchSpecification bindQualifierVariable(java.math.BigDecimal revenueBinding, your.app.gwt.eo.Studio studioBinding, String studioNameBinding, String titleBinding) {
+	    EOFetchSpecification spec = EOFetchSpecification.fetchSpecificationNamed("QualifierVariable", Movie.ENTITY_NAME);
+	    	
+	    NSMutableDictionary bindings = new NSMutableDictionary();
+	    if (revenueBinding != null)
+	        bindings.setObjectForKey(revenueBinding, "revenue");
+	    if (studioBinding != null)
+	        bindings.setObjectForKey(studioBinding, "studio");
+	    if (studioNameBinding != null)
+	        bindings.setObjectForKey(studioNameBinding, "studioName");
+	    if (titleBinding != null)
+	        bindings.setObjectForKey(titleBinding, "title");
+	    spec = spec.fetchSpecificationWithQualifierBindings(bindings);
+	    
+	    return spec;
+	} 
+
+	public static EOFetchSpecification bindRawFetchAllMovies() {
+	    EOFetchSpecification spec = EOFetchSpecification.fetchSpecificationNamed("RawFetchAllMovies", Movie.ENTITY_NAME);
+	    return spec;
+	} 
+
+	public static NSArray<Movie> objectsForDeepFetchOneMovie(EOEditingContext ec,
+			Integer myMovieBinding) {
+        EOFetchSpecification spec = bindDeepFetchOneMovie(myMovieBinding);
+        return ec.objectsWithFetchSpecification(spec);        
+	}
+	
+	public static NSArray<Movie> objectsForQualifierVariable(EOEditingContext ec,
+			java.math.BigDecimal revenueBinding,
+			your.app.gwt.eo.Studio studioBinding,
+			String studioNameBinding,
+			String titleBinding) {
+        EOFetchSpecification spec = bindQualifierVariable(revenueBinding, studioBinding, studioNameBinding, titleBinding);
+        return ec.objectsWithFetchSpecification(spec);        
+	}
+	
+	/**
+	 * RAW ROW KEY PATHS:
+     * movieID
+     * title
+	 */
+	public static NSArray<NSDictionary> objectsForRawFetchAllMovies(EOEditingContext ec) {
+        EOFetchSpecification spec = bindRawFetchAllMovies();
+        return ec.objectsWithFetchSpecification(spec);        
+	}
+	
+
 }

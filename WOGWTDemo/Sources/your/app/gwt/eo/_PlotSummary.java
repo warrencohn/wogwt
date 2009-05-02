@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.webobjects.eocontrol.EOEnterpriseObject;
+import com.webobjects.eocontrol.*;
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSDictionary;
@@ -247,4 +247,58 @@ public abstract class _PlotSummary
 		return result.immutableClone();
 	}
 		
+	public static PlotSummary createPlotSummary(EOEditingContext editingContext, your.app.gwt.eo.Movie movie) {
+		PlotSummary eo = (PlotSummary) new PlotSummary(); editingContext.insertObject(eo);    
+		eo.setMovieRelationship(movie);
+		return eo;
+	}
+
+	public static NSArray<PlotSummary> fetchAllPlotSummaries(EOEditingContext editingContext) {
+		return _PlotSummary.fetchAllPlotSummaries(editingContext, null);
+	}
+
+	public static NSArray<PlotSummary> fetchAllPlotSummaries(EOEditingContext editingContext, NSArray<EOSortOrdering> sortOrderings) {
+		return _PlotSummary.fetchPlotSummaries(editingContext, null, sortOrderings);
+	}
+
+	public static NSArray<PlotSummary> fetchPlotSummaries(EOEditingContext editingContext, EOQualifier qualifier, NSArray<EOSortOrdering> sortOrderings) {
+		EOFetchSpecification fetchSpec = new EOFetchSpecification(PlotSummary.ENTITY_NAME, qualifier, sortOrderings);
+		fetchSpec.setIsDeep(true);
+		NSArray<PlotSummary> eoObjects = (NSArray<PlotSummary>)editingContext.objectsWithFetchSpecification(fetchSpec);
+		return eoObjects;
+	}
+
+	public static PlotSummary fetchPlotSummary(EOEditingContext editingContext, String keyName, Object value) {
+		return _PlotSummary.fetchPlotSummary(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static PlotSummary fetchPlotSummary(EOEditingContext editingContext, EOQualifier qualifier) {
+		NSArray<PlotSummary> eoObjects = _PlotSummary.fetchPlotSummaries(editingContext, qualifier, null);
+		PlotSummary eoObject;
+		int count = eoObjects.count();
+		if (count == 0) {
+			eoObject = null;
+		}
+		else if (count == 1) {
+			eoObject = (PlotSummary)eoObjects.objectAtIndex(0);
+		}
+		else {
+			throw new IllegalStateException("There was more than one PlotSummary that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+	public static PlotSummary fetchRequiredPlotSummary(EOEditingContext editingContext, String keyName, Object value) {
+		return _PlotSummary.fetchRequiredPlotSummary(editingContext, new EOKeyValueQualifier(keyName, EOQualifier.QualifierOperatorEqual, value));
+	}
+
+	public static PlotSummary fetchRequiredPlotSummary(EOEditingContext editingContext, EOQualifier qualifier) {
+		PlotSummary eoObject = _PlotSummary.fetchPlotSummary(editingContext, qualifier);
+		if (eoObject == null) {
+			throw new NoSuchElementException("There was no PlotSummary that matched the qualifier '" + qualifier + "'.");
+		}
+		return eoObject;
+	}
+
+
 }
