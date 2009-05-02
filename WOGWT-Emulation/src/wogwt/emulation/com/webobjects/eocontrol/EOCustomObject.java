@@ -49,6 +49,15 @@ public abstract class EOCustomObject implements EOEnterpriseObject, EODeferredFa
 	
 	public abstract NSArray<String> attributeKeys();
 
+	public void awakeFromClientUpdate(EOEditingContext ec) {
+	}
+	
+	public void awakeFromFetch(EOEditingContext ec) {
+	}
+	
+	public void awakeFromInsertion(EOEditingContext ec) {
+	}
+	
 	public static boolean canAccessFieldsDirectly() {
 		return true;
 	}
@@ -68,6 +77,14 @@ public abstract class EOCustomObject implements EOEnterpriseObject, EODeferredFa
 		return result;
 	}
 	
+	public EOClassDescription classDescription() {
+		return null;
+	}
+	
+	public EOClassDescription classDescriptionForDestinationKey(String detailKey) {
+		return null;
+	}
+	
 	public void clearFault() {
 		throw new IllegalStateException("clearFault was invoked on an object that is not a fault");
 	}
@@ -84,6 +101,10 @@ public abstract class EOCustomObject implements EOEnterpriseObject, EODeferredFa
 	}
 	
 	public abstract int deleteRuleForRelationshipKey(String relationshipKey);
+	
+	public EOEditingContext editingContext() {
+		return null;
+	}
 	
 	public abstract String entityName();
 	
@@ -117,7 +138,9 @@ public abstract class EOCustomObject implements EOEnterpriseObject, EODeferredFa
 	public abstract boolean ownsDestinationObjectsForRelationshipKey(String relationshipKey); 
 	
 	public void prepareValuesForClient() {
-		
+	}
+
+	public void propagateDeleteWithEditingContext(EOEditingContext ec) {
 	}
 	
 	public void reapplyChangesFromDictionary(NSDictionary<String, Object> changes) {

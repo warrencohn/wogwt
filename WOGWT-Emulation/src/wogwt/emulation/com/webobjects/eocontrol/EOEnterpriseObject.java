@@ -15,13 +15,26 @@ public interface EOEnterpriseObject extends
 	
 	public NSArray<String> attributeKeys();
 	
+	public void awakeFromClientUpdate(EOEditingContext ec);
+	
+	public void awakeFromFetch(EOEditingContext ec);
+	
+	public void awakeFromInsertion(EOEditingContext ec);
+	
+	
 	public NSDictionary changesFromSnapshot(NSDictionary<String, Object> snapshot);
+	
+	public EOClassDescription classDescription();
+	
+	public EOClassDescription classDescriptionForDestinationKey(String detailKey);
 	
 	public void clearFault();
 	
 	public void clearProperties();
 	
 	public int deleteRuleForRelationshipKey(String relationshipKey);
+	
+	public EOEditingContext editingContext();
 	
 	public String entityName();
 	
@@ -42,6 +55,8 @@ public interface EOEnterpriseObject extends
 	public boolean ownsDestinationObjectsForRelationshipKey(String relationshipKey);
 	
 	public void prepareValuesForClient();
+	
+	public void propagateDeleteWithEditingContext(EOEditingContext ec);
 	
 	public void reapplyChangesFromDictionary(NSDictionary<String, Object> changes);
 	

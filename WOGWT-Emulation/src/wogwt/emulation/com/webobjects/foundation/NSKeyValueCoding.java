@@ -21,7 +21,7 @@ public interface NSKeyValueCoding {
 	
 	public static final Null NullValue = new Null();
 	
-	public static class Null<T> implements Serializable, Cloneable {
+	public static final class Null<T> implements Serializable, Cloneable {
 
 		public Null() {
 			super();
