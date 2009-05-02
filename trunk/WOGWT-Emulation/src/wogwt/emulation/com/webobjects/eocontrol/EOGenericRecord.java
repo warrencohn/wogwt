@@ -8,7 +8,15 @@ import com.webobjects.foundation.NSArray;
  */
 public class EOGenericRecord extends EOCustomObject {
 
+	public static boolean usesDeferredFaultCreation() {
+		return true;
+	}
+	
 	public EOGenericRecord() {
+		super();
+	}
+	
+	public EOGenericRecord(EOClassDescription classDescription) {
 		super();
 	}
 	
