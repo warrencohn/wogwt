@@ -163,8 +163,14 @@ public class NSSet<E> extends HashSet<E> {
 		return true;
 	}
 	
-	public boolean member(Object object) {
-		return contains(object);
+	public Object member(Object object) {
+		NSArray<E> objects = this.allObjects();
+		int index = objects.indexOfObject(object);
+		if (index != -1) {
+			return objects.get(index);
+		} else {
+			return null;
+		}
 	}
 	
 	public NSMutableSet<E> mutableClone() {

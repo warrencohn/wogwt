@@ -16,8 +16,18 @@ import com.webobjects.foundation.NSMutableSet;
  */
 public abstract class EOCustomObject implements EOEnterpriseObject, EODeferredFaulting {
 
+	private EOGlobalID __globalID;
+	
 	public EOCustomObject() {
 		super();
+	}
+	
+	public EOGlobalID __globalID() {
+		return __globalID;
+	}
+	
+	public void __setGlobalID(EOGlobalID id) {
+		__globalID = id;
 	}
 	
 	public void addObjectToPropertyWithKey(Object eo, String key) {
@@ -28,7 +38,10 @@ public abstract class EOCustomObject implements EOEnterpriseObject, EODeferredFa
 				takeStoredValueForKey(value, key);
 			}
 		} else {
-			takeStoredValueForKey(eo, key);
+			if (attributeKeys().contains(key) ||
+					toOneRelationshipKeys().contains(key)) {
+				takeStoredValueForKey(eo, key);
+			}
 		}
 	}
 
@@ -122,10 +135,7 @@ public abstract class EOCustomObject implements EOEnterpriseObject, EODeferredFa
 	
 	public abstract String inverseForRelationshipKey(String relationshipKey);
 	
-	public boolean isFault() {
-		// assume no faults on the client
-		return false;
-	}
+	public abstract boolean isFault();
 	
 	public abstract boolean isReadOnly();
 	

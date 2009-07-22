@@ -2,6 +2,7 @@ package com.webobjects.foundation;
 
 import java.io.Serializable;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.rpc.SerializationStreamWriter;
@@ -21,7 +22,7 @@ public interface NSKeyValueCoding {
 	
 	public static final Null NullValue = new Null();
 	
-	public static final class Null<T> implements Serializable, Cloneable {
+	public static final class Null<T> implements Serializable, Cloneable, IsSerializable {
 
 		public Null() {
 			super();
@@ -32,28 +33,15 @@ public interface NSKeyValueCoding {
 		}
 		
 		@Override
+		public boolean equals(Object obj) {
+			return obj != null && obj instanceof Null;
+		}
+		
+		@Override
 		public String toString() {
 			return "NSKeyValueCoding.NullValue";
 		}
 		
-	}
-	
-	public final class Null_CustomFieldSerializer {
-
-		public static void deserialize(SerializationStreamReader streamReader, Null instance)
-	        throws SerializationException {
-	    }
-
-//	    public static Null instantiate(SerializationStreamReader streamReader)
-//	    	throws SerializationException {
-//	    	System.out.println("Null instantiate");
-//	        return new Null();
-//	    }
-
-	    public static void serialize(SerializationStreamWriter streamWriter, Null instance)
-	        throws SerializationException {
-	    }
-	    
 	}
 	
 	public static class UnknownKeyException extends RuntimeException {

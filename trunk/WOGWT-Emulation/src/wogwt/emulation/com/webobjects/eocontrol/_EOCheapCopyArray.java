@@ -12,4 +12,8 @@ public class _EOCheapCopyArray extends NSArray {
 		super(otherArray);
 	}
 	
+	public boolean isFault() {
+		return true;
+	}
+	
 }

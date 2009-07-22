@@ -103,7 +103,11 @@ public class EOEditingContext implements EOObserving, NSDisposable, NSLocking, S
 	public void forgetObject(EOEnterpriseObject object) {
 	}
 	
-	public EOGlobalID globalIDForObject(EOEnterpriseObject arg0) {
+	public EOGlobalID globalIDForObject(EOEnterpriseObject eo) {
+		if (eo == null) 
+			return null;
+		if (eo instanceof EOCustomObject)
+			return ((EOCustomObject)eo).__globalID();
 		return null;
 	}
 	

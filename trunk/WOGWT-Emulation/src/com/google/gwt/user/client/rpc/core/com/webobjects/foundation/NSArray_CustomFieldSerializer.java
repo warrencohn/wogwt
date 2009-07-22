@@ -17,9 +17,9 @@ public final class NSArray_CustomFieldSerializer {
 
     public static NSArray instantiate(SerializationStreamReader streamReader)
 		throws SerializationException {
-    	ArrayList array = new ArrayList();
-    	Collection_CustomFieldSerializerBase.deserialize(streamReader, array);
-    	return new NSArray(array);
+    	ArrayList instance = new ArrayList();
+    	Collection_CustomFieldSerializerBase.deserialize(streamReader, instance);
+    	return new NSArray(instance);
     }
     
     public static void serialize(SerializationStreamWriter streamWriter, NSArray instance)

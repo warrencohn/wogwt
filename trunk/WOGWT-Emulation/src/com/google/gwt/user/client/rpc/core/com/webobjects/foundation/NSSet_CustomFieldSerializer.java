@@ -1,6 +1,7 @@
 package com.google.gwt.user.client.rpc.core.com.webobjects.foundation;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
@@ -17,9 +18,9 @@ public final class NSSet_CustomFieldSerializer {
 
     public static NSSet instantiate(SerializationStreamReader streamReader)
 		throws SerializationException {
-    	ArrayList array = new ArrayList();
-    	Collection_CustomFieldSerializerBase.deserialize(streamReader, array);
-    	return new NSSet(array);
+    	Set instance = new HashSet();
+    	Collection_CustomFieldSerializerBase.deserialize(streamReader, instance);
+    	return new NSSet(instance);
     }
     
     public static void serialize(SerializationStreamWriter streamWriter, NSSet instance)

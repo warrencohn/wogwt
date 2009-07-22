@@ -12,14 +12,7 @@ public final class NSMutableSet_CustomFieldSerializer {
 
 	public static void deserialize(SerializationStreamReader streamReader, NSMutableSet instance)
         throws SerializationException {
-
-    }
-
-    public static NSMutableSet instantiate(SerializationStreamReader streamReader)
-		throws SerializationException {
-    	ArrayList array = new ArrayList();
-    	Collection_CustomFieldSerializerBase.deserialize(streamReader, array);
-    	return new NSMutableSet(array);
+    	Collection_CustomFieldSerializerBase.deserialize(streamReader, instance);
     }
     
     public static void serialize(SerializationStreamWriter streamWriter, NSMutableSet instance)
