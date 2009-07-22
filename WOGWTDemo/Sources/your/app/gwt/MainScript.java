@@ -2,8 +2,8 @@ package your.app.gwt;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.gen2.logging.shared.Log;
 
 public class MainScript implements EntryPoint {
 
@@ -13,7 +13,7 @@ public class MainScript implements EntryPoint {
 			return;
 		}
 		
-		Log.debug(getClass().getName() + ": onModuleLoad");
+		Log.finest(getClass().getName() + ": onModuleLoad");
 	}
 	
 }

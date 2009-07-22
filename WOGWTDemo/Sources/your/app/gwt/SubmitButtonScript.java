@@ -3,8 +3,8 @@ package your.app.gwt;
 import wogwt.translatable.WOGWTClientUtil;
 import wogwt.translatable.http.SubmitOnClickListener;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Button;
 
@@ -16,7 +16,7 @@ public class SubmitButtonScript implements EntryPoint {
 			return;
 		}
 		
-		Log.debug(getClass().getName() + ": onModuleLoad");
+		Log.finest(getClass().getName() + ": onModuleLoad");
 		
 		Button helloButton = Button.wrap(DOM.getElementById("helloButton"));
 		helloButton.addClickHandler(new SubmitOnClickListener("formOutsideContainer"));

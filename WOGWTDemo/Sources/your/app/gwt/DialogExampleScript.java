@@ -3,8 +3,8 @@ package your.app.gwt;
 import wogwt.translatable.ErrorDialog;
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -18,7 +18,7 @@ public class DialogExampleScript implements EntryPoint {
 			return;
 		}
 		
-		Log.debug(getClass().getName() + ": onModuleLoad");
+		Log.finest(getClass().getName() + ": onModuleLoad");
 		
 		Button button = new Button();
 		button.setText("Show Dialog");

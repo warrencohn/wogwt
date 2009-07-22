@@ -3,8 +3,8 @@ package your.app.gwt;
 import wogwt.translatable.WOGWTClientUtil;
 import wogwt.translatable.http.PeriodicUpdater;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.gen2.logging.shared.Log;
 
 public class PeriodicUpdateScript implements EntryPoint {
 
@@ -14,7 +14,7 @@ public class PeriodicUpdateScript implements EntryPoint {
 			return;
 		}
 
-		Log.debug(getClass().getName() + ": onModuleLoad");
+		Log.finest(getClass().getName() + ": onModuleLoad");
 
 		PeriodicUpdater periodicUpdater = new PeriodicUpdater("periodicContainer", 2000);
 	}

@@ -8,8 +8,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.webobjects.foundation.NSArray;
-import com.webobjects.foundation.NSKeyValueCoding;
-import com.webobjects.foundation.NSMutableDictionary;
 
 public interface EOService extends RemoteService {
 	
@@ -23,5 +21,9 @@ public interface EOService extends RemoteService {
 
 	public NSArray<Movie> allMovies();
 	public NSArray<Studio> allStudios();
-
+	
+	public void saveMovies(NSArray<Movie> movies);
+	
+	public Movie aMovie();
+	
 }

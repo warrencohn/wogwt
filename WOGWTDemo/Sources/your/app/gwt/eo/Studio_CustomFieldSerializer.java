@@ -11,6 +11,11 @@ public final class Studio_CustomFieldSerializer extends _Studio_CustomFieldSeria
 		_Studio_CustomFieldSerializer.deserialize(streamReader, instance);
 	}
 	
+	public static Studio instantiate(SerializationStreamReader streamReader)
+	throws SerializationException {
+		return _Studio_CustomFieldSerializer.instantiate(streamReader);
+	}
+	
 	public static void serialize(SerializationStreamWriter streamWriter, Studio instance)
 	    throws SerializationException {
 		_Studio_CustomFieldSerializer.serialize(streamWriter, instance);

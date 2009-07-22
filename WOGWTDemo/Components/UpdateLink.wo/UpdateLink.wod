@@ -19,3 +19,7 @@ MyLink : WOHyperlink {
   action = updateTimeAction;
   id = "myLink";
 }
+
+UpdateTimeActionLink : WOHyperlink {
+  action = updateTimeAction;
+}

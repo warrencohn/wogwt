@@ -6,9 +6,9 @@ import wogwt.translatable.WOGWTClientUtil;
 import wogwt.translatable.http.LogOnErrorRequestCallback;
 import wogwt.translatable.richtext.RichTextToolbar;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
@@ -28,7 +28,7 @@ public class RichTextExampleScript implements EntryPoint {
 			return;
 		}
 		
-		Log.debug(getClass().getName() + ": onModuleLoad");
+		Log.finest(getClass().getName() + ": onModuleLoad");
 		
 	    final RichTextArea textArea = new RichTextArea();
 	    RichTextToolbar toolbar = new RichTextToolbar(textArea);

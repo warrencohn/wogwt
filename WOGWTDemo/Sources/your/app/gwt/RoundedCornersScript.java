@@ -2,8 +2,8 @@ package your.app.gwt;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -16,7 +16,7 @@ public class RoundedCornersScript implements EntryPoint {
 			return;
 		}
 		
-		Log.debug(getClass().getName() + ": onModuleLoad");
+		Log.finest(getClass().getName() + ": onModuleLoad");
 		
 		DecoratorPanel panel = new DecoratorPanel();
 		panel.setHeight("300px");

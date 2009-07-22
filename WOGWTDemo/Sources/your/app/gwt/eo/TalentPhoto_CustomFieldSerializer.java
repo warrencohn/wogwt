@@ -11,6 +11,11 @@ public final class TalentPhoto_CustomFieldSerializer extends _TalentPhoto_Custom
 		_TalentPhoto_CustomFieldSerializer.deserialize(streamReader, instance);
 	}
 	
+	public static TalentPhoto instantiate(SerializationStreamReader streamReader)
+	throws SerializationException {
+		return _TalentPhoto_CustomFieldSerializer.instantiate(streamReader);
+	}
+	
 	public static void serialize(SerializationStreamWriter streamWriter, TalentPhoto instance)
 	    throws SerializationException {
 		_TalentPhoto_CustomFieldSerializer.serialize(streamWriter, instance);

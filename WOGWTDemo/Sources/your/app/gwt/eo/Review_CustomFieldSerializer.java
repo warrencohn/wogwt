@@ -11,6 +11,11 @@ public final class Review_CustomFieldSerializer extends _Review_CustomFieldSeria
 		_Review_CustomFieldSerializer.deserialize(streamReader, instance);
 	}
 	
+	public static Review instantiate(SerializationStreamReader streamReader)
+	throws SerializationException {
+		return _Review_CustomFieldSerializer.instantiate(streamReader);
+	}
+	
 	public static void serialize(SerializationStreamWriter streamWriter, Review instance)
 	    throws SerializationException {
 		_Review_CustomFieldSerializer.serialize(streamWriter, instance);

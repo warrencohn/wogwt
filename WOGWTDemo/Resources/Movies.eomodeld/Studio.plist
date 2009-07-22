@@ -27,10 +27,10 @@
     ); 
     attributesUsedForLocking = (budget, name, studioID); 
     className = "your.app.gwt.eo.Studio"; 
-    classProperties = (budget, name, movies); 
+    classProperties = (budget, movies, name); 
     externalName = STUDIO; 
     internalInfo = {
-        "_clientClassPropertyNames" = (budget, name, movies); 
+        "_clientClassPropertyNames" = (budget, movies, name); 
         "_javaClientClassName" = "your.app.gwt.eo.Studio_CustomFieldSerializer"; 
     }; 
     name = Studio; 

@@ -8,14 +8,7 @@ import java.math.BigDecimal;
 import wogwt.translatable.WOGWTClientUtil;
 
 import com.webobjects.eocontrol.*;
-import com.webobjects.foundation.NSArray;
-import com.webobjects.foundation.NSMutableArray;
-import com.webobjects.foundation.NSDictionary;
-import com.webobjects.foundation.NSMutableDictionary;
-import com.webobjects.foundation.NSKeyValueCoding;
-import com.webobjects.foundation.NSKeyValueCodingAdditions;
-import com.webobjects.foundation.NSTimestamp;
-import com.webobjects.foundation.NSData;
+import com.webobjects.foundation.*;
 
 // This class can be serialized from server to client and back
 @SuppressWarnings("all")
@@ -28,10 +21,11 @@ public abstract class _MovieRole
 	public static final transient String MOVIE_KEY = "movie";
 	public static final transient String TALENT_KEY = "talent";
 	
-	public Integer _rawPrimaryKey;
-	public String _roleName;
-	public your.app.gwt.eo.Movie _movie;
-	public your.app.gwt.eo.Talent _talent;
+	/* these fields are defined for serialization and to hold data on the client side;
+	   can't use a plain Map because all the types must be explicit for optimal code */
+	private String _roleName;
+	private your.app.gwt.eo.Movie _movie;
+	private your.app.gwt.eo.Talent _talent;
 
 	public _MovieRole() {
 		super();
@@ -148,8 +142,6 @@ public abstract class _MovieRole
 		if (result != null)
 			return result;
 		
-		if ("movie".equals(relationshipKey))
-			return "roles";
 		if ("talent".equals(relationshipKey))
 			return "roles";
 
@@ -194,15 +186,15 @@ public abstract class _MovieRole
 			super.takeValueForKey(value, key);
 		} catch (UnsupportedOperationException e) {
 			if ("roleName".equals(key)) {
-				setRoleName(WOGWTClientUtil.isNull(value) ? null : (String)value);
+				setRoleName((value == null || value instanceof NSKeyValueCoding.Null) ? null : (String)value);
 				return;
 			}
 			if ("movie".equals(key)) {
-				setMovieRelationship(WOGWTClientUtil.isNull(value) ? null : (your.app.gwt.eo.Movie)value);
+				setMovieRelationship((value == null || value instanceof NSKeyValueCoding.Null) ? null : (your.app.gwt.eo.Movie)value);
 				return;
 			}
 			if ("talent".equals(key)) {
-				setTalentRelationship(WOGWTClientUtil.isNull(value) ? null : (your.app.gwt.eo.Talent)value);
+				setTalentRelationship((value == null || value instanceof NSKeyValueCoding.Null) ? null : (your.app.gwt.eo.Talent)value);
 				return;
 			}
 			handleTakeValueForUnboundKey(value, key);
@@ -257,6 +249,22 @@ public abstract class _MovieRole
 		try {
 			super.excludeObjectFromPropertyWithKey(eo, key);
 		} catch (UnsupportedOperationException e) {
+		}
+	}
+	
+	public Object handleQueryWithUnboundKey(String key) {
+		if ("__globalID".equals(key) || "__isFault".equals(key)) {
+			return null;
+		} else {
+			throw new NSKeyValueCoding.UnknownKeyException("Class '" + getClass().getName() + " does not have a client key named " + key, this, key);
+		}	
+	}
+	
+	public void handleTakeValueForUnboundKey(Object value, String key) {
+		if ("__globalID".equals(key) || "__isFault".equals(key)) {
+			return;
+		} else {
+			throw new NSKeyValueCoding.UnknownKeyException("Class '" + getClass().getName() + " does not have a client key named " + key, this, key);
 		}
 	}
 	

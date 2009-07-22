@@ -7,13 +7,14 @@
 	brower and locale permutations are available.  If you do all your development
 	using the GWT shell / Hosted Mode Browser, then this isn't needed.
 	
-	possible user.agent vaules: safari, gecko1_8
+	possible user.agent values: safari, gecko1_8
 -->
 <module rename-to="your.app.gwt.Application">
 
 	<inherits name="your.app.gwt.Application"/>
 
-  	<set-property name="user.agent" value="gecko1_8"/>
+<!--
+  	<set-property name="user.agent" value="safari"/>
   	<set-property name="locale" value="default"/>
-  	
+  -->
 </module>

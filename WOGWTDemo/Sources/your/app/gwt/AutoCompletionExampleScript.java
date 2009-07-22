@@ -5,8 +5,8 @@ import wogwt.translatable.rpc.LogOnErrorAsyncCallback;
 import your.app.gwt.eo.Movie;
 import your.app.gwt.rpc.EOService;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SuggestBox;
@@ -20,7 +20,7 @@ public class AutoCompletionExampleScript implements EntryPoint {
 			return;
 		}
 		
-		Log.debug(getClass().getName() + ": onModuleLoad");
+		Log.finest(getClass().getName() + ": onModuleLoad");
 		
 		EOService.Util.getInstance().allMovies(
 				new LogOnErrorAsyncCallback<NSArray<Movie>>() {

@@ -4,10 +4,10 @@ import wogwt.translatable.WOGWTClientUtil;
 import wogwt.translatable.http.AfterDOMUpdateCallback;
 import wogwt.translatable.http.UpdateOnClickListener;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Anchor;
@@ -22,7 +22,7 @@ public class UpdateLinkScript implements EntryPoint {
 			return;
 		}
 		
-		Log.debug(getClass().getName() + ": onModuleLoad");
+		Log.finest(getClass().getName() + ": onModuleLoad");
 		
 		Anchor outsideLink = Anchor.wrap(DOM.getElementById("outsideLink"));
 		outsideLink.addClickHandler(new UpdateOnClickListener("outsideContainer"));

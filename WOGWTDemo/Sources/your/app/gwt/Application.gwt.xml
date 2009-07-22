@@ -32,11 +32,8 @@
   	   
 --><module>
 
-	<inherits name="com.google.gwt.user.User"/>
-	<inherits name="com.google.gwt.xml.XML"/>
 	<inherits name="wogwt.translatable.WOGWT"/>
-	<inherits name="wogwt.emulation.WOGWTEmulation"/>
-	<inherits name="com.googlecode.gwt.math.Math"/> 
+	<inherits name="wogwt.translatable.rpc.RPC"/>
 
 	<inherits name="com.google.gwt.user.theme.standard.Standard"/>
 
