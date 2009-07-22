@@ -8,14 +8,7 @@ import java.math.BigDecimal;
 import wogwt.translatable.WOGWTClientUtil;
 
 import com.webobjects.eocontrol.*;
-import com.webobjects.foundation.NSArray;
-import com.webobjects.foundation.NSMutableArray;
-import com.webobjects.foundation.NSDictionary;
-import com.webobjects.foundation.NSMutableDictionary;
-import com.webobjects.foundation.NSKeyValueCoding;
-import com.webobjects.foundation.NSKeyValueCodingAdditions;
-import com.webobjects.foundation.NSTimestamp;
-import com.webobjects.foundation.NSData;
+import com.webobjects.foundation.*;
 
 // This class can be serialized from server to client and back
 @SuppressWarnings("all")
@@ -31,15 +24,16 @@ public abstract class ${entity.prefixClassNameWithoutPackage}
 	public static final transient String ${relationship.uppercaseUnderscoreName}_KEY = "$relationship.name";
 #end
 	
-	public Integer _rawPrimaryKey;
+	/* these fields are defined for serialization and to hold data on the client side;
+	   can't use a plain Map because all the types must be explicit for optimal code */
 #foreach ($attribute in $entity.sortedClassAttributes)
-	public ${attribute.javaClassName} _$attribute.name;
+	private ${attribute.javaClassName} _$attribute.name;
 #end
 #foreach ($relationship in $entity.sortedClassToOneRelationships)
-	public ${relationship.actualDestination.classNameWithDefault} _$relationship.name;
+	private ${relationship.actualDestination.classNameWithDefault} _$relationship.name;
 #end
 #foreach ($relationship in $entity.sortedClassToManyRelationships)
-	public NSArray<${relationship.actualDestination.classNameWithDefault}> _$relationship.name = new NSArray<${relationship.actualDestination.classNameWithDefault}>();
+	private NSArray<${relationship.actualDestination.classNameWithDefault}> _$relationship.name = new NSArray<${relationship.actualDestination.classNameWithDefault}>();
 #end
 
 	public ${entity.prefixClassNameWithoutPackage}() {
@@ -237,7 +231,7 @@ public abstract class ${entity.prefixClassNameWithoutPackage}
 			return result;
 		
 #foreach ($relationship in $entity.sortedClientClassRelationships)
-#if (${relationship.inverseRelationship.name})
+#if (${relationship.inverseRelationship.name} && ${relationship.inverseRelationship.clientClassProperty})
 		if ("${relationship.name}".equals(relationshipKey))
 			return "${relationship.inverseRelationship.name}";
 #end
@@ -301,13 +295,13 @@ public abstract class ${entity.prefixClassNameWithoutPackage}
 		} catch (UnsupportedOperationException e) {
 #foreach ($attribute in $entity.sortedClientClassAttributes)
 			if ("${attribute.name}".equals(key)) {
-				set${attribute.capitalizedName}(WOGWTClientUtil.isNull(value) ? null : ($attribute.javaClassName)value);
+				set${attribute.capitalizedName}((value == null || value instanceof NSKeyValueCoding.Null) ? null : ($attribute.javaClassName)value);
 				return;
 			}
 #end		
 #foreach ($relationship in $entity.sortedClientClassToOneRelationships)
 			if ("${relationship.name}".equals(key)) {
-				set${relationship.capitalizedName}Relationship(WOGWTClientUtil.isNull(value) ? null : ($relationship.destination.classNameWithDefault)value);
+				set${relationship.capitalizedName}Relationship((value == null || value instanceof NSKeyValueCoding.Null) ? null : ($relationship.destination.classNameWithDefault)value);
 				return;
 			}
 #end
@@ -399,6 +393,22 @@ public abstract class ${entity.prefixClassNameWithoutPackage}
 				}
 			}
 #end
+		}
+	}
+	
+	public Object handleQueryWithUnboundKey(String key) {
+		if ("__globalID".equals(key) || "__isFault".equals(key)) {
+			return null;
+		} else {
+			throw new NSKeyValueCoding.UnknownKeyException("Class '" + getClass().getName() + " does not have a client key named " + key, this, key);
+		}	
+	}
+	
+	public void handleTakeValueForUnboundKey(Object value, String key) {
+		if ("__globalID".equals(key) || "__isFault".equals(key)) {
+			return;
+		} else {
+			throw new NSKeyValueCoding.UnknownKeyException("Class '" + getClass().getName() + " does not have a client key named " + key, this, key);
 		}
 	}
 	

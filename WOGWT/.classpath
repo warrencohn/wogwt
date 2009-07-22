@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="Sources"/>
+	<classpathentry kind="con" path="WOFramework/ERExtensions"/>
 	<classpathentry exported="true" kind="lib" path="Libraries/gwt-benchmark-viewer.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libraries/gwt-dev-mac.jar" sourcepath="Libraries/gwt-dev-mac.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libraries/gwt-incubator.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libraries/gwt-servlet.jar" sourcepath="Libraries/gwt-servlet.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libraries/gwt-user.jar" sourcepath="Libraries/gwt-user.jar"/>
-	<classpathentry exported="true" kind="lib" path="Libraries/gwt-log-2.5.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libraries/gwt-math-2.0.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libraries/gwt-math-server-2.0.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libraries/Tidy.jar" sourcepath="Libraries/Tidy.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libraries/wogwt-emulation.jar"/>
 	<classpathentry kind="con" path="WOFramework/ICSShared"/>
-	<classpathentry kind="con" path="WOFramework/ERExtensions"/>
 	<classpathentry kind="con" path="WOFramework/ERJars"/>
 	<classpathentry kind="con" path="WOFramework/ERPrototypes"/>
 	<classpathentry kind="con" path="WOFramework/JavaWOExtensions"/>
@@ -24,5 +23,6 @@
 	<classpathentry kind="con" path="WOFramework/JavaWOJSPServlet"/>
 	<classpathentry kind="con" path="WOFramework/JavaXML"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="WOFramework/Ajax"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

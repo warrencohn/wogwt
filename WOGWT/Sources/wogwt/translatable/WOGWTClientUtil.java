@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import wogwt.translatable.http.WOGWTRequestCallback;
-import wogwt.translatable.rpc.WOGWTSerializableEO;
-
 import com.google.gwt.dom.client.AnchorElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
@@ -24,11 +21,6 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.http.client.RequestBuilder.Method;
 import com.google.gwt.user.client.DOM;
-import com.webobjects.eocontrol.EOEnterpriseObject;
-import com.webobjects.eocontrol.EOFaultHandler;
-import com.webobjects.foundation.NSArray;
-import com.webobjects.foundation.NSDictionary;
-import com.webobjects.foundation.NSKeyValueCoding;
 
 /**
  * Utility methods for CLIENT (gwt) code.
@@ -80,14 +72,14 @@ public class WOGWTClientUtil {
      * @return the direct action url (non-ajax)
      */
     public static String directActionUrlForActionNamed(String actionName) {
-    	String url = directActionBaseUrl();
+    	String url = directActionDefaultActionUrl();
     	
     	// replace "default" action name with actionName if there is a query dictionary in the url
     	String fixedUrl = url.replaceFirst("/default\\?", "/" + actionName + "?");
     	
     	if (fixedUrl.equals(url)) {
     		// replace "default" action name with actionName (no query dictionary)
-    		fixedUrl = url.replaceFirst("/default$", "/actionName");
+    		fixedUrl = url.replaceFirst("/default$", "/" + actionName);
     	}
     	
     	return fixedUrl;
@@ -96,7 +88,7 @@ public class WOGWTClientUtil {
     /**
      * Convenience method to fetch a direct action url using a RequestBuilder (not ajax)
      */
-    public static void executeDirectAction(String actionName, WOGWTRequestCallback callback) {
+    public static void executeDirectAction(String actionName, RequestCallback callback) {
 		WOGWTClientUtil.fetchUrl(WOGWTClientUtil.directActionUrlForActionNamed(actionName), callback);
     }
     
@@ -104,7 +96,7 @@ public class WOGWTClientUtil {
      * Convenience method to fetch a url using a RequestBuilder
      */
     public static void fetchUrl(String url, RequestCallback callback) {
-    	fetchUrl(url, callback, false, null, 60000);
+    	fetchUrl(url, callback, false, null, 30000);
     }
 
     /**
@@ -188,8 +180,8 @@ public class WOGWTClientUtil {
 		return $wnd.WOGWT.rpcUrl;
 	}-*/;
 	
-	public static native String directActionBaseUrl() /*-{
-		return $wnd.WOGWT.directActionBaseUrl;
+	public static native String directActionDefaultActionUrl() /*-{
+		return $wnd.WOGWT.directActionDefaultActionUrl;
 	}-*/;
 	
 	public static native String resourceUrl() /*-{
@@ -270,78 +262,4 @@ public class WOGWTClientUtil {
 		return formValues;
 	}
 	
-//	/**
-//	 * @return an ID string that is not currently used on the page
-//	 */
-//	public static String getTemporaryID() {
-//		String id = "gwtTempID";
-//		int i = 1;
-//		while (DOM.getElementById(id) != null) {
-//			id = "gwtTempID" + i;
-//			i++;
-//		}
-//		return id;
-//	}
-	
-	public static boolean isNull(Object value) {
-		return value == null || value instanceof NSKeyValueCoding.Null;
-	}
-	
-	public static NSDictionary<String, Object> serializableSnapshot(WOGWTSerializableEO eo) {
-    	
-		NSDictionary<String, Object> snapshot = eo.clientSnapshot().mutableClone();
-    	
-    	// remove null attributes
-    	for (Iterator iterator = eo.attributeKeys().iterator(); iterator.hasNext();) {
-			String key = (String) iterator.next();
-			Object value = eo.valueForKey(key);
-			if (value == null) {
-				//System.out.println("removing null: " + key);
-				snapshot.remove(key);
-			}
-		}
-    	
-    	// remove null relationships
-    	for (Iterator iterator = eo.toOneRelationshipKeys().iterator(); iterator.hasNext();) {
-			String key = (String) iterator.next();
-			Object value = eo.valueForKey(key);
-			if (value == null) {
-				//System.out.println("removing null: " + key);
-				snapshot.remove(key);
-			}
-		}
-    	
-    	// remove faults
-    	for (Iterator iterator = eo.toOneRelationshipKeys().iterator(); iterator.hasNext();) {
-			String key = (String) iterator.next();
-			EOEnterpriseObject relatedEO = (EOEnterpriseObject)eo.valueForKey(key);
-			if (relatedEO != null && relatedEO.isFault()) {
-				//System.out.println("removing fault: " + key);
-				snapshot.remove(key);
-			}
-		}
-
-    	for (Iterator keyIterator = eo.toManyRelationshipKeys().iterator(); keyIterator.hasNext();) {
-			String key = (String) keyIterator.next();
-			NSArray relatedArray = (NSArray)eo.valueForKey(key);
-			if (relatedArray == null || EOFaultHandler.isFault(relatedArray)) {
-				//System.out.println("removing array fault: " + key);
-				snapshot.remove(key);
-			} else if (relatedArray != null) {
-				relatedArray = relatedArray.mutableClone();
-				for (Iterator arrayIterator = relatedArray.iterator(); arrayIterator.hasNext();) {
-					EOEnterpriseObject relatedEO = (EOEnterpriseObject) arrayIterator.next();
-					if (relatedEO.isFault()) {
-						//System.out.println("removing fault: " + key);
-						relatedArray.remove(key);
-					}
-				}
-				snapshot.put(key, new NSArray(relatedArray));
-			} 
-		}
-    	
-    	snapshot = snapshot.immutableClone();
-    	return snapshot;
-	}
-
 }

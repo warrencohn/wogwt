@@ -5,9 +5,9 @@ import java.util.Map;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
@@ -145,7 +145,7 @@ public class Updater {
 				Document.get().getBody().setInnerHTML(response.getText());
 				History.newItem("updateError");
 			} else {
-				Log.error("the update container " + getUpdateContainerID() + " is missing.");
+				Log.severe("the update container " + getUpdateContainerID() + " is missing.");
 			}
 		}
 	}

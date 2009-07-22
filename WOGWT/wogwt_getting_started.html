@@ -33,9 +33,16 @@
 
 <p>If you don't need to debug your GWT code, then you can run your app the way your always do (as a WOApplication).  You just have to compile the GWT code to javascript.  You can do this by calling the "gwt-compile-dev" ant build target.  This does a development-mode compile, which is faster than the full compile (gwt-compile) because it only generates code to support a single browser and locale (safari and english).</p>  
 
-<p>Here are the steps you need to follow to use WOGWT in your application.</p>
+<p>WOGWT requires Project Wonder build 8565 (Nov 11, 2008) or later.  WOGWT no longer requires WebObjects 5.4, but it is still recommended.</p>
 
-<p>0) WOGWT requires WebObjects 5.4 or later (for ajax support) so be sure it is installed.  It also requires Project Wonder build 8565 (Nov 11, 2008) or later.</p>
+<p style="font-weight: bold;">UPDATE: There is a helper application that performs all the following steps automatically.  Simply run the Swing application wogwt-tool.jar found in the Resources directory of the WOGWT.framework. The tool will guide you through the process.</p>
+<br/>
+<br/>
+<br/>
+<br/>
+<p style="font-weight: bold; color: red">The following instructions are deprecated (and out-dated); use wogwt-tool.jar to automate this instead</p>
+
+<p>Here are the steps you need to follow to use WOGWT in your application.</p>
 
 <p>1) Install WOGWT.framework into /Library/Frameworks.</p>
 

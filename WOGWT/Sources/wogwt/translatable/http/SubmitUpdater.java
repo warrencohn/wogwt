@@ -4,8 +4,8 @@ import java.util.Map;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.dom.client.FormElement;
+import com.google.gwt.gen2.logging.shared.Log;
 
 /**
  * Sends the all the form values to the server using the form action url
@@ -44,10 +44,10 @@ public abstract class SubmitUpdater extends Updater {
 	 */
 	public void fireUpdate() {
 		if (getForm() == null) {
-			Log.error("No form element available");
+			Log.severe("No form element available");
 			return;
 		} else if (getForm().getAction() == null) {
-			Log.error("Form " + getForm().getId() + " doesn't have an action url");
+			Log.severe("Form " + getForm().getId() + " doesn't have an action url");
 			return;
 		}
 		

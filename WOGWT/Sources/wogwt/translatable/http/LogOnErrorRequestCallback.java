@@ -1,7 +1,7 @@
 package wogwt.translatable.http;
 
 
-import com.allen_sauer.gwt.log.client.Log;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
 
@@ -22,7 +22,7 @@ public abstract class LogOnErrorRequestCallback extends WOGWTRequestCallback {
 	 */
 	public void onError(Request request, Throwable throwable) {
 		super.onError(request, throwable);
-		Log.error("Request error: " + throwable.getMessage());
+		Log.severe("Request error: " + throwable.getMessage());
 	}
 	
 }

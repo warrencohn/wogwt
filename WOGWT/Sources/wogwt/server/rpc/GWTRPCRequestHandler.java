@@ -137,6 +137,35 @@ public class GWTRPCRequestHandler extends WORequestHandler /*implements Serializ
 			
 			Object serviceObject = createServiceObject(context, rpcRequest);
 		
+			
+//			SerializationPolicy policy = new SerializationPolicy() {
+//				@Override
+//				public boolean shouldDeserializeFields(Class<?> clazz) {
+//					return RPC.getDefaultSerializationPolicy().shouldDeserializeFields(clazz);
+//				}
+//				
+//				@Override
+//				public boolean shouldSerializeFields(Class<?> clazz) {
+//					return RPC.getDefaultSerializationPolicy().shouldSerializeFields(clazz);
+//				}
+//				
+//				@Override
+//				public void validateSerialize(Class<?> clazz)
+//						throws SerializationException {
+//					if (FakeNull.class.equals(clazz))
+//						return;
+//					RPC.getDefaultSerializationPolicy().validateSerialize(clazz);
+//				}
+//				
+//				@Override
+//				public void validateDeserialize(Class<?> clazz)
+//						throws SerializationException {
+//					if (FakeNull.class.equals(clazz))
+//						return;
+//					RPC.getDefaultSerializationPolicy().validateDeserialize(clazz);					
+//				}
+//			};
+			
 			String result = RPC.invokeAndEncodeResponse(
 					serviceObject, 
 					rpcRequest.getMethod(), 
