@@ -2,9 +2,9 @@ package wogwt.translatable.http;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -55,7 +55,7 @@ public class UpdateOnClickListener extends Updater implements ClickHandler {
 	}
 	
 	public void onClick(ClickEvent event) {
-		Log.debug("onClick: " + ((Widget)event.getSource()).getElement().getId());
+		Log.finest("onClick: " + ((Widget)event.getSource()).getElement().getId());
 		
 		eventSender = (Widget)event.getSource();
 		try {

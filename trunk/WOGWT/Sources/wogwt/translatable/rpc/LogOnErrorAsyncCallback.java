@@ -1,6 +1,6 @@
 package wogwt.translatable.rpc;
 
-import com.allen_sauer.gwt.log.client.Log;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
@@ -19,6 +19,6 @@ public class LogOnErrorAsyncCallback<T> implements AsyncCallback<T> {
 	 * Logs an error to any available consoles: firebug, gwt-shell, eclipse
 	 */
 	public void onFailure(Throwable error) {
-		Log.error(error.getMessage(), error);
+		Log.severe(error.getMessage(), Log.CATEGORY, error);
 	}
 }

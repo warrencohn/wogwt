@@ -69,7 +69,6 @@
 						  
 							<pathelement path="@{gwthome}/gwt-user.jar" />
 							<pathelement path="@{gwthome}/gwt-dev-mac.jar" />
-							<pathelement path="@{gwthome}/gwt-log-2.5.2.jar" />
 							<pathelement path="@{gwthome}/gwt-incubator.jar" />
 							<pathelement path="@{gwthome}/wogwt.jar" />
 							<pathelement path="@{gwthome}/gwt-math-2.0.3.jar" />
@@ -78,10 +77,19 @@
 						
 						<sysproperty key="java.awt.headless" value="true"/>
 						<jvmarg line="-XstartOnFirstThread" />
-						<jvmarg line="-Xms256m -Xmx512m" />
+						<jvmarg line="-Xms256m -Xmx1024m" />
 						<jvmarg line="-XX:+AggressiveOpts" />
 						<jvmarg line="-XX:ThreadPriorityPolicy=1" />
 						<jvmarg line="-Xverify:none" />
+						
+						<!--
+						<arg line="-draftCompile" />
+						<arg line="-disableClassMetadata" />
+						<arg line="-disableCastChecking" />
+						-->
+												
+						<arg value="-localWorkers" />
+						<arg value="2" />
 						<arg value="-logLevel" />
 						<arg value="@{logLevel}" />
 						<!--<arg value="${genDirArg}" />

@@ -11,6 +11,11 @@ public final class ${entity.classNameWithoutPackage} extends ${entity.prefixClas
 		${entity.prefixClassNameWithoutPackage}.deserialize(streamReader, instance);
 	}
 	
+	public static ${entity.name} instantiate(SerializationStreamReader streamReader)
+	throws SerializationException {
+		return ${entity.prefixClassNameWithoutPackage}.instantiate(streamReader);
+	}
+	
 	public static void serialize(SerializationStreamWriter streamWriter, ${entity.name} instance)
 	    throws SerializationException {
 		${entity.prefixClassNameWithoutPackage}.serialize(streamWriter, instance);

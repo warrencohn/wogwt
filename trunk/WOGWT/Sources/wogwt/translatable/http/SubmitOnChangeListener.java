@@ -2,12 +2,12 @@ package wogwt.translatable.http;
 
 import wogwt.translatable.WOGWTClientUtil;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.dom.client.FormElement;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -34,12 +34,12 @@ public class SubmitOnChangeListener extends SubmitUpdater implements ChangeHandl
 	}
 	
 	public void onChange(ChangeEvent event) {
-		Log.debug("onChange: " + Element.as(event.getNativeEvent().getEventTarget()).getId());
+		Log.finest("onChange: " + Element.as(event.getNativeEvent().getEventTarget()).getId());
 		handleEvent((Widget)event.getSource());		
 	}
 
 	public void onKeyUp(KeyUpEvent event) {
-		Log.debug("onKeyUp: " + Element.as(event.getNativeEvent().getEventTarget()).getId());
+		Log.finest("onKeyUp: " + Element.as(event.getNativeEvent().getEventTarget()).getId());
 		handleEvent((Widget)event.getSource());	
 	}
 	
@@ -47,7 +47,7 @@ public class SubmitOnChangeListener extends SubmitUpdater implements ChangeHandl
 		eventSender = sender;
 		try {
 			if (getForm() == null) {
-				Log.error("Element " + sender.getElement().getId() + " is not contained in a form");
+				Log.severe("Element " + sender.getElement().getId() + " is not contained in a form");
 				return;
 			} 
 			

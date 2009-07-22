@@ -47,10 +47,16 @@ public class WOGWTScript extends WOComponent {
         StringMatchFilter filter = new StringMatchFilter();
         filter.setStringToMatch("invokeAction: An non stored response return context.page()");
         filter.setAcceptOnMatch(false);
+        
+        StringMatchFilter filter2 = new StringMatchFilter();
+        filter2.setStringToMatch("An Ajax response returned context.page(), which is almost certainly an error");
+        filter2.setAcceptOnMatch(false);
+        
         Enumeration appenders = Logger.getRootLogger().getAllAppenders();
         while (appenders.hasMoreElements()) {
 			Appender appender = (Appender)appenders.nextElement();
 			appender.addFilter(filter);
+			appender.addFilter(filter2);
 		}
         filter.setAcceptOnMatch(false);
 	}
@@ -96,7 +102,7 @@ public class WOGWTScript extends WOComponent {
     			"WOGWT={};\n" +
     			"WOGWT.hostPageName='" + rootParent().getClass().getSimpleName() + "';\n" +
     			"WOGWT.rpcUrl='" + rpcUrl + "';\n" +
-    			"WOGWT.directActionBaseUrl='" + directActionUrl + "';\n" +
+    			"WOGWT.directActionDefaultActionUrl='" + directActionUrl + "';\n" +
     			"WOGWT.resourceUrl='" + resourceUrl + "';\n" + 
     			"WOGWT.componentRequestHandlerKey='" + application().componentRequestHandlerKey() + "';\n" +
     			"WOGWT.ajaxRequestHandlerKey='ja';\n"
