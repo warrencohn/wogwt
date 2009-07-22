@@ -162,8 +162,8 @@ public class TestNSSet extends BaseTestCase {
 
 	public void testMember() {
 		NSSet set = new NSSet(new String[] {"abc"});
-		assertTrue(set.member("abc"));
-		assertFalse(set.member("123"));
+		assertEquals("abc", set.member("abc"));
+		assertNull(set.member("123"));
 	}
 
 	public void testSetByIntersectingSet() {

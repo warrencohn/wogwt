@@ -10,7 +10,7 @@ public final class NSMutableArray_CustomFieldSerializer {
 
 	public static void deserialize(SerializationStreamReader streamReader, NSMutableArray instance)
         throws SerializationException {
-		Collection_CustomFieldSerializerBase.deserialize(streamReader, instance);
+    	Collection_CustomFieldSerializerBase.deserialize(streamReader, instance);
     }
 
     public static void serialize(SerializationStreamWriter streamWriter, NSMutableArray instance)

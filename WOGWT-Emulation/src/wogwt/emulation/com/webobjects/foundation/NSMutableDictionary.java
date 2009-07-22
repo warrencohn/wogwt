@@ -70,6 +70,11 @@ public class NSMutableDictionary<K,V> extends NSDictionary<K,V> {
 	}
 	
 	@Override
+	public void takeValueForKey(Object value, String key) {
+		put((K)key, (V)value);
+	}
+	
+	@Override
 	public void clear() {
 		superDotClear();
 	}

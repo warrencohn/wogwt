@@ -534,26 +534,26 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 	}
 	
 	protected boolean superDotAdd(E o) {
-		if (o == null)
-			throw new IllegalArgumentException(NULL_NOT_ALLOWED);
+		//if (o == null)
+		//	throw new IllegalArgumentException(NULL_NOT_ALLOWED);
 		return super.add(o);
 	}
 	
 	protected void superDotAdd(int index, E element) {
-		if (element == null)
-			throw new IllegalArgumentException(NULL_NOT_ALLOWED);
+		//if (element == null)
+		//	throw new IllegalArgumentException(NULL_NOT_ALLOWED);
 		super.add(index, element);
 	}
 	
 	protected boolean superDotAddAll(Collection c) {
-		if (c.contains(null))
-			throw new IllegalArgumentException(NULL_NOT_ALLOWED);
+		//if (c.contains(null))
+		//	throw new IllegalArgumentException(NULL_NOT_ALLOWED);
 		return super.addAll(c);
 	}
 	
 	protected boolean superDotAddAll(int index, Collection c) {
-		if (c.contains(null))
-			throw new IllegalArgumentException(NULL_NOT_ALLOWED);
+		//if (c.contains(null))
+		//	throw new IllegalArgumentException(NULL_NOT_ALLOWED);
 		return super.addAll(index, c);
 	}
 	

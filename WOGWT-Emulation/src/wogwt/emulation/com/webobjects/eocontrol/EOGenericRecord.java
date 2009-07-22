@@ -8,6 +8,8 @@ import com.webobjects.foundation.NSArray;
  */
 public class EOGenericRecord extends EOCustomObject {
 
+	private Boolean __isFault = Boolean.FALSE;
+	
 	public static boolean usesDeferredFaultCreation() {
 		return true;
 	}
@@ -56,6 +58,12 @@ public class EOGenericRecord extends EOCustomObject {
 	}
 	
 	@Override
+	public boolean isFault() {
+		return __isFault;
+		
+	}
+	
+	@Override
 	public boolean isReadOnly() {
 		return false;
 	}
@@ -67,12 +75,24 @@ public class EOGenericRecord extends EOCustomObject {
 
 	@Override
 	public Object valueForKey(String key) {
+		if ("__globalID".equals(key)) {
+			return __globalID();
+		}
+		if ("__isFault".equals(key)) {
+			return __isFault;
+		}
 		throw new UnsupportedOperationException("Abstract method (not implemented)");
 	}
 	
 	@Override
 	public void takeValueForKey(Object value, String key) {
-		throw new UnsupportedOperationException("Abstract method (not implemented)");
+		if ("__globalID".equals(key)) {
+			__setGlobalID((EOGlobalID) value);
+		} else if ("__isFault".equals(key)) {
+			__isFault = (Boolean)value;
+		} else {
+			throw new UnsupportedOperationException("Abstract method (not implemented)");
+		}
 	}
 	
 	@Override

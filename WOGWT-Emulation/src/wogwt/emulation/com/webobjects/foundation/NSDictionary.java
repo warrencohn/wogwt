@@ -140,10 +140,7 @@ public class NSDictionary<K,V> extends HashMap<K,V> implements NSKeyValueCoding,
 	}
 	
 	public void takeValueForKey(Object value, String key) {
-		if (value != null)
-			superDotPut((K)key, (V)value);
-		else
-			superDotRemove(key);
+		throw new UnsupportedOperationException("put" + UNSUPPORTED);
 	}
 	
 	public Object valueForKeyPath(String keyPath) {

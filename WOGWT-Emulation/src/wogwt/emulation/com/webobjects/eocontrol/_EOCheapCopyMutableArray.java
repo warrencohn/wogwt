@@ -17,4 +17,8 @@ public class _EOCheapCopyMutableArray extends NSMutableArray {
 		super();
 	}
 	
+	public boolean isFault() {
+		return true;
+	}
+	
 }
