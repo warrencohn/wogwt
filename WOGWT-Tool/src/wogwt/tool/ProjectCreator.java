@@ -1,11 +1,8 @@
 package wogwt.tool;
 
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Collection;
 
 import org.apache.commons.io.FileUtils;
@@ -53,20 +50,28 @@ public class ProjectCreator {
 					"package " + gwtPackage + ";\n" +
 					"\n" +
 					"import wogwt.translatable.WOGWTClientUtil;\n" +
-					"import com.allen_sauer.gwt.log.client.Log;\n" +
+					"\n" + 
 					"import com.google.gwt.core.client.EntryPoint;\n" +
+					"import com.google.gwt.gen2.logging.shared.Log;\n" +
 					"import com.google.gwt.user.client.Window;\n" +
+					"import com.google.gwt.gen2.logging.shared.Level;\n" +
+					"import com.google.gwt.gen2.logging.shared.Log;\n" +
 					"\n" +
 					"public class MainScript implements EntryPoint {\n" +
 					"\n" +
+					"   /* This class must be declared as an entry-point in the module (Application.gwt.xml). */\n" +
 					"	public void onModuleLoad() {\n" +
 					"		if (!WOGWTClientUtil.hostPageNameEquals(\"Main\")) {\n" +
 					"			return;\n" +
 					"		}\n" + 
 					"\n" +		
-					"		Log.debug(getClass().getName() + \": onModuleLoad\");\n" +
+					"		Log.installUncaughtExceptionHandler(); // this won't take affect until the next event loop\n" + 
+					"		Log.setDefaultLevel(Level.FINEST);\n" + 		
+					"		Log.finest(getClass().getName() + \": onModuleLoad\");\n" +
+					"\n" +
 					"		Window.alert(\"WOGWT is active!!\");\n" +
 					"	}\n" + 
+					"\n"+ 
 					"}\n"
 					);
 			writer.flush();
@@ -79,6 +84,9 @@ public class ProjectCreator {
 					"<module>\n" +
 					"	<inherits name=\"com.google.gwt.user.User\"/>\n" +
 					"	<inherits name=\"wogwt.translatable.WOGWT\"/>\n" +
+					"	<inherits name=\"wogwt.translatable.rpc.RPC\"/>\n" +
+					"\n" +
+					"   <set-property name=\"gwt.logging\" value=\"disabled\"/>\n" +
 					"\n" +
 				  	"	<source path=\"\"/>\n" +
 				  	"\n" +
@@ -96,6 +104,8 @@ public class ProjectCreator {
 					"<module rename-to=\"" + gwtPackage + ".Application\">\n" +
 					"	<inherits name=\"" + gwtPackage + ".Application\"/>\n" +
 					"\n" +
+					"   <set-property name=\"gwt.logging\" value=\"enabled\"/>\n" +
+					"\n" +
 				  	"	<set-property name=\"user.agent\" value=\"safari\"/>\n" +
 				  	"	<set-property name=\"locale\" value=\"default\"/>\n" +
 				  	"</module>"
@@ -104,20 +114,31 @@ public class ProjectCreator {
 			writer.close();
 		}
 		
+		String addedCode = 
+			    "		registerRequestHandler(new wogwt.server.rpc.GWTRPCRequestHandler(), wogwt.server.rpc.GWTRPCRequestHandler.KEY);\n" +
+			    "\n" +
+				"		if(!isWO54()) {\n" +
+				"    		System.setProperty(\"er.extensions.ERXAjaxApplication.allowContextPageResponse\", \"true\");\n" +
+				"    		registerRequestHandler(new WOComponentRequestHandler() {\n" +
+				"        		@Override\n" +
+				"        		public WOResponse handleRequest(WORequest request) {\n" +
+				"            		AjaxUtils.updateMutableUserInfoWithAjaxInfo(request);\n" +
+				"            		return super.handleRequest(request);\n" +
+				"        		}\n" +
+				"    		}, \"ja\");\n" +
+				"		}\n" +
+				"\n" +
+				"		// needed for proper class loading in GWT's Hosted Mode shell\n" +
+				"		com.webobjects.foundation._NSUtilities.setClassForName( " + mainClass + ".class, \"Main\" );\n";
+		
 		String applicationClassTextMod = applicationClassText.replaceFirst(
 				"public\\s+Application\\(\\)\\s+\\{\\s+super\\(\\);",
 				"public Application() {\n" +
-				"		super();\n" +
-				"		registerRequestHandler(new wogwt.server.rpc.GWTRPCRequestHandler(), wogwt.server.rpc.GWTRPCRequestHandler.KEY);\n" +
-				"		// needed for proper class loading in GWT's Hosted Mode shell\n" +
-				"		com.webobjects.foundation._NSUtilities.setClassForName( " + mainClass + ".class, \"Main\" );\n");
+				"		super();\n" + addedCode);
 		if (applicationClassTextMod.equals(applicationClassText)) {
 			applicationClassTextMod = applicationClassText.replaceFirst(
 					"public\\s*Application\\(\\)\\s*\\{",
-					"public Application() {\n" +
-					"		registerRequestHandler(new wogwt.server.rpc.GWTRPCRequestHandler(), wogwt.server.rpc.GWTRPCRequestHandler.KEY);\n" +
-					"		// needed for proper class loading in GWT's Hosted Mode shell\n" +
-					"		com.webobjects.foundation._NSUtilities.setClassForName( " + mainClass + ".class, \"Main\" );\n");
+					"public Application() {\n" + addedCode);
 			
 			if (applicationClassTextMod.equals(applicationClassText)) {
 				throw new RuntimeException("Couldn't modify Application constructor");
@@ -181,14 +202,14 @@ public class ProjectCreator {
 				"   <url-pattern>/" + gwtPackage + ".Application/" + projectName + "/WebObjects/*</url-pattern>\n" +
 			    "</servlet-mapping>\n" +
 			    "\n" +
-			    "<servlet>\n" +
-				"   <servlet-name>remoteLoggerServiceImpl</servlet-name>\n" +
-				"   <servlet-class>com.allen_sauer.gwt.log.server.RemoteLoggerServiceImpl</servlet-class>\n" +
+			    "<servlet>\n" + 
+			    "	<servlet-name>remoteLoggingService</servlet-name>\n" + 
+			    "	<servlet-class>com.google.gwt.gen2.logging.server.RemoteLoggingService</servlet-class>\n" +
 			    "</servlet>\n" +
-			    "\n" +
+			    "\n" + 
 			    "<servlet-mapping>\n" +
-				"   <servlet-name>remoteLoggerServiceImpl</servlet-name>\n" +
-				"   <url-pattern>/your.app.gwt.Application/gwt-log</url-pattern>\n" +
+			    "	<servlet-name>remoteLoggingService</servlet-name>\n" + 
+			    "	<url-pattern>/" + gwtPackage + ".Application/logging</url-pattern>\n" +
 			    "</servlet-mapping>\n" +
 				"\n" +
 				"</web-app>\n";
@@ -213,13 +234,13 @@ public class ProjectCreator {
 				"\n" +
 				"	<import file=\"/Library/Frameworks/WOGWT.framework/Resources/wogwt-build.xml\"/>\n" +
 				"\n" +
-				"	<target name=\"gwt-compile-dev\" depends=\"setProps\">\n" +
+				"	<target name=\"gwt-compile-dev\" depends=\"init.properties\">\n" +
 				"		<gwtCompile module=\"${gwtpackage}.Development\"\n" +
 				"			renamedto=\"${gwtpackage}.Application\" \n" +
 				"			style=\"PRETTY\"/>\n" +
 				"	</target>\n" +
 				"\n" +
-				"	<target name=\"gwt-compile\" depends=\"setProps\">\n" +
+				"	<target name=\"gwt-compile\" depends=\"init.properties\">\n" +
 				"		<gwtCompile module=\"${gwtpackage}.Application\" forceBuild=\"true\"/>\n" +
 				"	</target>\n\n";
 			
@@ -391,13 +412,13 @@ public class ProjectCreator {
 			"<booleanAttribute key=\"org.eclipse.debug.core.appendEnvironmentVariables\" value=\"true\"/>\n" +
 			"<listAttribute key=\"org.eclipse.jdt.launching.CLASSPATH\">\n" +
 			"<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry containerPath=&quot;org.eclipse.jdt.launching.JRE_CONTAINER&quot; javaProject=&quot;" + projectName + "&quot; path=&quot;1&quot; type=&quot;4&quot;/&gt;&#10;\"/>\n" +
-			"<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry internalArchive=&quot;/WOGWT/Sources&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;\"/>\n" +
+			//"<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry internalArchive=&quot;/WOGWT/Sources&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;\"/>\n" +
 			"<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry internalArchive=&quot;/" + projectName + "/" + sourceRelativeDir + "/&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;\"/>\n" +
 			"<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry id=&quot;org.eclipse.jdt.launching.classpathentry.defaultClasspath&quot;&gt;&#10;&lt;memento exportedEntriesOnly=&quot;false&quot; project=&quot;" + projectName + "&quot;/&gt;&#10;&lt;/runtimeClasspathEntry&gt;&#10;\"/>\n" +
 			"</listAttribute>\n" +
 			"<booleanAttribute key=\"org.eclipse.jdt.launching.DEFAULT_CLASSPATH\" value=\"false\"/>\n" +
 			"<stringAttribute key=\"org.eclipse.jdt.launching.MAIN_TYPE\" value=\"com.google.gwt.dev.HostedMode\"/>\n" +
-			"<stringAttribute key=\"org.eclipse.jdt.launching.PROGRAM_ARGUMENTS\" value=\"-logLevel TRACE -style PRETTY -war &quot;${workspace_loc:" + projectName + "}/WebServerResources&quot; -startupUrl " + gwtPackage + ".Application/" + projectName + "/WebObjects/" + projectName + ".woa " + gwtPackage + ".Application\"/>\n" +
+			"<stringAttribute key=\"org.eclipse.jdt.launching.PROGRAM_ARGUMENTS\" value=\"-logLevel TRACE -style PRETTY -war &quot;${workspace_loc:" + projectName + "}/WebServerResources&quot; -startupUrl " + gwtPackage + ".Application/" + projectName + "/WebObjects/" + projectName + ".woa " + gwtPackage + ".Development\"/>\n" +
 			"<stringAttribute key=\"org.eclipse.jdt.launching.PROJECT_ATTR\" value=\"" + projectName + "\"/>\n" +
 			"<stringAttribute key=\"org.eclipse.jdt.launching.VM_ARGUMENTS\" value=\"-XstartOnFirstThread -Xmx256M -Dwogwt.isHostedMode=&quot;true&quot; -DWOAINSTALLROOT=&quot;${workspace_loc:" + projectName + "/build}&quot;\"/>\n" +
 			"</launchConfiguration>\n";
