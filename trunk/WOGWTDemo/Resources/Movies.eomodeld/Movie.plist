@@ -89,16 +89,11 @@
         category, 
         dateReleased, 
         title, 
-        directors, 
         revenue, 
-        roles, 
-        plotSummary, 
-        studio, 
         posterName, 
         trailerName, 
-        reviews, 
-        voting, 
-        rated
+        rated, 
+        studio
     ); 
     externalName = MOVIE; 
     internalInfo = {
@@ -106,16 +101,11 @@
             category, 
             dateReleased, 
             title, 
-            directors, 
             revenue, 
-            roles, 
-            plotSummary, 
-            studio, 
             posterName, 
             trailerName, 
-            reviews, 
-            voting, 
-            rated
+            rated, 
+            studio
         ); 
         "_javaClientClassName" = "your.app.gwt.eo.Movie_CustomFieldSerializer"; 
     }; 

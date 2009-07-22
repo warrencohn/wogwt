@@ -8,14 +8,7 @@ import java.math.BigDecimal;
 import wogwt.translatable.WOGWTClientUtil;
 
 import com.webobjects.eocontrol.*;
-import com.webobjects.foundation.NSArray;
-import com.webobjects.foundation.NSMutableArray;
-import com.webobjects.foundation.NSDictionary;
-import com.webobjects.foundation.NSMutableDictionary;
-import com.webobjects.foundation.NSKeyValueCoding;
-import com.webobjects.foundation.NSKeyValueCodingAdditions;
-import com.webobjects.foundation.NSTimestamp;
-import com.webobjects.foundation.NSData;
+import com.webobjects.foundation.*;
 
 // This class can be serialized from server to client and back
 @SuppressWarnings("all")
@@ -28,10 +21,11 @@ public abstract class _Studio
 	public static final transient String NAME_KEY = "name";
 	public static final transient String MOVIES_KEY = "movies";
 	
-	public Integer _rawPrimaryKey;
-	public java.math.BigDecimal _budget;
-	public String _name;
-	public NSArray<your.app.gwt.eo.Movie> _movies = new NSArray<your.app.gwt.eo.Movie>();
+	/* these fields are defined for serialization and to hold data on the client side;
+	   can't use a plain Map because all the types must be explicit for optimal code */
+	private java.math.BigDecimal _budget;
+	private String _name;
+	private NSArray<your.app.gwt.eo.Movie> _movies = new NSArray<your.app.gwt.eo.Movie>();
 
 	public _Studio() {
 		super();
@@ -233,11 +227,11 @@ public abstract class _Studio
 			super.takeValueForKey(value, key);
 		} catch (UnsupportedOperationException e) {
 			if ("budget".equals(key)) {
-				setBudget(WOGWTClientUtil.isNull(value) ? null : (java.math.BigDecimal)value);
+				setBudget((value == null || value instanceof NSKeyValueCoding.Null) ? null : (java.math.BigDecimal)value);
 				return;
 			}
 			if ("name".equals(key)) {
-				setName(WOGWTClientUtil.isNull(value) ? null : (String)value);
+				setName((value == null || value instanceof NSKeyValueCoding.Null) ? null : (String)value);
 				return;
 			}
 			if ("movies".equals(key)) {
@@ -310,6 +304,22 @@ public abstract class _Studio
 					throw new IllegalArgumentException("Relationship '" + key + "' does not contain object: " + eo);
 				}
 			}
+		}
+	}
+	
+	public Object handleQueryWithUnboundKey(String key) {
+		if ("__globalID".equals(key) || "__isFault".equals(key)) {
+			return null;
+		} else {
+			throw new NSKeyValueCoding.UnknownKeyException("Class '" + getClass().getName() + " does not have a client key named " + key, this, key);
+		}	
+	}
+	
+	public void handleTakeValueForUnboundKey(Object value, String key) {
+		if ("__globalID".equals(key) || "__isFault".equals(key)) {
+			return;
+		} else {
+			throw new NSKeyValueCoding.UnknownKeyException("Class '" + getClass().getName() + " does not have a client key named " + key, this, key);
 		}
 	}
 	

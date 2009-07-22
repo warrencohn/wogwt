@@ -11,6 +11,11 @@ public final class Voting_CustomFieldSerializer extends _Voting_CustomFieldSeria
 		_Voting_CustomFieldSerializer.deserialize(streamReader, instance);
 	}
 	
+	public static Voting instantiate(SerializationStreamReader streamReader)
+	throws SerializationException {
+		return _Voting_CustomFieldSerializer.instantiate(streamReader);
+	}
+	
 	public static void serialize(SerializationStreamWriter streamWriter, Voting instance)
 	    throws SerializationException {
 		_Voting_CustomFieldSerializer.serialize(streamWriter, instance);

@@ -1,26 +1,95 @@
 // DO NOT EDIT.  Make changes to PlotSummary_CustomFieldSerializer.java instead.
 package your.app.gwt.eo;
 
-import wogwt.translatable.WOGWTClientUtil;
+import java.util.*;
+import java.math.BigDecimal;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.user.client.rpc.SerializationException;
 import com.google.gwt.user.client.rpc.SerializationStreamReader;
 import com.google.gwt.user.client.rpc.SerializationStreamWriter;
 import com.google.gwt.user.client.rpc.core.com.webobjects.foundation.NSDictionary_CustomFieldSerializer;
-import com.webobjects.foundation.NSDictionary;
+import com.google.gwt.user.client.rpc.core.java.util.Map_CustomFieldSerializerBase;
+import com.webobjects.eocontrol.EOEditingContext;
+import com.webobjects.eocontrol.EOGlobalID;
+import com.webobjects.foundation.*;
+
+import er.extensions.appserver.ERXWOContext;
 
 public class _PlotSummary_CustomFieldSerializer {
 
 	public static void deserialize(SerializationStreamReader streamReader, PlotSummary instance)
         throws SerializationException {
-    	NSDictionary snapshot = NSDictionary_CustomFieldSerializer.instantiate(streamReader);
-    	instance.reapplyChangesFromDictionary(snapshot);
+		
     }
 
+	public static void readFields(SerializationStreamReader streamReader, PlotSummary instance) 
+	throws SerializationException {
+    	instance.setSummary((String)streamReader.readObject());
+    	instance.setMovieRelationship((Movie)streamReader.readObject());
+	}
+	
+	public static PlotSummary serverInstantiate(SerializationStreamReader streamReader)
+	throws SerializationException {
+
+		EOGlobalID id = (EOGlobalID)streamReader.readObject();
+    	Boolean isFault = (Boolean)streamReader.readObject();
+    	
+		EOEditingContext sessionEC = ERXWOContext.currentContext().session().defaultEditingContext();
+		PlotSummary instance = (PlotSummary)sessionEC.objectForGlobalID(id);
+
+		if (instance == null) {
+			EOEditingContext requestEC = (EOEditingContext) ERXWOContext.contextDictionary().valueForKey("editingContext");
+			instance = (PlotSummary)requestEC.faultForGlobalID(id, requestEC);
+		}
+		
+		if (instance == null) {
+			instance = new PlotSummary();
+			sessionEC.insertObject(instance);
+		}
+
+		readFields(streamReader, instance);
+		return (PlotSummary) instance;	
+	}
+	
+	public static PlotSummary clientInstantiate(SerializationStreamReader streamReader)
+	throws SerializationException {
+
+		PlotSummary instance = new PlotSummary();
+		
+    	instance.__setGlobalID((EOGlobalID)streamReader.readObject());
+    	instance.takeValueForKey((Boolean)streamReader.readObject(), "__isFault");
+    	
+    	readFields(streamReader, instance);
+    	return instance;
+	}
+	
+	public static PlotSummary instantiate(SerializationStreamReader streamReader)
+	throws SerializationException {
+		try {
+			if (GWT.isClient()) {
+				return clientInstantiate(streamReader);
+			} else {
+				return serverInstantiate(streamReader);
+			}
+		} catch (SerializationException e) {
+			Log.severe(e.getMessage(), Log.CATEGORY, e);
+			throw e;
+		}
+	}
+	  
     public static void serialize(SerializationStreamWriter streamWriter, PlotSummary instance)
         throws SerializationException {
-    	NSDictionary_CustomFieldSerializer.serialize(streamWriter, 
-    			WOGWTClientUtil.serializableSnapshot(instance));
+    	
+    	streamWriter.writeObject(instance.__globalID());
+    	streamWriter.writeObject(instance.isFault());
+    	
+    	streamWriter.writeObject(instance.summary());
+    	streamWriter.writeObject(instance.movie());
+    
+    	//Map<String, Object> snapshot = WOGWTClientUtil.serializableSnapshot(instance).hashMap();
+    	//streamWriter.writeObject(snapshot);
     }
     
 }

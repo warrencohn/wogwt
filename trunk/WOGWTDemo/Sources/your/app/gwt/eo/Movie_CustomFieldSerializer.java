@@ -11,6 +11,11 @@ public final class Movie_CustomFieldSerializer extends _Movie_CustomFieldSeriali
 		_Movie_CustomFieldSerializer.deserialize(streamReader, instance);
 	}
 	
+	public static Movie instantiate(SerializationStreamReader streamReader)
+	throws SerializationException {
+		return _Movie_CustomFieldSerializer.instantiate(streamReader);
+	}
+	
 	public static void serialize(SerializationStreamWriter streamWriter, Movie instance)
 	    throws SerializationException {
 		_Movie_CustomFieldSerializer.serialize(streamWriter, instance);

@@ -11,6 +11,11 @@ public final class Director_CustomFieldSerializer extends _Director_CustomFieldS
 		_Director_CustomFieldSerializer.deserialize(streamReader, instance);
 	}
 	
+	public static Director instantiate(SerializationStreamReader streamReader)
+	throws SerializationException {
+		return _Director_CustomFieldSerializer.instantiate(streamReader);
+	}
+	
 	public static void serialize(SerializationStreamWriter streamWriter, Director instance)
 	    throws SerializationException {
 		_Director_CustomFieldSerializer.serialize(streamWriter, instance);

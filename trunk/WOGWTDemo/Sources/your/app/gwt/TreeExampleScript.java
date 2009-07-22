@@ -6,8 +6,8 @@ import your.app.gwt.eo.Movie;
 import your.app.gwt.eo.Studio;
 import your.app.gwt.rpc.EOService;
 
-import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -23,7 +23,7 @@ public class TreeExampleScript implements EntryPoint {
 			return;
 		}
 		
-		Log.debug(getClass().getName() + ": onModuleLoad");
+		Log.finest(getClass().getName() + ": onModuleLoad");
 		
 		final Tree tree = new Tree();
 		
@@ -38,13 +38,13 @@ public class TreeExampleScript implements EntryPoint {
 							TreeItem item = new TreeItem(studio.name());
 							tree.addItem(item);
 							
-							Tree childTree = new Tree();
-							for (int movieIdx = 0; movieIdx < studio.movies().size(); movieIdx++) {
-								Movie movie = (Movie)studio.movies().get(movieIdx);
-								TreeItem childItem = new TreeItem(movie.title());
-								childTree.addItem(childItem);
-							}
-							item.addItem(childTree);
+//							Tree childTree = new Tree();
+//							for (int movieIdx = 0; movieIdx < studio.movies().size(); movieIdx++) {
+//								Movie movie = (Movie)studio.movies().get(movieIdx);
+//								TreeItem childItem = new TreeItem(movie.title());
+//								childTree.addItem(childItem);
+//							}
+//							item.addItem(childTree);
 						}
 					}
 		});

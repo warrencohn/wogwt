@@ -16,7 +16,7 @@
 </listAttribute>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.google.gwt.dev.HostedMode"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-logLevel TRACE -style PRETTY -gen ${workspace_loc:WOGWTDemo}/gen -war &quot;${workspace_loc:WOGWTDemo}/WebServerResources&quot; -startupUrl your.app.gwt.Application/WOGWTDemo/WebObjects/WOGWTDemo.woa your.app.gwt.Application"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-logLevel TRACE -style PRETTY -gen ${workspace_loc:WOGWTDemo}/gen -war &quot;${workspace_loc:WOGWTDemo}/WebServerResources&quot; -startupUrl your.app.gwt.Application/WOGWTDemo/WebObjects/WOGWTDemo.woa your.app.gwt.Development"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="WOGWTDemo"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-XstartOnFirstThread -Xmx256M -Dwogwt.isHostedMode=&quot;true&quot; -DWOAINSTALLROOT=&quot;${workspace_loc:WOGWTDemo/build}&quot;"/>
 </launchConfiguration>

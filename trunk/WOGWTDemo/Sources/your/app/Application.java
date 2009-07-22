@@ -47,4 +47,11 @@ public class Application extends ERXApplication {
     	return response;
     }
     
+    @Override
+    public String host() {
+    	_setHost("127.0.0.1");
+    	return "127.0.0.1";
+    }
+    
+    
 }
