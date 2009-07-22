@@ -1,5 +1,6 @@
 package wogwt.tool;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -27,7 +29,11 @@ public class WOGWTToolMain extends JFrame {
 		JPanel headerPanel = new JPanel();
 		this.add(headerPanel);
 		
-		JLabel label = new JLabel("WOGWT Tool - this will add WOGWT to an existing WO application.");
+		JLabel label = new JLabel("<html>WOGWT Tool - this will add WOGWT to an existing WO application.<br><br>" +
+				"Before you run this app you should do these things:<br>" +
+				"Step 1: Commit or backup your project<br>" +
+				"Step 2: Add the frameworks \"WOGWT\" and \"JavaWOJSPServlet\" to your project's build path.<br>" +
+				"Step 3: Click the button below.</html>");
 		headerPanel.add(label);
 		
 		JPanel topPanel = new JPanel();
@@ -60,10 +66,9 @@ public class WOGWTToolMain extends JFrame {
 		JButton runButton = new JButton("Add WOGWT to Project");
 		runButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// show confirmation dialog prompting to backup
 				try {
 					ProjectCreator.main(new String[] {projectPath.getText()});
-					// show success dialog telling to add WOGWT and JavaWOJSPServlet to classpath
+					JOptionPane.showMessageDialog(WOGWTToolMain.this, "WOGWT has been added to your project");
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
