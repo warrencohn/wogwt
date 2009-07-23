@@ -2,9 +2,9 @@
 <project basedir="." default="install" name="WOGWT-Tool">
 	
 	<target name="install">
-	    <delete file="../WOGWT/Libraries/wogwt-tool.jar" quiet="true"/>	
+	    <delete file="../WOGWT/Resources/wogwt-tool.jar" quiet="true"/>	
 
-		<jar destfile="../WOGWT/Libraries/wogwt-tool.jar"
+		<jar destfile="../WOGWT/Resources/wogwt-tool.jar"
 			basedir="src">
 		</jar>
 		
