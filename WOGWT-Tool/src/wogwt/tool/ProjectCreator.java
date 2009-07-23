@@ -420,7 +420,7 @@ public class ProjectCreator {
 			"<stringAttribute key=\"org.eclipse.jdt.launching.MAIN_TYPE\" value=\"com.google.gwt.dev.HostedMode\"/>\n" +
 			"<stringAttribute key=\"org.eclipse.jdt.launching.PROGRAM_ARGUMENTS\" value=\"-logLevel TRACE -style PRETTY -war &quot;${workspace_loc:" + projectName + "}/WebServerResources&quot; -startupUrl " + gwtPackage + ".Application/" + projectName + "/WebObjects/" + projectName + ".woa " + gwtPackage + ".Development\"/>\n" +
 			"<stringAttribute key=\"org.eclipse.jdt.launching.PROJECT_ATTR\" value=\"" + projectName + "\"/>\n" +
-			"<stringAttribute key=\"org.eclipse.jdt.launching.VM_ARGUMENTS\" value=\"-XstartOnFirstThread -Xmx256M -Dwogwt.isHostedMode=&quot;true&quot; -DWOAINSTALLROOT=&quot;${workspace_loc:" + projectName + "/build}&quot;\"/>\n" +
+			"<stringAttribute key=\"org.eclipse.jdt.launching.VM_ARGUMENTS\" value=\"-XstartOnFirstThread -Xmx256M -Dwogwt.isHostedMode=&quot;true&quot; -DWOAINSTALLROOT=&quot;${workspace_loc:" + projectName + "/build}&quot; -DWOIDE=&quot;WOLips&quot; \"/>\n" +
 			"</launchConfiguration>\n";
 		if (!new File(launcherFileName).exists()) {
 			FileUtils.writeStringToFile(new File(launcherFileName), launcherText, "UTF-8");
