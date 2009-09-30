@@ -102,10 +102,10 @@ public class WOGWTClientUtil {
     /**
      * Convenience method to fetch a url using a RequestBuilder
      */
-    public static void fetchUrl(String url, RequestCallback callback, boolean usePostMethod, Map<String, String> formValues, int timeout) {
+    public static void fetchUrl(String url, RequestCallback callback, boolean usePostMethod, Map<String, String> formValues, int timeoutMillis) {
 		Method method = usePostMethod ? RequestBuilder.POST : RequestBuilder.GET;
     	RequestBuilder requestBuilder = new RequestBuilder(method, url);
-		requestBuilder.setTimeoutMillis(timeout);
+		requestBuilder.setTimeoutMillis(timeoutMillis);
 
 		if (method.equals(RequestBuilder.POST)) {
 			requestBuilder.setHeader("Content-type", "application/x-www-form-urlencoded");

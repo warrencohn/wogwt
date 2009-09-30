@@ -25,7 +25,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class TextBoxWithPlaceholder extends TextBox {
 
 	/**
-	 * Creates a SearchTextBox widget that wraps an existing &lt;input
+	 * Creates a TextBoxWithPlaceholder widget that wraps an existing &lt;input
 	 * type='text'&gt; element.
 	 * 
 	 * This element must already be attached to the document. If the element is

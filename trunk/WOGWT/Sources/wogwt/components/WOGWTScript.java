@@ -100,7 +100,7 @@ public class WOGWTScript extends WOComponent {
     	ERXResponseRewriter.addScriptCodeInHead(response, context, 
     			//"if (!WOGWT)\n" +
     			"WOGWT={};\n" +
-    			"WOGWT.hostPageName='" + rootParent().getClass().getSimpleName() + "';\n" +
+    			"WOGWT.hostPageName='" + context.page().getClass().getSimpleName() + "';\n" +
     			"WOGWT.rpcUrl='" + rpcUrl + "';\n" +
     			"WOGWT.directActionDefaultActionUrl='" + directActionUrl + "';\n" +
     			"WOGWT.resourceUrl='" + resourceUrl + "';\n" + 
@@ -127,14 +127,6 @@ public class WOGWTScript extends WOComponent {
     
     public String scriptPath() {
     	return module() + "/" + module() + ".nocache.js";
-    }
-    
-    public WOComponent rootParent() {
-    	WOComponent result = this;
-    	while (result.parent() != null) {
-    		result = result.parent();
-    	}
-    	return result;
     }
 
 }

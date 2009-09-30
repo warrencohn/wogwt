@@ -23,7 +23,6 @@ import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSMutableDictionary;
 import com.webobjects.foundation.NSComparator.ComparisonException;
 
-import er.ajax.AjaxResponse;
 import er.extensions.foundation.ERXDictionaryUtilities;
 
 /**
@@ -42,7 +41,7 @@ public class WOGWTServerUtil {
 	 * @param response the fully populated response to extract the update container from
 	 */
 	public static void onlyIncludeUpdateContainerInResponse(WORequest request, WOResponse response) {
-		if (response instanceof AjaxResponse) {
+		if (response.getClass().getName().equals("er.ajax.AjaxResponse")) {
 			return;
 		}
 		

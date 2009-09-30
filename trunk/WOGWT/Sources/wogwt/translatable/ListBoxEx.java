@@ -3,11 +3,37 @@ package wogwt.translatable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class ListBoxEx extends ListBox {
 
+	/**
+	 * Creates a ListBox widget that wraps an existing &lt;select&gt; element.
+	 * 
+	 * This element must already be attached to the document. If the element is
+	 * removed from the document, you must call
+	 * {@link RootPanel#detachNow(Widget)}.
+	 * 
+	 * @param element the element to be wrapped
+	 * @return list box
+	 */
+	public static ListBoxEx wrap(Element element) {
+		// Assert that the element is attached.
+		assert Document.get().getBody().isOrHasChild(element);
+
+		ListBoxEx listBox = new ListBoxEx(element);
+
+		// Mark it attached and remember it for cleanup.
+		listBox.onAttach();
+		RootPanel.detachOnWindowClose(listBox);
+
+		return listBox;
+	}
+	  
 	public ListBoxEx() {
 		super();
 	}
