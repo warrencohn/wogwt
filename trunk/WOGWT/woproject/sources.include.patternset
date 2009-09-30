@@ -1,2 +1,2 @@
 **/*.gwt.xml
-wogwt/translatable/**/*
+**/*.java
