@@ -1,8 +1,6 @@
 package wogwt.translatable.http;
 
 
-import wogwt.translatable.ErrorDialog;
-
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
@@ -10,7 +8,7 @@ import com.google.gwt.user.client.Window;
 /**
  * A request callback that displays a modal ErrorDialog for any error
  */
-public abstract class DialogOnErrorRequestCallback extends WOGWTRequestCallback {
+public abstract class AlertOnErrorRequestCallback extends WOGWTRequestCallback {
 	
 	/**
 	 * Empty implementation
@@ -23,8 +21,7 @@ public abstract class DialogOnErrorRequestCallback extends WOGWTRequestCallback 
 	 * Displays an ErrorDialog with the error message
 	 */
 	public void onError(Request request, Throwable throwable) {
-		ErrorDialog dialog = new ErrorDialog(throwable.getMessage());
-		dialog.showModal();
+		Window.alert(throwable.getMessage());
 	}
 	
 }
