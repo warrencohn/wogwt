@@ -1,0 +1,5 @@
+#summary Step by step instructions
+
+= Getting Started =
+
+Click [http://wogwt.googlecode.com/svn/trunk/WOGWT/wogwt_getting_started.html here] to view the Getting Started page.
