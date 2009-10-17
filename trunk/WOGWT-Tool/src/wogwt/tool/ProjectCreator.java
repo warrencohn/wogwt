@@ -13,6 +13,12 @@ public class ProjectCreator {
 
 	public static void main(String[] args) throws Exception {
 		String projectDir = args[0];
+		
+		boolean useWOGWTSourceProject = false;
+		if (args.length > 1 && "true".equals(args[1])) {
+			useWOGWTSourceProject = true;
+		}
+		
 		String projectName = new File(projectDir).getName();
 		
 		String applicationClassFileName = findFile(projectDir, "Application.java");
@@ -52,7 +58,7 @@ public class ProjectCreator {
 					"import wogwt.translatable.WOGWTClientUtil;\n" +
 					"\n" + 
 					"import com.google.gwt.core.client.EntryPoint;\n" +
-					"import com.google.gwt.gen2.logging.shared.Log;\n" +
+					"import com.google.gwt.gen2.logging.handler.client.RemoteLogHandler;\n" +
 					"import com.google.gwt.user.client.Window;\n" +
 					"import com.google.gwt.gen2.logging.shared.Level;\n" +
 					"import com.google.gwt.gen2.logging.shared.Log;\n" +
@@ -66,7 +72,8 @@ public class ProjectCreator {
 					"		}\n" + 
 					"\n" +		
 					"		Log.installUncaughtExceptionHandler(); // this won't take affect until the next event loop\n" + 
-					"		Log.setDefaultLevel(Level.FINEST);\n" + 		
+					"		Log.setDefaultLevel(Level.ALL);\n" + 
+					"		Log.addLogHandler(new RemoteLogHandler());\n" + 	
 					"		Log.finest(getClass().getName() + \": onModuleLoad\");\n" +
 					"\n" +
 					"		Window.alert(\"WOGWT is active!!\");\n" +
@@ -84,9 +91,8 @@ public class ProjectCreator {
 					"<module>\n" +
 					"	<inherits name=\"com.google.gwt.user.User\"/>\n" +
 					"	<inherits name=\"wogwt.translatable.WOGWT\"/>\n" +
-					"	<inherits name=\"wogwt.translatable.rpc.RPC\"/>\n" +
 					"\n" +
-					"   <set-property name=\"gwt.logging\" value=\"disabled\"/>\n" +
+					"	<set-property name=\"gwt.logging\" value=\"disabled\"/>\n" +
 					"\n" +
 				  	"	<source path=\"\"/>\n" +
 				  	"\n" +
@@ -119,10 +125,10 @@ public class ProjectCreator {
 			    "\n" +
 				"		if(!isWO54()) {\n" +
 				"    		System.setProperty(\"er.extensions.ERXAjaxApplication.allowContextPageResponse\", \"true\");\n" +
-				"    		registerRequestHandler(new WOComponentRequestHandler() {\n" +
+				"    		registerRequestHandler(new com.webobjects.appserver._private.WOComponentRequestHandler() {\n" +
 				"        		@Override\n" +
-				"        		public WOResponse handleRequest(WORequest request) {\n" +
-				"            		AjaxUtils.updateMutableUserInfoWithAjaxInfo(request);\n" +
+				"        		public com.webobjects.appserver.WOResponse handleRequest(com.webobjects.appserver.WORequest request) {\n" +
+				"            		er.ajax.AjaxUtils.updateMutableUserInfoWithAjaxInfo(request);\n" +
 				"            		return super.handleRequest(request);\n" +
 				"        		}\n" +
 				"    		}, \"ja\");\n" +
@@ -412,7 +418,7 @@ public class ProjectCreator {
 			"<booleanAttribute key=\"org.eclipse.debug.core.appendEnvironmentVariables\" value=\"true\"/>\n" +
 			"<listAttribute key=\"org.eclipse.jdt.launching.CLASSPATH\">\n" +
 			"<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry containerPath=&quot;org.eclipse.jdt.launching.JRE_CONTAINER&quot; javaProject=&quot;" + projectName + "&quot; path=&quot;1&quot; type=&quot;4&quot;/&gt;&#10;\"/>\n" +
-			//"<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry internalArchive=&quot;/WOGWT/Sources&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;\"/>\n" +
+			(useWOGWTSourceProject ? "<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry internalArchive=&quot;/WOGWT/Sources&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;\"/>\n" : "") +
 			"<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry internalArchive=&quot;/" + projectName + "/" + sourceRelativeDir + "/&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;\"/>\n" +
 			"<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry id=&quot;org.eclipse.jdt.launching.classpathentry.defaultClasspath&quot;&gt;&#10;&lt;memento exportedEntriesOnly=&quot;false&quot; project=&quot;" + projectName + "&quot;/&gt;&#10;&lt;/runtimeClasspathEntry&gt;&#10;\"/>\n" +
 			"</listAttribute>\n" +

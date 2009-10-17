@@ -1,11 +1,12 @@
 package wogwt.tool;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,26 +19,29 @@ public class WOGWTToolMain extends JFrame {
 	public static void main(String[] args) {
 		WOGWTToolMain frame = new WOGWTToolMain();
 		frame.pack();
+		frame.setSize(frame.getWidth() + 50, frame.getHeight() + 50);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 	
 	public WOGWTToolMain() {
 		super();
 		
-		setLayout(new GridLayout(3, 1));
+		setLayout(new GridBagLayout());
 		
-		JPanel headerPanel = new JPanel();
-		this.add(headerPanel);
+		GridBagConstraints mainConstraints = new GridBagConstraints();
+		mainConstraints.gridx = 0;
+		mainConstraints.anchor = GridBagConstraints.EAST;
 		
 		JLabel label = new JLabel("<html>WOGWT Tool - this will add WOGWT to an existing WO application.<br><br>" +
-				"Before you run this app you should do these things:<br>" +
-				"Step 1: Commit or backup your project<br>" +
-				"Step 2: Add the frameworks \"WOGWT\" and \"JavaWOJSPServlet\" to your project's build path.<br>" +
-				"Step 3: Click the button below.</html>");
-		headerPanel.add(label);
+				"Before you run this app you should do these things:<br><br>" +
+				"Step 1: Commit or backup your project<br><br>" +
+				"Step 2: Add the frameworks \"WOGWT\" and \"JavaWOJSPServlet\" to your project's build path.<br><br></html>");
+		this.add(label, mainConstraints);
 		
 		JPanel topPanel = new JPanel();
-		this.add(topPanel);
+		topPanel.setLayout(new GridBagLayout());
+		this.add(topPanel, mainConstraints);
 		
 		JLabel pathLabel = new JLabel("Project folder: ");
 		topPanel.add(pathLabel);
@@ -60,20 +64,23 @@ public class WOGWTToolMain extends JFrame {
 		});
 		topPanel.add(browseButton);
 		
-		JPanel lowerPanel = new JPanel();
-		this.add(lowerPanel);
+		
+		final JCheckBox chkUseGWTSourceProject = new JCheckBox("Use the WOGWT source project instead of the binary framework");
+		this.add(chkUseGWTSourceProject, mainConstraints);
 		
 		JButton runButton = new JButton("Add WOGWT to Project");
 		runButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ProjectCreator.main(new String[] {projectPath.getText()});
+					ProjectCreator.main(new String[] {projectPath.getText(), chkUseGWTSourceProject.isSelected() + ""});
 					JOptionPane.showMessageDialog(WOGWTToolMain.this, "WOGWT has been added to your project");
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			}
 		});
-		lowerPanel.add(runButton);
+		
+		mainConstraints.anchor = GridBagConstraints.CENTER;
+		this.add(runButton, mainConstraints);
 	}
 }
