@@ -95,6 +95,9 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 	public NSArray(Collection<? extends E> collection)  {
 		for (Iterator iterator = collection.iterator(); iterator.hasNext();) {
 			E e = (E) iterator.next();
+			if (e == null) {
+				throw new IllegalArgumentException(NULL_NOT_ALLOWED);
+			}
 			superDotAdd(e);
 		}
 	}

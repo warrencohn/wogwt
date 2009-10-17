@@ -6,6 +6,8 @@ import java.util.Enumeration;
 import java.util.NoSuchElementException;
 import java.util.Vector;
 
+import junit.framework.TestCase;
+
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSComparator;
 import com.webobjects.foundation.NSDictionary;
@@ -15,7 +17,7 @@ import com.webobjects.foundation.NSRange;
 import com.webobjects.foundation.NSTimestamp;
 import com.webobjects.foundation.NSComparator.ComparisonException;
 
-public class TestNSArray extends BaseTestCase {
+public class TestNSArray extends TestCase {
 	
 	public void testNSArray() {
 		NSArray array = new NSArray();
@@ -354,9 +356,9 @@ public class TestNSArray extends BaseTestCase {
 	}
 
 	public void testTakeValueForKey() {
-		NSDictionary[] dicts = new NSDictionary[] {
-				new NSDictionary("val1", "key"),
-				new NSDictionary("val2", "key")
+		NSDictionary[] dicts = new NSMutableDictionary[] {
+				new NSMutableDictionary("val1", "key"),
+				new NSMutableDictionary("val2", "key")
 				};
 		NSArray array = new NSArray(dicts);
 		array.takeValueForKey("val3", "key3");

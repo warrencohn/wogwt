@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import junit.framework.TestCase;
+
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSMutableSet;
 import com.webobjects.foundation.NSSet;
 
 
-public class TestNSMutableSet extends BaseTestCase {
+public class TestNSMutableSet extends TestCase {
 
 	public void testNSMutableSet() {
 		NSMutableSet set = new NSMutableSet();

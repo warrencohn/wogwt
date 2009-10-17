@@ -3,9 +3,11 @@ package test.com.webobjects.foundation;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import junit.framework.TestCase;
+
 import com.webobjects.foundation.NSTimestamp;
 
-public class TestNSTimestamp extends BaseTestCase {
+public class TestNSTimestamp extends TestCase {
 
 	public void testNSTimestamp() {
 		NSTimestamp time = new NSTimestamp();

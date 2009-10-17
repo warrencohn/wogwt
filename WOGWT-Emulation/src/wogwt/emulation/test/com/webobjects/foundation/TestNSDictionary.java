@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import junit.framework.TestCase;
+
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSKeyValueCoding;
 import com.webobjects.foundation.NSMutableDictionary;
 
-public class TestNSDictionary extends BaseTestCase {
+public class TestNSDictionary extends TestCase {
 
 	public void testNSDictionary() {
 		NSDictionary dict = new NSDictionary();
@@ -171,8 +173,12 @@ public class TestNSDictionary extends BaseTestCase {
 
 	public void testTakeValueForKey() {
 		NSDictionary dict = new NSDictionary("value", "key");
-		dict.takeValueForKey("newValue", "key");
-		assertEquals("newValue", dict.get("key"));
+		try {
+			dict.takeValueForKey("newValue", "key");
+			fail("Expected UnsupportedOperationException");
+		} catch (UnsupportedOperationException e) {
+			
+		}
 	}
 
 	public void testValueForKeyPath() {
@@ -189,13 +195,12 @@ public class TestNSDictionary extends BaseTestCase {
 
 	public void testTakeValueForKeyPath() {
 		NSDictionary dict = new NSDictionary("value", "key");
-		dict.takeValueForKeyPath("newValue", "key");
-		assertEquals("newValue", dict.get("key"));
-		
-		NSDictionary subDict = new NSDictionary("value", "path");
-		dict = new NSDictionary(subDict, "key");
-		dict.takeValueForKeyPath("newValue", "key.path");
-		assertEquals("newValue", dict.valueForKeyPath("key.path"));
+		try {
+			dict.takeValueForKeyPath("newValue", "key");
+			fail("Expected UnsupportedOperationException");
+		} catch (UnsupportedOperationException e) {
+			
+		}
 	}
 
 	public void testClone() {
