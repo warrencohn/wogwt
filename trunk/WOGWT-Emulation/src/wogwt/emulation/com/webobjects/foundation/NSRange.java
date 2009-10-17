@@ -31,6 +31,9 @@ public class NSRange extends Object implements Serializable, Cloneable {
 	}
 	
 	public NSRange(int location, int length) {
+		if (length < 0) {
+			throw new IllegalArgumentException("Cannot create an " + getClass().getName() + "with negative length.");
+		}
 		this.location = location;
 		this.length = length;
 	}
@@ -70,7 +73,7 @@ public class NSRange extends Object implements Serializable, Cloneable {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof NSRange))
 			return false;
 		final NSRange other = (NSRange) obj;
 		if (length != other.length)

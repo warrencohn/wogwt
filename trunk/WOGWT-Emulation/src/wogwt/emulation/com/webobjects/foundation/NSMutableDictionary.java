@@ -75,6 +75,11 @@ public class NSMutableDictionary<K,V> extends NSDictionary<K,V> {
 	}
 	
 	@Override
+	public void takeValueForKeyPath(Object value, String keyPath) {
+		superDotPut((K)keyPath, (V)value);
+	}
+	
+	@Override
 	public void clear() {
 		superDotClear();
 	}

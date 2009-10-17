@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src/wogwt/emulation"/>
 	<classpathentry excluding="wogwt/emulation/" kind="src" path="src"/>
+	<classpathentry kind="con" path="WOFramework/WOGWT"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="con" path="WOFramework/JavaWOExtensions"/>
 	<classpathentry kind="con" path="WOFramework/JavaEOAccess"/>
@@ -10,6 +11,5 @@
 	<classpathentry kind="con" path="WOFramework/JavaWebObjects"/>
 	<classpathentry kind="con" path="WOFramework/JavaXML"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="WOFramework/WOGWT"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

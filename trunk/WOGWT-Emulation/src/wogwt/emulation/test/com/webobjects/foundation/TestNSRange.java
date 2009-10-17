@@ -1,9 +1,11 @@
 package test.com.webobjects.foundation;
 
+import junit.framework.TestCase;
+
 import com.webobjects.foundation.NSMutableRange;
 import com.webobjects.foundation.NSRange;
 
-public class TestNSRange extends BaseTestCase {
+public class TestNSRange extends TestCase {
 
 	public void testNSRange() {
 		NSRange range = new NSRange();
@@ -14,6 +16,13 @@ public class TestNSRange extends BaseTestCase {
 		NSRange range = new NSRange(2,3);
 		assertEquals(2, range.location());
 		assertEquals(3, range.length());
+		
+		try {
+			range = new NSRange(1,-1);
+			fail("Negative length allowed");
+		} catch (IllegalArgumentException e) {
+			
+		}
 	}
 
 	public void testNSRangeNSRange() {
@@ -44,7 +53,7 @@ public class TestNSRange extends BaseTestCase {
 		assertFalse(range.equals(otherRange));
 		
 		otherRange = new NSMutableRange(2, 3);
-		assertFalse(range.equals(otherRange));
+		assertTrue(range.equals(otherRange));
 	}
 	
 	public void testIsEqualToRange() {
@@ -88,7 +97,7 @@ public class TestNSRange extends BaseTestCase {
 		range = new NSRange(2, 0);
 		assertTrue(range.isEmpty());
 		
-		range = new NSRange(0, -1);
+		range = new NSRange(0, 0);
 		assertTrue(range.isEmpty());
 	}
 

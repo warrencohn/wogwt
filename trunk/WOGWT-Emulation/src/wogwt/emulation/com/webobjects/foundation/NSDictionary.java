@@ -171,7 +171,7 @@ public class NSDictionary<K,V> extends HashMap<K,V> implements NSKeyValueCoding,
 	}
 	
 	public void takeValueForKeyPath(Object value, String keyPath) {
-		superDotPut((K)keyPath, (V)value);
+		throw new UnsupportedOperationException("put" + UNSUPPORTED);
 	}
 	
 	protected void superDotClear() {

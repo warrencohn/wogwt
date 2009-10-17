@@ -3,6 +3,8 @@ package test.com.webobjects.foundation;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSComparator;
 import com.webobjects.foundation.NSMutableArray;
@@ -10,7 +12,7 @@ import com.webobjects.foundation.NSRange;
 import com.webobjects.foundation.NSTimestamp;
 import com.webobjects.foundation.NSComparator.ComparisonException;
 
-public class TestNSMutableArray extends BaseTestCase {
+public class TestNSMutableArray extends TestCase {
 
 	public void testNSMutableArray() {
 		NSMutableArray array = new NSMutableArray();
