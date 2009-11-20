@@ -210,7 +210,7 @@ public class ProjectCreator {
 			    "\n" +
 			    "<servlet>\n" + 
 			    "	<servlet-name>remoteLoggingService</servlet-name>\n" + 
-			    "	<servlet-class>com.google.gwt.gen2.logging.server.RemoteLoggingService</servlet-class>\n" +
+			    "	<servlet-class>com.google.gwt.libideas.logging.server.RemoteLoggingServiceImpl</servlet-class>\n" +
 			    "</servlet>\n" +
 			    "\n" + 
 			    "<servlet-mapping>\n" +
@@ -423,10 +423,10 @@ public class ProjectCreator {
 			"<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry id=&quot;org.eclipse.jdt.launching.classpathentry.defaultClasspath&quot;&gt;&#10;&lt;memento exportedEntriesOnly=&quot;false&quot; project=&quot;" + projectName + "&quot;/&gt;&#10;&lt;/runtimeClasspathEntry&gt;&#10;\"/>\n" +
 			"</listAttribute>\n" +
 			"<booleanAttribute key=\"org.eclipse.jdt.launching.DEFAULT_CLASSPATH\" value=\"false\"/>\n" +
-			"<stringAttribute key=\"org.eclipse.jdt.launching.MAIN_TYPE\" value=\"com.google.gwt.dev.HostedMode\"/>\n" +
-			"<stringAttribute key=\"org.eclipse.jdt.launching.PROGRAM_ARGUMENTS\" value=\"-logLevel TRACE -style PRETTY -war &quot;${workspace_loc:" + projectName + "}/WebServerResources&quot; -startupUrl " + gwtPackage + ".Application/" + projectName + "/WebObjects/" + projectName + ".woa " + gwtPackage + ".Development\"/>\n" +
+			"<stringAttribute key=\"org.eclipse.jdt.launching.MAIN_TYPE\" value=\"com.google.gwt.dev.DevMode\"/>\n" +
+			"<stringAttribute key=\"org.eclipse.jdt.launching.PROGRAM_ARGUMENTS\" value=\"-logLevel TRACE -war &quot;${workspace_loc:" + projectName + "}/WebServerResources&quot; -startupUrl " + gwtPackage + ".Application/" + projectName + "/WebObjects/" + projectName + ".woa " + gwtPackage + ".Development\"/>\n" +
 			"<stringAttribute key=\"org.eclipse.jdt.launching.PROJECT_ATTR\" value=\"" + projectName + "\"/>\n" +
-			"<stringAttribute key=\"org.eclipse.jdt.launching.VM_ARGUMENTS\" value=\"-XstartOnFirstThread -Xmx256M -Dwogwt.isHostedMode=&quot;true&quot; -DWOAINSTALLROOT=&quot;${workspace_loc:" + projectName + "/build}&quot; -DWOIDE=&quot;WOLips&quot; \"/>\n" +
+			"<stringAttribute key=\"org.eclipse.jdt.launching.VM_ARGUMENTS\" value=\"-Xmx256M -Dwogwt.isHostedMode=&quot;true&quot; -DWOAINSTALLROOT=&quot;${workspace_loc:" + projectName + "/build}&quot; -DWOIDE=&quot;WOLips&quot; \"/>\n" +
 			"</launchConfiguration>\n";
 		if (!new File(launcherFileName).exists()) {
 			FileUtils.writeStringToFile(new File(launcherFileName), launcherText, "UTF-8");
