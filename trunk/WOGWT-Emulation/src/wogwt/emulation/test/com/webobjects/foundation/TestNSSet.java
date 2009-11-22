@@ -63,12 +63,13 @@ public class TestNSSet extends TestCase {
 		source.add("abc");
 		source.add(null);
 		
-		NSSet set = new NSSet(source, true);
-		assertEquals(1, set.size());
-		assertTrue(set.contains("abc"));
+		try {
+			NSSet set = new NSSet(source, false);
+		} catch (NullPointerException e) {
+		}
 		
 		try {
-			set = new NSSet(source, false);
+			NSSet set = new NSSet(source, true);
 			fail("IllegalArgumentException expected");
 		} catch (IllegalArgumentException e) {
 		}
@@ -109,7 +110,7 @@ public class TestNSSet extends TestCase {
 
 	public void testHashSet() {
 		NSSet set = new NSSet(new String[] {"abc"});
-		NSSet hashSet = (NSSet) set.hashSet();
+		HashSet hashSet = set.hashSet();
 		assertEquals(1, hashSet.size());
 		assertTrue(hashSet.contains("abc"));
 	}

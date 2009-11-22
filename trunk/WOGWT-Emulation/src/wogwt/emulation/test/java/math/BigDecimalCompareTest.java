@@ -26,14 +26,14 @@ import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import test.com.webobjects.foundation.BaseTestCase;
+import junit.framework.TestCase;
 
 /**
  * Class:  java.math.BigDecimal
  * Methods: abs, compareTo, equals, hashCode, 
  * max, min, negate, signum
  */
-public class BigDecimalCompareTest extends BaseTestCase {
+public class BigDecimalCompareTest extends TestCase {
     /**
      * Abs() of a negative BigDecimal
      */
@@ -434,7 +434,7 @@ public class BigDecimalCompareTest extends BaseTestCase {
        int precision = 37;
        RoundingMode rm = RoundingMode.FLOOR;
        MathContext mc = new MathContext(precision, rm);
-       String c = "-929487820944884782312124789.8748298842";
+       String c = "-929487820944884782312124789.8748298843";
        int cScale = 10;
        BigDecimal aNumber = new BigDecimal(new BigInteger(a), aScale);
        BigDecimal res = aNumber.negate(mc);
@@ -464,7 +464,7 @@ public class BigDecimalCompareTest extends BaseTestCase {
        int precision = 46;
        RoundingMode rm = RoundingMode.CEILING;
        MathContext mc = new MathContext(precision, rm);
-       String c = "9294878209448847823.121247898748298842980877981";
+       String c = "9294878209448847823.121247898748298842980877982";
        int cScale = 27;
        BigDecimal aNumber = new BigDecimal(new BigInteger(a), aScale);
        BigDecimal res = aNumber.negate(mc);

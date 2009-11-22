@@ -26,13 +26,13 @@ import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import test.com.webobjects.foundation.BaseTestCase;
+import junit.framework.TestCase;
 
 /**
  * Class:  java.math.BigDecimal
  * Methods: constructors and fields
  */
-public class BigDecimalConstructorsTest extends BaseTestCase {
+public class BigDecimalConstructorsTest extends TestCase {
     /**
      * check ONE
      */

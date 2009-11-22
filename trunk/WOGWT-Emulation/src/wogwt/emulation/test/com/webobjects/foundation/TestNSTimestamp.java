@@ -74,15 +74,23 @@ public class TestNSTimestamp extends TestCase {
 		return d;
 	}
 	
+	private void assertEqualTimeParts(NSTimestamp expected, NSTimestamp actual) {
+		assertEquals(expected.getYear(), actual.getYear());	
+		assertEquals(expected.getMonth(), actual.getMonth());	
+		assertEquals(expected.getDate(), actual.getDate());	
+		assertEquals(expected.getHours(), actual.getHours());	
+		assertEquals(expected.getMinutes(), actual.getMinutes());	
+		assertEquals(expected.getSeconds(), actual.getSeconds());
+	}
+	
 	public void testTimestampByAddingGregorianUnits() {
 		Date d = jan1();
-		
+
 		NSTimestamp timestamp = new NSTimestamp(d);
-		NSTimestamp clone = new NSTimestamp(d);
-		assertEquals(timestamp, clone);
 		
 		NSTimestamp temp = timestamp.timestampByAddingGregorianUnits(0, 0, 0, 0, 0, 0);
-		assertEquals(timestamp, temp);
+		//assertEquals(timestamp.getTime(), temp.getTime());
+		assertEqualTimeParts(timestamp, temp);	
 	}
 		
 	public void testTimestampByAddingGregorianUnitsYear() {
@@ -94,7 +102,7 @@ public class TestNSTimestamp extends TestCase {
 		NSTimestamp expected = new NSTimestamp(d);
 		
 		NSTimestamp temp = timestamp.timestampByAddingGregorianUnits(1, 0, 0, 0, 0, 0);
-		assertEquals(expected, temp);		
+		assertEqualTimeParts(expected, temp);		
 	}
 
 	public void testTimestampByAddingGregorianUnitsMonth() {
@@ -104,9 +112,8 @@ public class TestNSTimestamp extends TestCase {
 		
 		d.setMonth(1);
 		NSTimestamp expected = new NSTimestamp(d);
-		
 		NSTimestamp temp = timestamp.timestampByAddingGregorianUnits(0, 1, 0, 0, 0, 0);
-		assertEquals(expected, temp);		
+		assertEqualTimeParts(expected, temp);		
 	}
 	
 	public void testTimestampByAddingGregorianUnitsDate() {
@@ -118,7 +125,7 @@ public class TestNSTimestamp extends TestCase {
 		NSTimestamp expected = new NSTimestamp(d);
 		
 		NSTimestamp temp = timestamp.timestampByAddingGregorianUnits(0, 0, 1, 0, 0, 0);
-		assertEquals(expected, temp);		
+		assertEqualTimeParts(expected, temp);		
 	}
 	
 	public void testTimestampByAddingGregorianUnitsHour() {
@@ -130,7 +137,7 @@ public class TestNSTimestamp extends TestCase {
 		NSTimestamp expected = new NSTimestamp(d);
 		
 		NSTimestamp temp = timestamp.timestampByAddingGregorianUnits(0, 0, 0, 1, 0, 0);
-		assertEquals(expected, temp);		
+		assertEqualTimeParts(expected, temp);		
 	}
 	
 	public void testTimestampByAddingGregorianUnitsMinute() {
@@ -142,7 +149,7 @@ public class TestNSTimestamp extends TestCase {
 		NSTimestamp expected = new NSTimestamp(d);
 		
 		NSTimestamp temp = timestamp.timestampByAddingGregorianUnits(0, 0, 0, 0, 1, 0);
-		assertEquals(expected, temp);		
+		assertEqualTimeParts(expected, temp);		
 	}
 
 	public void testTimestampByAddingGregorianUnitsSecond() {
@@ -154,70 +161,70 @@ public class TestNSTimestamp extends TestCase {
 		NSTimestamp expected = new NSTimestamp(d);
 		
 		NSTimestamp temp = timestamp.timestampByAddingGregorianUnits(0, 0, 0, 0, 0, 1);
-		assertEquals(expected, temp);		
+		assertEqualTimeParts(expected, temp);		
 	}
 	
 	public void testSetYear() {
 		try {
 			new NSTimestamp().setYear(2000);
-			fail("SetYear should throw UnsupportedOperationException");
-		} catch (UnsupportedOperationException e) {
+			fail("SetYear should throw IllegalStateException");
+		} catch (IllegalStateException e) {
 		}
 	}
 
 	public void testSetMonth() {
 		try {
 			new NSTimestamp().setMonth(1);
-			fail("SetMonth should throw UnsupportedOperationException");
-		} catch (UnsupportedOperationException e) {
+			fail("SetMonth should throw IllegalStateException");
+		} catch (IllegalStateException e) {
 		}
 	}
 
 	public void testSetDate() {
 		try {
 			new NSTimestamp().setDate((int)new Date().getTime());
-			fail("SetDate should throw UnsupportedOperationException");
-		} catch (UnsupportedOperationException e) {
+			fail("SetDate should throw IllegalStateException");
+		} catch (IllegalStateException e) {
 		}
 	}
 
 	public void testSetHours() {
 		try {
 			new NSTimestamp().setHours(1);
-			fail("SetHours should throw UnsupportedOperationException");
-		} catch (UnsupportedOperationException e) {
+			fail("SetHours should throw IllegalStateException");
+		} catch (IllegalStateException e) {
 		}
 	}
 
 	public void testSetMinutes() {
 		try {
 			new NSTimestamp().setMinutes(1);
-			fail("SetMinutes should throw UnsupportedOperationException");
-		} catch (UnsupportedOperationException e) {
+			fail("SetMinutes should throw IllegalStateException");
+		} catch (IllegalStateException e) {
 		}
 	}
 
 	public void testSetSeconds() {
 		try {
 			new NSTimestamp().setSeconds(1);
-			fail("SetSeconds should throw UnsupportedOperationException");
-		} catch (UnsupportedOperationException e) {
+			fail("SetSeconds should throw IllegalStateException");
+		} catch (IllegalStateException e) {
 		}
 	}
 
 	public void testSetTime() {
 		try {
 			new NSTimestamp().setTime(new Date().getTime());
-			fail("SetTime should throw UnsupportedOperationException");
-		} catch (UnsupportedOperationException e) {
+			fail("SetTime should throw IllegalStateException");
+		} catch (IllegalStateException e) {
 		}
 	}
 
 	public void testSetNanos() {
 		try {
 			new NSTimestamp().setNanos(999999999);
-			fail("SetNanos should throw UnsupportedOperationException");
-		} catch (UnsupportedOperationException e) {
+			fail("SetNanos should throw IllegalStateException");
+		} catch (IllegalStateException e) {
 		}
 	}
 

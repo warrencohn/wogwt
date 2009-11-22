@@ -76,7 +76,7 @@ public class TestNSArray extends TestCase {
 		list.add("def");
 		
 		NSArray array = new NSArray(list, false);
-		assertEquals(2, array.size());
+		assertEquals(3, array.size()); // nulls are allowed by this call
 		
 		try {
 			array = new NSArray(list, true);
@@ -197,7 +197,7 @@ public class TestNSArray extends TestCase {
 		NSArray array = new NSArray(new String[] {"abc", def});
 		NSRange range = new NSRange(1, 1);
 		int index = array.indexOfIdenticalObject(def, range);
-		assertEquals(0, index);
+		assertEquals(1, index);
 		
 		range = NSRange.ZeroRange;
 		index = array.indexOfIdenticalObject(def, range);
@@ -217,7 +217,7 @@ public class TestNSArray extends TestCase {
 		NSArray array = new NSArray(new String[] {"abc", "def"});
 		NSRange range = new NSRange(1, 1);
 		int index = array.indexOfIdenticalObject("def", range);
-		assertEquals(0, index);
+		assertEquals(1, index);
 		
 		range = NSRange.ZeroRange;
 		index = array.indexOfObject("def", range);
@@ -383,7 +383,7 @@ public class TestNSArray extends TestCase {
 		assertEquals(new BigDecimal(6), sum);
 		
 		BigDecimal avg = (BigDecimal) array.valueForKeyPath("@avg.key");
-		assertEquals(new BigDecimal(3), avg);
+		assertEquals(3, avg.intValue());
 		
 		int min = ((Integer) array.valueForKeyPath("@min.key")).intValue();
 		assertEquals(2, min);
@@ -404,7 +404,7 @@ public class TestNSArray extends TestCase {
 		NSMutableDictionary dict = new NSMutableDictionary(subDict, "key");
 		NSArray array = new NSArray(dict);
 		array.takeValueForKeyPath(3, "key.subkey");
-		assertEquals(2, subDict.objectForKey("subkey"));
+		assertEquals(3, subDict.objectForKey("subkey"));
 	}
 
 	public void testVector() {
@@ -502,8 +502,8 @@ public class TestNSArray extends TestCase {
 
 	public void testSetIntObject() {
 		try {
-			NSArray.EmptyArray.set(0, "abc");
-			fail("Remove should throw UnsupportedOperationException");
+			new NSArray("abc").set(0, "abc");
+			fail("Set should throw UnsupportedOperationException");
 		} catch (UnsupportedOperationException e) {
 		}
 	}

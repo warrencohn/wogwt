@@ -22,13 +22,13 @@ import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import test.com.webobjects.foundation.BaseTestCase;
+import junit.framework.TestCase;
 
 /**
  * Class:  java.math.BigDecimal
  * Methods: add, subtract, multiply, divide 
  */
-public class BigDecimalArithmeticTest extends BaseTestCase {
+public class BigDecimalArithmeticTest extends TestCase {
     /**
      * Add two numbers of equal positive scales
      */

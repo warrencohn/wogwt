@@ -25,13 +25,13 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 
-import test.com.webobjects.foundation.BaseTestCase;
+import junit.framework.TestCase;
 
 /**
  * Class:  java.math.BigDecimal
  * Methods: movePointLeft, movePointRight, scale, setScale, unscaledValue * 
  */
-public class BigDecimalScaleOperationsTest extends BaseTestCase {
+public class BigDecimalScaleOperationsTest extends TestCase {
     /**
      * Check the default scale
      */

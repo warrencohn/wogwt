@@ -86,9 +86,7 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 			throw new IllegalArgumentException(NULL_NOT_ALLOWED);
 		for (Iterator iterator = collection.iterator(); iterator.hasNext();) {
 			E e = (E) iterator.next();
-			if (e != null) {
-				superDotAdd(e);
-			}
+			superDotAdd(e);
 		}
 	}
 	
@@ -108,7 +106,7 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 		if (range == null)
 			throw new IllegalArgumentException("range may not be null");
 		
-		for (int i = range.location(); i <= range.maxRange(); i++) {
+		for (int i = range.location(); i <= range.maxRange()-1; i++) {
 			E element = (E)list.get(i);
 			if (element == null) {
 				if (!ignoreNull)
@@ -279,7 +277,11 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 		if (range == null)
 			throw new IllegalArgumentException("range may not be null");
 		NSArray subArray = subarrayWithRange(range);
-		return subArray.indexOfIdenticalObject(object);
+		int result = subArray.indexOfIdenticalObject(object);
+		if (result != NotFound) {
+			result += range.location;
+		} 
+		return result;
 	}
 	
 	public int indexOfObject(Object object) {
@@ -371,7 +373,7 @@ public class NSArray<E> extends ArrayList<E> implements NSKeyValueCoding,
 		if (range == null)
 			throw new IllegalArgumentException("range may not be null");
 		NSMutableArray<E> result = new NSMutableArray<E>();
-		for (int i = range.location(); i <= range.maxRange(); i++) {
+		for (int i = range.location(); i <= range.maxRange()-1; i++) {
 			result.add(get(i));
 		}
 		return result.immutableClone();

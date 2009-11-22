@@ -123,7 +123,7 @@ public class NSMutableArray<E> extends NSArray<E> {
 	
 	public void removeObjectsInRange(NSRange range) {
 		NSMutableArray<E> objectsToRemove = new NSMutableArray<E>();
-		for (int i = range.location(); i <= range.maxRange(); i++) {
+		for (int i = range.location(); i <= range.maxRange()-1; i++) {
 			objectsToRemove.add(get(i));
 		}
 		removeObjectsInArray(objectsToRemove);

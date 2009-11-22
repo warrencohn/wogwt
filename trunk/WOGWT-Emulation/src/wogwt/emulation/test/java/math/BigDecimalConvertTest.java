@@ -24,14 +24,14 @@ package test.java.math;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import test.com.webobjects.foundation.BaseTestCase;
+import junit.framework.TestCase;
 
 /**
  * Class:  java.math.BigDecimal
  * Methods: doubleValue, floatValue, intValue, longValue,  
  * valueOf, toString, toBigInteger
  */
-public class BigDecimalConvertTest extends BaseTestCase {
+public class BigDecimalConvertTest extends TestCase {
     /**
      * Double value of a negative BigDecimal
      */

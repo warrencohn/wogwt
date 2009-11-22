@@ -23,7 +23,7 @@ package test.java.math;
 
 import java.math.BigInteger;
 
-import test.com.webobjects.foundation.BaseTestCase;
+import junit.framework.TestCase;
 
 import com.google.gwt.user.client.Random;
 
@@ -32,7 +32,7 @@ import com.google.gwt.user.client.Random;
  * Constructors: BigInteger(byte[] a), BigInteger(int sign, byte[] a), 
  *               BigInteger(String val, int radix)
  */
-public class BigIntegerConstructorsTest extends BaseTestCase {
+public class BigIntegerConstructorsTest extends TestCase {
     /**
      * Create a number from an array of bytes.
      * Verify an exception thrown if an array is zero bytes long
@@ -741,35 +741,35 @@ public class BigIntegerConstructorsTest extends BaseTestCase {
         assertEquals("incorrect sign", 0, aNumber.signum());
     }
 
-    /**
-     * Create a random number of 75 bits length.
-     */
-    public void testConstructorRandom() {
-        int bitLen = 75;
-        Random rnd = null;
-        BigInteger aNumber = new BigInteger(bitLen, rnd);
-        assertTrue("incorrect bitLength", aNumber.bitLength() <= bitLen);
-    }
-
-    /**
-     * Create a prime number of 25 bits length.
-     */
-    public void testConstructorPrime() {
-        int bitLen = 25;
-        Random rnd = null;
-        BigInteger aNumber = new BigInteger(bitLen, 80, rnd);
-        assertTrue("incorrect bitLength", aNumber.bitLength() == bitLen);
-    }
-
-    /**
-     * Create a prime number of 2 bits length.
-     */
-    public void testConstructorPrime2() {
-        int bitLen = 2;
-        Random rnd = null;
-        BigInteger aNumber = new BigInteger(bitLen, 80, rnd);
-        assertTrue("incorrect bitLength", aNumber.bitLength() == bitLen);
-        int num = aNumber.intValue();
-        assertTrue("incorrect value", num == 2 || num == 3);
-    }
+//    /**
+//     * Create a random number of 75 bits length.
+//     */
+//    public void testConstructorRandom() {
+//        int bitLen = 75;
+//        Random rnd = null;
+//        BigInteger aNumber = new BigInteger(bitLen, rnd);
+//        assertTrue("incorrect bitLength", aNumber.bitLength() <= bitLen);
+//    }
+//
+//    /**
+//     * Create a prime number of 25 bits length.
+//     */
+//    public void testConstructorPrime() {
+//        int bitLen = 25;
+//        Random rnd = null;
+//        BigInteger aNumber = new BigInteger(bitLen, 80, rnd);
+//        assertTrue("incorrect bitLength", aNumber.bitLength() == bitLen);
+//    }
+//
+//    /**
+//     * Create a prime number of 2 bits length.
+//     */
+//    public void testConstructorPrime2() {
+//        int bitLen = 2;
+//        Random rnd = null;
+//        BigInteger aNumber = new BigInteger(bitLen, 80, rnd);
+//        assertTrue("incorrect bitLength", aNumber.bitLength() == bitLen);
+//        int num = aNumber.intValue();
+//        assertTrue("incorrect value", num == 2 || num == 3);
+//    }
 }

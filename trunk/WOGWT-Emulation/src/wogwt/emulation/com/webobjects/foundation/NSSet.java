@@ -61,12 +61,15 @@ public class NSSet<E> extends HashSet<E> {
 		}
 	}
 	
-	public NSSet(Set<? extends E> set, boolean ignoreNull) {
+	public NSSet(Set<? extends E> set, boolean checkForNull) {
 		for (Iterator iterator = set.iterator(); iterator.hasNext();) {
 			E e = (E) iterator.next();
 			if (e == null) {
-				if (!ignoreNull)
+				if (checkForNull) {
 					throw new IllegalArgumentException(NULL_NOT_ALLOWED);
+				} else {
+					throw new NullPointerException();
+				}
 			} else {
 				superDotAdd(e);
 			}

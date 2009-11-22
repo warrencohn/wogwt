@@ -33,11 +33,7 @@ public class NSMutableSet<E> extends NSSet<E> {
 	public NSMutableSet(NSSet<? extends E> otherSet) {
 		super(otherSet);
 	}
-	
-	public NSMutableSet(Set<? extends E> set, boolean ignoreNull) {
-		super(set, ignoreNull);
-	}
-	
+		
 	public void addObject(E object) {
 		add(object);
 	}

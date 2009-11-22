@@ -175,8 +175,8 @@ public class TestNSDictionary extends TestCase {
 		NSDictionary dict = new NSDictionary("value", "key");
 		try {
 			dict.takeValueForKey("newValue", "key");
-			fail("Expected UnsupportedOperationException");
-		} catch (UnsupportedOperationException e) {
+			fail("Expected IllegalStateException");
+		} catch (IllegalStateException e) {
 			
 		}
 	}
@@ -197,8 +197,8 @@ public class TestNSDictionary extends TestCase {
 		NSDictionary dict = new NSDictionary("value", "key");
 		try {
 			dict.takeValueForKeyPath("newValue", "key");
-			fail("Expected UnsupportedOperationException");
-		} catch (UnsupportedOperationException e) {
+			fail("Expected IllegalStateException");
+		} catch (IllegalStateException e) {
 			
 		}
 	}

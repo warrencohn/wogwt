@@ -140,7 +140,7 @@ public class NSDictionary<K,V> extends HashMap<K,V> implements NSKeyValueCoding,
 	}
 	
 	public void takeValueForKey(Object value, String key) {
-		throw new UnsupportedOperationException("put" + UNSUPPORTED);
+		throw new IllegalStateException("put" + UNSUPPORTED);
 	}
 	
 	public Object valueForKeyPath(String keyPath) {
@@ -171,7 +171,7 @@ public class NSDictionary<K,V> extends HashMap<K,V> implements NSKeyValueCoding,
 	}
 	
 	public void takeValueForKeyPath(Object value, String keyPath) {
-		throw new UnsupportedOperationException("put" + UNSUPPORTED);
+		throw new IllegalStateException("put" + UNSUPPORTED);
 	}
 	
 	protected void superDotClear() {
