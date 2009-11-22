@@ -84,42 +84,42 @@ public class NSTimestamp extends Timestamp {
 	
 	@Override
 	public void setDate(int date) {
-		throw new UnsupportedOperationException("setDate" + UNSUPPORTED);
+		throw new IllegalStateException("setDate" + UNSUPPORTED);
 	}
 	
 	@Override
 	public void setMonth(int month) {
-		throw new UnsupportedOperationException("setMonth" + UNSUPPORTED);
+		throw new IllegalStateException("setMonth" + UNSUPPORTED);
 	}
 	
 	@Override
 	public void setYear(int year) {
-		throw new UnsupportedOperationException("setYear" + UNSUPPORTED);
+		throw new IllegalStateException("setYear" + UNSUPPORTED);
 	}
 	
 	@Override
 	public void setHours(int hours) {
-		throw new UnsupportedOperationException("setHours" + UNSUPPORTED);
+		throw new IllegalStateException("setHours" + UNSUPPORTED);
 	}
 	
 	@Override
 	public void setMinutes(int minutes) {
-		throw new UnsupportedOperationException("setMinutes" + UNSUPPORTED);
+		throw new IllegalStateException("setMinutes" + UNSUPPORTED);
 	}
 	
 	@Override
 	public void setSeconds(int seconds) {
-		throw new UnsupportedOperationException("setSeconds" + UNSUPPORTED);
+		throw new IllegalStateException("setSeconds" + UNSUPPORTED);
 	}
 	
 	@Override
 	public void setNanos(int n) {
-		throw new UnsupportedOperationException("setNanos" + UNSUPPORTED);
+		throw new IllegalStateException("setNanos" + UNSUPPORTED);
 	}
 	
 	@Override
 	public void setTime(long time) {
-		throw new UnsupportedOperationException("setTime" + UNSUPPORTED);
+		throw new IllegalStateException("setTime" + UNSUPPORTED);
 	}
 	
 }

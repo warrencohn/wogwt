@@ -93,7 +93,7 @@ public class NSRange extends Object implements Serializable, Cloneable {
 	}
 	
 	public boolean containsLocation(int location) {
-		return location >= this.location && location <= this.maxRange();
+		return location >= this.location && location <= lastLocation();
 	}
 	
 	public boolean intersectsRange(NSRange otherRange) {
@@ -118,15 +118,22 @@ public class NSRange extends Object implements Serializable, Cloneable {
 		if (otherRange == null)
 			return false;
 		
-		return (otherRange.location >= location &&
-				otherRange.maxRange() <= maxRange());
+		return (otherRange.location <= location &&
+				otherRange.maxRange() >= maxRange());
 	}
 	
 	public int maxRange() {
 		if (length <= 0)
 			return location;
 		else
-			return location + length - 1;
+			return location + length;
+	}
+	
+	private int lastLocation() {
+		if (length <= 0)
+			return location;
+		else
+			return location + length -1;
 	}
 	
 	public NSRange rangeByIntersectingRange(NSRange otherRange) {
@@ -134,7 +141,7 @@ public class NSRange extends Object implements Serializable, Cloneable {
 			return ZeroRange;
 		
 		int start = Math.max(location, otherRange.location());
-		int end = Math.min(maxRange(), otherRange.maxRange());
+		int end = Math.min(lastLocation(), otherRange.lastLocation());
 		return new NSRange(start, end - start + 1);
 	}
 	
@@ -143,7 +150,7 @@ public class NSRange extends Object implements Serializable, Cloneable {
 			return this;
 		
 		int start = Math.min(location, otherRange.location());
-		int end = Math.max(maxRange(), otherRange.maxRange());
+		int end = Math.max(lastLocation(), otherRange.lastLocation());
 		return new NSRange(start, end - start + 1);
 	}
 	
@@ -168,7 +175,7 @@ public class NSRange extends Object implements Serializable, Cloneable {
 		
 		// intersects from the start, single result with the remaining range
 		} else if (intersection.location() == location()) { 
-			resultRange1.setLocation(intersection.maxRange()+1);
+			resultRange1.setLocation(intersection.maxRange());
 			resultRange1.setLength(length() - intersection.length());
 			
 			resultRange2.setLocation(0);

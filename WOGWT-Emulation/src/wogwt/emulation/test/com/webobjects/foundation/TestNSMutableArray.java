@@ -302,12 +302,6 @@ public class TestNSMutableArray extends TestCase {
 
 	public void testReplaceObjectAtIndexEInt() {
 		NSMutableArray array = new NSMutableArray(new String[] {"abc", "def", "ghi"});
-		array.replaceObjectAtIndex(0, "123");
-		assertEquals("123", array.get(0));
-	}
-
-	public void testReplaceObjectAtIndexIntE() {
-		NSMutableArray array = new NSMutableArray(new String[] {"abc", "def", "ghi"});
 		array.replaceObjectAtIndex("123", 0);
 		assertEquals("123", array.get(0));
 	}

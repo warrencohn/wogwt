@@ -76,7 +76,26 @@ public class NSMutableDictionary<K,V> extends NSDictionary<K,V> {
 	
 	@Override
 	public void takeValueForKeyPath(Object value, String keyPath) {
-		superDotPut((K)keyPath, (V)value);
+		String firstKey;
+		String restOfKeyPath = null;
+		int dotIndex = keyPath.indexOf(NSKeyValueCodingAdditions.KeyPathSeparator);
+		if (dotIndex == -1) {
+			firstKey = keyPath;
+		} else {
+			firstKey = keyPath.substring(0, dotIndex);
+			if (keyPath.length()-1 > dotIndex) {
+				restOfKeyPath = keyPath.substring(dotIndex+1);
+			}
+		}
+
+		Object firstValue = get(firstKey);
+		if (firstValue != null && 
+				(firstValue instanceof NSKeyValueCodingAdditions)
+				&& restOfKeyPath != null) {
+			((NSKeyValueCodingAdditions)firstValue).takeValueForKeyPath(value, restOfKeyPath);
+		} else {
+			takeValueForKey(value, keyPath);
+		}
 	}
 	
 	@Override

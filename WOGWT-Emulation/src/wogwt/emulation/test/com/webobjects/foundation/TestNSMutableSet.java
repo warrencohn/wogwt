@@ -62,22 +62,6 @@ public class TestNSMutableSet extends TestCase {
 		assertTrue(copy.contains("abc"));
 	}
 
-	public void testNSMutableSetSetOfQextendsEBoolean() {
-		Set source = new HashSet();
-		source.add("abc");
-		source.add(null);
-		
-		NSMutableSet set = new NSMutableSet(source, true);
-		assertEquals(1, set.size());
-		assertTrue(set.contains("abc"));
-		
-		try {
-			set = new NSMutableSet(source, false);
-			fail("IllegalArgumentException expected");
-		} catch (IllegalArgumentException e) {
-		}
-	}
-
 	public void testAddObject() {
 		NSMutableSet set = new NSMutableSet();
 		set.addObject("abc");

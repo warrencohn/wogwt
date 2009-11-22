@@ -37,11 +37,11 @@ public class TestNSMutableDictionary extends TestCase {
 	}
 
 	public void testNSMutableDictionaryNSMutableDictionaryOfKV() {
-		NSMutableDictionary mutableDict = new NSMutableDictionary("value", "key");
-		NSMutableDictionary dict = new NSMutableDictionary(mutableDict);
-		assertFalse(dict.isEmpty());
+		NSDictionary dict = new NSDictionary("value", "key");
+		NSMutableDictionary mutableDict = new NSMutableDictionary(dict);
+		assertFalse(mutableDict.isEmpty());
 		mutableDict.put("key", "newValue");
-		assertEquals("value", dict.get("key"));
+		assertEquals("newValue", mutableDict.get("key"));
 	}
 
 	public void testNSMutableDictionaryVArrayKArray() {
