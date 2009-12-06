@@ -1,11 +1,12 @@
 package your.app.gwt;
 
-import java.util.Iterator;
+import java.util.List;
 
+import wogwt.translatable.ListBoxEx;
 import wogwt.translatable.WOGWTClientUtil;
 import wogwt.translatable.rpc.LogOnErrorAsyncCallback;
-import your.app.gwt.eo.Movie;
-import your.app.gwt.eo.Studio;
+import your.app.gwt.eo.MovieClient;
+import your.app.gwt.eo.StudioClient;
 import your.app.gwt.rpc.EOService;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -27,25 +28,26 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.webobjects.foundation.NSArray;
-import com.webobjects.foundation.NSKeyValueCodingAdditions;
+import com.webobjects.foundation.NSComparator;
 import com.webobjects.foundation.NSMutableArray;
 import com.webobjects.foundation.NSSet;
+import com.webobjects.foundation.NSComparator.ComparisonException;
 
 public class RPCExampleScript implements EntryPoint {
 
 	private Image img;
 	
-	private NSArray<Movie> movies;
+	private NSArray<MovieClient> movies;
 
 	private TextBox txtTitle;
 
 	//private TextBox txtStudioName;
 
-	private ListBox lstMovies;
+	private ListBoxEx lstMovies;
 
-	private ListBox lstStudio;
+	private ListBoxEx lstStudio;
 
-	private NSArray<Studio> studios;
+	private NSArray<StudioClient> studios;
 
 	private HorizontalPanel dataPanel;
 	
@@ -85,7 +87,7 @@ public class RPCExampleScript implements EntryPoint {
 		dataPanel.setVisible(false);
 		RootPanel.get("rpcContent").add(dataPanel);
 		
-		lstMovies = new ListBox();
+		lstMovies = new ListBoxEx();
 		lstMovies.setVisibleItemCount(20);
 		dataPanel.add(lstMovies);
 		
@@ -101,7 +103,7 @@ public class RPCExampleScript implements EntryPoint {
 		
 		flowPanel.add(new InlineLabel("Studio: "));
 		
-		lstStudio = new ListBox();
+		lstStudio = new ListBoxEx();
 		flowPanel.add(lstStudio);
 		
 		flowPanel.add(new HTML("<br/>"));
@@ -113,7 +115,7 @@ public class RPCExampleScript implements EntryPoint {
 					
 					if (selectedMovie().studio() != null) {
 						lstStudio.setSelectedIndex(
-							find(studios, Studio.NAME_KEY, selectedMovie().studio().name()));
+							find(studios, StudioClient.NAME_KEY, selectedMovie().studio().name()));
 					} else {
 						//txtStudioName.setText("");
 					}
@@ -131,39 +133,36 @@ public class RPCExampleScript implements EntryPoint {
 				selectedMovie().setTitle(txtTitle.getText().equals("") ? null : txtTitle.getText());
 				//selectedMovie().studio().setName(txtStudioName.getText().equals("") ? null : txtStudioName.getText());
 				
-				int index = find(studios, Studio.NAME_KEY, lstStudio.getItemText(lstStudio.getSelectedIndex()));
-				selectedMovie().setStudioRelationship(studios.get(index));
+				int index = find(studios, StudioClient.NAME_KEY, lstStudio.getSelectedItem());
+				selectedMovie().setStudio(studios.get(index));
 				
-				EOService.Util.getInstance().saveMovies(new NSArray(selectedMovie()), new LogOnErrorAsyncCallback<Void>() {
-					public void onSuccess(Void arg0) {
-						populateListBox();
-						RootPanel.get().add(new HTML("Saved."));
-					}
-				});	
+//				EOService.Util.getInstance().saveMovies(new NSArray(selectedMovie()), new LogOnErrorAsyncCallback<Void>() {
+//					public void onSuccess(Void arg0) {
+//						populateListBox();
+//						RootPanel.get().add(new HTML("Saved."));
+//					}
+//				});	
 			}
 		});
 		flowPanel.add(btnSendBackToServer);
 	}
 	
-	public void loadData() {		
-		EOService.Util.getInstance().allMovies(
-				new LogOnErrorAsyncCallback<NSArray<Movie>>() {
-					public void onSuccess(NSArray<Movie> response) {
-						movies = response;
-						
-						studios = (NSArray<Studio>) movies.valueForKeyPath(Movie.STUDIO_KEY);
-						studios = new NSSet(studios).allObjects();
-						
-						populateScreen();
-						
-					}
-				}
-		);
+	public void loadData() {	
+		EOService.Util.getInstance().allMovies(new LogOnErrorAsyncCallback<NSArray<MovieClient>>() {
+			public void onSuccess(NSArray<MovieClient> response) {
+				movies = response;
+				
+				NSArray<StudioClient> studiosWithDuplicates = (NSArray<StudioClient>) movies.valueForKey(MovieClient.STUDIO_KEY);
+				studios = new NSSet(studiosWithDuplicates).allObjects();
+				
+				populateScreen();
+			}
+		});
 	}
 	
 	public void populateScreen() {
 		NSMutableArray<String> attributes;
-		if (!movies.isEmpty()) {
+		if (movies.size() != 0) {
 			attributes = movies.get(0).attributeKeys().mutableClone();
 			attributes.add("studio.name");
 		} else {
@@ -172,10 +171,15 @@ public class RPCExampleScript implements EntryPoint {
 		
 		populateListBox();
 
-		for (Iterator iterator = studios.iterator(); iterator.hasNext();) {
-			Studio studio = (Studio) iterator.next();
-			lstStudio.addItem(studio.name());
+		NSArray<String> studioNames = (NSArray<String>) studios.valueForKey(StudioClient.NAME_KEY);
+		
+		try {
+			studioNames = studioNames.sortedArrayUsingComparator(NSComparator.AscendingCaseInsensitiveStringComparator);
+		} catch (ComparisonException e) {
+			Log.severe(e.getMessage());
 		}
+		
+		lstStudio.setItems(studioNames, null);
 		
 		img.setVisible(false);
 		dataPanel.setVisible(true);
@@ -183,12 +187,11 @@ public class RPCExampleScript implements EntryPoint {
 
 	private void populateListBox() {
 		lstMovies.clear();
-		for (Movie movie : movies) {
-			lstMovies.addItem(movie.title());
-		}
+		NSArray<String> movieTitles = (NSArray<String>) movies.valueForKey(MovieClient.TITLE_KEY);
+		lstMovies.setItems(movieTitles, null);
 	}
 	
-	public Movie selectedMovie() {
+	public MovieClient selectedMovie() {
 		int selectedIndex = lstMovies.getSelectedIndex();
 		if (selectedIndex != -1)
 			return movies.get(selectedIndex);
@@ -196,11 +199,11 @@ public class RPCExampleScript implements EntryPoint {
 			return null;
 	}
 	
-	public int find(NSArray<? extends NSKeyValueCodingAdditions> array, String key, Object value) {
+	public int find(List<StudioClient> array, String key, Object value) {
 		for (int i = 0; i < array.size(); i++) {
-			NSKeyValueCodingAdditions element = array.get(i);
-			if (element.valueForKeyPath(key) == value ||
-					element.valueForKeyPath(key).equals(value)) {
+			StudioClient element = array.get(i);
+			if (element.valueForKey(key) == value ||
+					element.valueForKey(key).equals(value)) {
 				return i;
 			}
 		}

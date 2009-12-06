@@ -1,29 +1,22 @@
 {
     attributes = (
+        {allowsNull = Y; columnName = PHOTO; name = photo; prototypeName = blob; }, 
         {
-            allowsNull = Y; 
-            columnName = PHOTO; 
-            externalType = object; 
-            name = photo; 
-            valueClassName = NSData; 
-        }, 
-        {
+            allowsNull = N; 
             columnName = "TALENT_ID"; 
-            externalType = long; 
             name = talentID; 
             precision = 9; 
-            valueClassName = NSNumber; 
-            valueType = i; 
+            prototypeName = id; 
         }
     ); 
     attributesUsedForLocking = (talentID); 
-    className = "your.app.gwt.eo.TalentPhoto"; 
-    classProperties = (photo, talent); 
+    className = "your.app.server.eo.TalentPhoto"; 
+    classProperties = (talent); 
     externalName = "TALENT_PHOTO"; 
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (talent); 
-        "_javaClientClassName" = "your.app.gwt.eo.TalentPhoto_CustomFieldSerializer"; 
+        "_javaClientClassName" = "your.app.gwt.eo.TalentPhotoClient"; 
     }; 
     maxNumberOfInstancesToBatchFetch = 10; 
     name = TalentPhoto; 

@@ -5,7 +5,6 @@ import wogwt.translatable.http.AfterDOMUpdateCallback;
 import wogwt.translatable.http.UpdateOnClickListener;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.http.client.Response;
@@ -26,7 +25,6 @@ public class UpdateLinkScript implements EntryPoint {
 		
 		Anchor outsideLink = Anchor.wrap(DOM.getElementById("outsideLink"));
 		outsideLink.addClickHandler(new UpdateOnClickListener("outsideContainer"));
-		
 		
 		/* Widgets that are inside an update container present a bit of a problem
 		 * because after the container is updated, the existing Widget is destroyed

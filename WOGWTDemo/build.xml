@@ -232,7 +232,7 @@
 		<gwtCompile module="${gwtpackage}.Development"
 			renamedTo="${gwtpackage}.Application"
 			genDir="gen"
-			style="PRETTY" />
+			style="PRETTY" forceBuild="true"/>
 	</target>
 	  	
 	<target name="gwt-compile">

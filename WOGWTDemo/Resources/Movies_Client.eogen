@@ -1,0 +1,1 @@
+ -destination Sources -extension java -java -javaclient -javaTemplate _EntityDTO.java -model Resources/Movies.eomodeld -packagedirs -subclassDestination Sources -subclassJavaTemplate EntityDTO.java -templatedir /Library/Frameworks/WOGWT.framework/Resources -verbose -loadModelGroup

@@ -2,36 +2,27 @@
     attributes = (
         {
             columnName = BUDGET; 
-            externalType = money; 
             name = budget; 
             precision = 15; 
+            prototypeName = currencyAmount; 
             scale = 2; 
-            valueClassName = NSDecimalNumber; 
-            valueType = B; 
         }, 
+        {columnName = NAME; name = name; prototypeName = varchar50; width = 40; }, 
         {
-            columnName = NAME; 
-            externalType = char; 
-            name = name; 
-            valueClassName = NSString; 
-            width = 40; 
-        }, 
-        {
+            allowsNull = N; 
             columnName = "STUDIO_ID"; 
-            externalType = long; 
             name = studioID; 
             precision = 9; 
-            valueClassName = NSNumber; 
-            valueType = i; 
+            prototypeName = id; 
         }
     ); 
     attributesUsedForLocking = (budget, name, studioID); 
-    className = "your.app.gwt.eo.Studio"; 
+    className = "your.app.server.eo.Studio"; 
     classProperties = (budget, movies, name); 
     externalName = STUDIO; 
     internalInfo = {
         "_clientClassPropertyNames" = (budget, movies, name); 
-        "_javaClientClassName" = "your.app.gwt.eo.Studio_CustomFieldSerializer"; 
+        "_javaClientClassName" = "your.app.gwt.eo.StudioClient"; 
     }; 
     name = Studio; 
     primaryKeyAttributes = (studioID); 

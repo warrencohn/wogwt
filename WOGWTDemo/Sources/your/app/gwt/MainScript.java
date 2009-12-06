@@ -3,6 +3,8 @@ package your.app.gwt;
 import wogwt.translatable.WOGWTClientUtil;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.gen2.logging.handler.client.RemoteLogHandler;
+import com.google.gwt.gen2.logging.shared.Level;
 import com.google.gwt.gen2.logging.shared.Log;
 
 public class MainScript implements EntryPoint {
@@ -13,7 +15,10 @@ public class MainScript implements EntryPoint {
 			return;
 		}
 		
-		Log.finest(getClass().getName() + ": onModuleLoad");
+		Log.setDefaultLevel(Level.ALL);
+		Log.addLogHandler(new RemoteLogHandler());
+		
+		Log.info(getClass().getName() + ": onModuleLoad");
 	}
 	
 }

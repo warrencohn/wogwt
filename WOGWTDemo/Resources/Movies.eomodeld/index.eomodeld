@@ -2,7 +2,7 @@
     EOModelVersion = "2.1"; 
     adaptorName = JDBC; 
     connectionDictionary = {
-        URL = "jdbc:derby:ERMovies;create=true"; 
+        URL = "jdbc:derby:/Users/john/Documents/workspace/WOGWTDemo/build/WOGWTDemo.woa/ERMovies;create=true"; 
         driver = ""; 
         jdbc2Info = {
             "ANSI92_CONFORMANCE" = ANSI92Intermediate; 
@@ -146,15 +146,15 @@
         username = ""; 
     }; 
     entities = (
-        {className = "your.app.gwt.eo.Director"; name = Director; }, 
-        {className = "your.app.gwt.eo.Movie"; name = Movie; }, 
-        {className = "your.app.gwt.eo.MovieRole"; name = MovieRole; }, 
-        {className = "your.app.gwt.eo.PlotSummary"; name = PlotSummary; }, 
-        {className = "your.app.gwt.eo.Review"; name = Review; }, 
-        {className = "your.app.gwt.eo.Studio"; name = Studio; }, 
-        {className = "your.app.gwt.eo.Talent"; name = Talent; }, 
-        {className = "your.app.gwt.eo.TalentPhoto"; name = TalentPhoto; }, 
-        {className = "your.app.gwt.eo.Voting"; name = Voting; }
+        {className = "your.app.server.eo.Director"; name = Director; }, 
+        {className = "your.app.server.eo.Movie"; name = Movie; }, 
+        {className = "your.app.server.eo.MovieRole"; name = MovieRole; }, 
+        {className = "your.app.server.eo.PlotSummary"; name = PlotSummary; }, 
+        {className = "your.app.server.eo.Review"; name = Review; }, 
+        {className = "your.app.server.eo.Studio"; name = Studio; }, 
+        {className = "your.app.server.eo.Talent"; name = Talent; }, 
+        {className = "your.app.server.eo.TalentPhoto"; name = TalentPhoto; }, 
+        {className = "your.app.server.eo.Voting"; name = Voting; }
     ); 
     userInfo = {
         "_EntityModeler" = {
@@ -163,7 +163,7 @@
                 Default = {
                     adaptorName = JDBC; 
                     connectionDictionary = {
-                        URL = "jdbc:derby:ERMovies;create=true"; 
+                        URL = "jdbc:derby:/Users/john/Documents/workspace/WOGWTDemo/build/WOGWTDemo.woa/ERMovies;create=true"; 
                         driver = ""; 
                         jdbc2Info = {
                             "ANSI92_CONFORMANCE" = ANSI92Intermediate; 
@@ -306,7 +306,7 @@
                         plugin = ""; 
                         username = ""; 
                     }; 
-                    prototypeEntityName = EOJDBCPrototypes; 
+                    prototypeEntityName = EOJDBCDerbyPrototypes; 
                 }; 
             }; 
         }; 
