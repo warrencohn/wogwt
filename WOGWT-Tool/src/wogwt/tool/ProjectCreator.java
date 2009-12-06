@@ -58,7 +58,6 @@ public class ProjectCreator {
 					"import wogwt.translatable.WOGWTClientUtil;\n" +
 					"\n" + 
 					"import com.google.gwt.core.client.EntryPoint;\n" +
-					"import com.google.gwt.gen2.logging.handler.client.RemoteLogHandler;\n" +
 					"import com.google.gwt.user.client.Window;\n" +
 					"import com.google.gwt.gen2.logging.shared.Level;\n" +
 					"import com.google.gwt.gen2.logging.shared.Log;\n" +
@@ -73,7 +72,6 @@ public class ProjectCreator {
 					"\n" +		
 					"		Log.installUncaughtExceptionHandler(); // this won't take affect until the next event loop\n" + 
 					"		Log.setDefaultLevel(Level.ALL);\n" + 
-					"		Log.addLogHandler(new RemoteLogHandler());\n" + 	
 					"		Log.finest(getClass().getName() + \": onModuleLoad\");\n" +
 					"\n" +
 					"		Window.alert(\"WOGWT is active!!\");\n" +
@@ -123,6 +121,10 @@ public class ProjectCreator {
 		String addedCode = 
 			    "		registerRequestHandler(new wogwt.server.rpc.GWTRPCRequestHandler(), wogwt.server.rpc.GWTRPCRequestHandler.KEY);\n" +
 			    "\n" +
+				"		if (wogwt.components.WOGWTScript.isHostedMode()) {\n" + 
+				"			setContextClassName(wogwt.GWTContext.class.getName());\n" +
+				"		}\n" +
+				"\n" +
 				"		if(!isWO54()) {\n" +
 				"    		System.setProperty(\"er.extensions.ERXAjaxApplication.allowContextPageResponse\", \"true\");\n" +
 				"    		registerRequestHandler(new com.webobjects.appserver._private.WOComponentRequestHandler() {\n" +
