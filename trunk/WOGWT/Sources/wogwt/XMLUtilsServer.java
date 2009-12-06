@@ -23,6 +23,9 @@ import org.w3c.tidy.Tidy;
  */
 public class XMLUtilsServer {
 
+	private XMLUtilsServer() {
+	}
+	
 	/**
 	 * 
 	 * @param node

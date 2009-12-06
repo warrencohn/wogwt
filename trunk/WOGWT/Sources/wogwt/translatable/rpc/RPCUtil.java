@@ -10,8 +10,15 @@ import com.webobjects.eocontrol.EOGlobalID;
 import com.webobjects.foundation.NSDictionary;
 import com.webobjects.foundation.NSMutableDictionary;
 
+/**
+ * Utility functions for use with RPC on the server.
+ *
+ */
 public class RPCUtil {
 
+	private RPCUtil() {
+	}
+	
 	public static NSDictionary<String, Object> serializableSnapshot(WOGWTSerializableEO eo) {
     	
 		if (eo.isFault() || Boolean.TRUE.equals(eo.valueForKey("__isFault"))) {

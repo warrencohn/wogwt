@@ -1,5 +1,9 @@
 package wogwt.translatable.utils;
 
+/**
+ * Utility class for general Object operations.
+ *
+ */
 public class ObjectUtils {
 
 	private ObjectUtils() {

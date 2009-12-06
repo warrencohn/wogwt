@@ -6,6 +6,11 @@ import wogwt.translatable.AbstractEntryPoint;
 
 import com.google.gwt.user.client.History;
 
+/**
+ * Base class for entry points that adds support for using
+ * history tokens with the same format as url query parameters,
+ * like #name=john&color=blue
+ */
 public abstract class ParameterizedHistoryEntryPoint extends AbstractEntryPoint {
 
 	private final UrlParametersFormat formatter = new UrlParametersFormat();

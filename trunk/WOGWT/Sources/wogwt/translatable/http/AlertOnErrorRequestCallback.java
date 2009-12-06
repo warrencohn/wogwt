@@ -6,7 +6,7 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 
 /**
- * A request callback that displays a modal ErrorDialog for any error
+ * A request callback that displays an alert for any error
  */
 public abstract class AlertOnErrorRequestCallback extends WOGWTRequestCallback {
 	

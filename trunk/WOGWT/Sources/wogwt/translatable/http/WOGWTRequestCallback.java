@@ -22,18 +22,8 @@ public abstract class WOGWTRequestCallback implements RequestCallback {
 		onSuccess(request, response);
 	}
 	
-	/**
-	 * Empty implementation
-	 */
-	public void onSuccess(Request request, Response response) {
-		// do nothing by default
-	}
+	public abstract void onSuccess(Request request, Response response);
 	
-	/**
-	 * Empty implementation
-	 */
-	public void onError(Request request, Throwable throwable) {
-		// do nothing by default
-	}
+	public abstract void onError(Request request, Throwable throwable);
 	
 }

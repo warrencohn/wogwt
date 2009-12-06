@@ -3,6 +3,10 @@ package wogwt.translatable.utils;
 import java.util.Collection;
 import java.util.Iterator;
 
+/**
+ * Utility class for String (client)
+ *
+ */
 public class StringUtils {
 
 	private StringUtils() {

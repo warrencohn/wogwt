@@ -94,6 +94,7 @@ public class WOGWTScript extends WOComponent {
     	
 
     	String resourceUrl = WOApplication.application().resourceManager().urlForResourceNamed(scriptPath(), "app", null, context.request());
+    	// TODO: if 'ERROR_NOT_FOUND' - display error
     	resourceUrl = resourceUrl.substring(0, resourceUrl.lastIndexOf('/'));
     	resourceUrl = resourceUrl.substring(0, resourceUrl.lastIndexOf('/')+1);
     	

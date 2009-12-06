@@ -66,7 +66,7 @@ public class ListTableModel<RowType> extends TableModel<RowType> {
 			return;
 		}
 		
-		final List<RowType> subList = subList(filteredList, request.getStartRow(), request.getStartRow() + request.getNumRows() + 1);
+		final List<RowType> subList = subList(filteredList, request.getStartRow(), request.getStartRow() + request.getNumRows());
 		
 		if (request.getColumnSortList().getPrimaryColumnSortInfo() != null && comparator != null) {
 			comparator.setSortInfo(request.getColumnSortList().getPrimaryColumnSortInfo());

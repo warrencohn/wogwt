@@ -1,7 +1,11 @@
+com.google.gwt.user.client.rpc.core.wogwt.translatable
 wogwt
 wogwt.components
 wogwt.server.rpc
 wogwt.translatable
 wogwt.translatable.http
+wogwt.translatable.json
 wogwt.translatable.richtext
 wogwt.translatable.rpc
+wogwt.translatable.utils
+wogwt.translatable.xml

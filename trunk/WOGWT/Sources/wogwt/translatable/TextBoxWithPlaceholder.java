@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * A text box that displays a placeholder string when empty
+ * A text box that displays a placeholder string when empty and not focused
  * 
  * <h3>CSS Style Rules</h3>
  * <ul class='css'>

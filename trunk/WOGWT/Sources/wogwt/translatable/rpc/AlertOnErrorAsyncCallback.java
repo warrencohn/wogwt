@@ -4,7 +4,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
- * An AsyncCallback that displays a modal ErrorDialog for any error.
+ * An AsyncCallback that displays an alert for any error.
  */
 public class AlertOnErrorAsyncCallback<T> implements AsyncCallback<T> {
 

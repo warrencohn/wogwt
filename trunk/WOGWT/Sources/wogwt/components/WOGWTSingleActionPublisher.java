@@ -15,6 +15,7 @@ import com.webobjects.appserver.WOContext;
  * This component is invisible, but must be placed in the BODY of the page 
  * because it generate a hidden anchor element.
  * 
+ * @binding action the action to publish
  */
 public class WOGWTSingleActionPublisher extends com.webobjects.appserver.WOComponent {
 	
