@@ -14,7 +14,7 @@ A: No, GWT can be used as little or as much as you need, in the same way as you 
 
 *Q: What dependencies are necessary to use WOGWT?*
 
-A: WebObjects 5.4 or later and a recent version Project Wonder.
+A: WebObjects 5.4 or later and a recent version Project Wonder.  If you're not using WO 5.4 you can use Wonder's Ajax request hander instead and then WO 5.4 is not necessary.
 
 *Q: It's not working, why not?*
 
