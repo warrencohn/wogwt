@@ -2,7 +2,7 @@ package com.webobjects.eocontrol;
 
 import java.io.Serializable;
 
-public class EOGlobalID implements Serializable, Cloneable {
+public abstract class EOGlobalID implements Serializable, Cloneable {
 
 	public static final String GlobalIDChangedNotification = "EOGlobalIDChangedNotification";
 	

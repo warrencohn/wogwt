@@ -340,10 +340,31 @@ public abstract class EOCustomObject implements EOEnterpriseObject, EODeferredFa
 	public String toString() {
 		return snapshot().toString();
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((__globalID == null) ? 0 : __globalID.hashCode());
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		return this == obj;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EOCustomObject other = (EOCustomObject) obj;
+		if (__globalID == null) {
+			if (other.__globalID != null)
+				return false;
+		} else if (!__globalID.equals(other.__globalID))
+			return false;
+		return true;
 	}
 	
 }
