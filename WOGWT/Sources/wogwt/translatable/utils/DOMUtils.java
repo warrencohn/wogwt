@@ -3,8 +3,21 @@ package wogwt.translatable.utils;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 
+/**
+ * DOM utility functions for use when programmatically
+ * constructing a UI.  Now that UiBinder is available
+ * this probably won't be used much.
+ *
+ */
 public class DOMUtils {
 
+	private DOMUtils() {
+	}
+	
+	public static Element id(String id) {
+		return Document.get().getElementById(id);
+	}
+	
 	public static void removeElement(Element element) {
 		if (element != null && element.getParentElement() != null) {
 			element.getParentElement().removeChild(element);

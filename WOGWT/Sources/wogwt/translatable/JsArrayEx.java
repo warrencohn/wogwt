@@ -31,15 +31,6 @@ public class JsArrayEx<T extends JavaScriptObject> extends JsArray<T> {
 	public final native JsArrayEx<T> concat(JsArray<T> otherArray) /*-{
 		return this.concat(otherArray);
 	}-*/;
-	
-	/**
-	 * Puts all the elements of an array into a string. The elements are separated by a specified delimiter
-	 * @param separator
-	 * @return string with each element separated by the delimiter
-	 */
-	public final native String join(String delimiter) /*-{
-		return this.join(delimiter);
-	}-*/;
 
 	/**
 	 * Removes and returns the last element of an array
@@ -98,16 +89,6 @@ public class JsArrayEx<T extends JavaScriptObject> extends JsArray<T> {
 	 */
 	public final native void splice(int index, int numberToRemove) /*-{
 		this.splice(index, numberToRemove);
-	}-*/;
-	
-	/**
-	 * TODO: support var-args
-	 * Adds one or more elements to the beginning of an array
-	 * @param newElement
-	 * @return the new length
-	 */
-	public final native int unshift(T newElement) /*-{
-		return this.unshift(newElement);
 	}-*/;
 	
 }

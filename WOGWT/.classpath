@@ -2,10 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="Sources"/>
 	<classpathentry kind="con" path="WOFramework/ERExtensions"/>
-	<classpathentry exported="true" kind="lib" path="Libraries/gwt-dev-mac.jar" sourcepath="Libraries/gwt-dev-mac.jar"/>
-	<classpathentry exported="true" kind="lib" path="Libraries/gwt-incubator.jar"/>
+	<classpathentry exported="true" kind="lib" path="Libraries/gwt-incubator.jar" sourcepath="Libraries/gwt-incubator.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libraries/gwt-servlet.jar" sourcepath="Libraries/gwt-servlet.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libraries/gwt-user.jar" sourcepath="Libraries/gwt-user.jar"/>
+	<classpathentry exported="true" kind="lib" path="Libraries/gwt-dev.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libraries/Tidy.jar" sourcepath="Libraries/Tidy.jar"/>
 	<classpathentry exported="true" kind="lib" path="Libraries/wogwt-emulation.jar"/>
 	<classpathentry kind="con" path="WOFramework/ICSShared"/>

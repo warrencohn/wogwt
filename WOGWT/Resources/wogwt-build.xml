@@ -36,8 +36,6 @@
 				output="@{outputDir}"
 				gwthome="@{gwtHome}"/>
 			
-			<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
-			
 			<condition property="genDirArg" value="-gen" else="">
 				<length string="@{genDir}" when="greater" length="0" />
 			</condition>
@@ -54,56 +52,46 @@
 				<istrue value="@{validateOnly}"/>
 			</condition>
 				
-			<if>
-				<or>
-					<not>
-						<isset property="gwtGenerate.notRequired" />
-					</not>
-					<istrue value="@{forceBuild}"/>
-				</or>
-				<then>
-					<java classname="com.google.gwt.dev.Compiler" fork="true">
-						<classpath refid="@{classpathRefid}" />
-						<classpath>
-							<pathelement location="@{srcDir}" />
-						  
-							<pathelement path="@{gwthome}/gwt-user.jar" />
-							<pathelement path="@{gwthome}/gwt-dev-mac.jar" />
-							<pathelement path="@{gwthome}/gwt-incubator.jar" />
-							<pathelement path="@{gwthome}/wogwt.jar" />
-							<pathelement path="@{gwthome}/wogwt-emulation.jar" />
-						</classpath>
-						
-						<sysproperty key="java.awt.headless" value="true"/>
-						<jvmarg line="-XstartOnFirstThread" />
-						<jvmarg line="-Xms256m -Xmx1024m" />
-						<jvmarg line="-XX:+AggressiveOpts" />
-						<jvmarg line="-XX:ThreadPriorityPolicy=1" />
-						<jvmarg line="-Xverify:none" />
-						
-						<!--
-						<arg line="-draftCompile" />
-						<arg line="-disableClassMetadata" />
-						<arg line="-disableCastChecking" />
-						-->
-												
-						<arg value="-localWorkers" />
-						<arg value="2" />
-						<arg value="-logLevel" />
-						<arg value="@{logLevel}" />
-						<!--<arg value="${genDirArg}" />
-						<arg value="@{genDir}" />-->
-						<arg value="-war" />
-						<arg value="@{outputDir}" />
-						<!--<arg value="${treeLogger}" />-->
-						<arg value="-style" />
-						<arg value="@{style}" />
-						<!--<arg value="${assertArg}" />-->
-						<!--<arg value="${validateOnlyArg}" />-->
-						<arg value="@{module}" />
-					</java>
-				</then>
-			</if>
+			<java classname="com.google.gwt.dev.Compiler" fork="true">
+				<classpath refid="@{classpathRefid}" />
+				<classpath>
+					<pathelement location="@{srcDir}" />
+				  
+					<pathelement path="@{gwthome}/gwt-user.jar" />
+					<pathelement path="@{gwthome}/gwt-dev.jar" />
+					<pathelement path="@{gwthome}/gwt-incubator.jar" />
+					<pathelement path="@{gwthome}/wogwt.jar" />
+					<pathelement path="@{gwthome}/wogwt-emulation.jar" />
+				</classpath>
+				
+				<sysproperty key="java.awt.headless" value="true"/>
+				<jvmarg line="-XstartOnFirstThread" />
+				<jvmarg line="-Xms256m -Xmx1024m" />
+				<jvmarg line="-XX:+AggressiveOpts" />
+				<jvmarg line="-XX:ThreadPriorityPolicy=1" />
+				<jvmarg line="-Xverify:none" />
+				
+				<!--
+				<arg line="-draftCompile" />
+				<arg line="-disableClassMetadata" />
+				<arg line="-disableCastChecking" />
+				-->
+										
+				<arg value="-localWorkers" />
+				<arg value="2" />
+				<arg value="-logLevel" />
+				<arg value="@{logLevel}" />
+				<!--<arg value="${genDirArg}" />
+				<arg value="@{genDir}" />-->
+				<arg value="-war" />
+				<arg value="@{outputDir}" />
+				<!--<arg value="${treeLogger}" />-->
+				<arg value="-style" />
+				<arg value="@{style}" />
+				<!--<arg value="${assertArg}" />-->
+				<!--<arg value="${validateOnlyArg}" />-->
+				<arg value="@{module}" />
+			</java>
 		</sequential>
 	</macrodef>
 

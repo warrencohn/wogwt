@@ -5,6 +5,13 @@ import java.util.Map;
 
 import com.google.gwt.http.client.URL;
 
+/**
+ * A formatter for url query parameters like:
+ * "key1=value1&key2=value2"
+ * Can be used with the history token (#) or with query parameters (?)
+ * 
+ * See ParameterizedHistoryEntryPoint.
+ */
 public class UrlParametersFormat {
 
 	public UrlParametersFormat() {

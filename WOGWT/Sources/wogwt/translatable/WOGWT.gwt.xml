@@ -3,8 +3,11 @@
 	<!-- Inherit the core Web Toolkit stuff.  -->
 	<inherits name="com.google.gwt.user.User"/>
 	<inherits name="com.google.gwt.http.HTTP"/>
+	<inherits name="com.google.gwt.json.JSON"/>
 	<inherits name="com.google.gwt.xml.XML"/>
 	<inherits name="com.google.gwt.gen2.logging.Logging"/>
+	<inherits name='com.google.gwt.gen2.table.ScrollTable'/>
+	<inherits name='com.google.gwt.widgetideas.WidgetIdeas'/>
 	<inherits name="wogwt.emulation.WOGWTEmulation"/>
 	
 	<!-- This means any classes in the same package as this module file and all classes

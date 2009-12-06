@@ -17,8 +17,7 @@ import com.google.gwt.xml.client.XMLParser;
  */
 public class XMLUtilsClient {
 
-	public XMLUtilsClient() {
-		super();
+	private XMLUtilsClient() {
 	}
 	
 	/**

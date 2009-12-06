@@ -22,8 +22,6 @@ import com.webobjects.foundation.NSMutableArray;
  * This component is invisible, but must be placed in the BODY of the page 
  * because it generates hidden anchor elements.
  * 
- * @binding action the action to publish
- * 
  */
 public class WOGWTActionPublisher extends WOComponent {
 	

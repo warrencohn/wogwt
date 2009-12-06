@@ -1,2 +1,4 @@
 **/*.gwt.xml
 **/*.java
+**/*.properties
+**/*.gif

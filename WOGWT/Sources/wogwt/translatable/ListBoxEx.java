@@ -42,7 +42,7 @@ public class ListBoxEx extends ListBox {
 		super(isMultipleSelect);
 	}
 
-	public ListBoxEx(Element element) {
+	protected ListBoxEx(Element element) {
 		super(element);
 	}
 

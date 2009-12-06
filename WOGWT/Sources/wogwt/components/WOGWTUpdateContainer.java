@@ -13,8 +13,6 @@ import er.ajax.AjaxUpdateContainer;
  * By using this then you can remove the call to:
  * 		WOGWTServerUtil.onlyIncludeUpdateContainerInResponse(request, response);
  * in Application.dispatchRequest and improve performance.
- * 
- * @author john
  *
  */
 public class WOGWTUpdateContainer extends AjaxUpdateContainer {

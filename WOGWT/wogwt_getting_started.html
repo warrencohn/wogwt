@@ -25,271 +25,52 @@
 <div>
 <h1>WOGWT - Getting Started</h1>
 
-<p>This page describes how to integrate <a href="http://code.google.com/webtoolkit/overview.html">GWT</a> into your existing WebObjects application.</p>
-
+<ol>
+	<li>Download WOGWT and install the binary into /Library/Frameworks or import the project source into Eclipse.<br/><br/></li>
+	<li>Run "WOGWT.framework/Resources/wogwt-tool.jar" by double-clicking it.  Follow the instructions.<br/><br/>
+	<img src="wogwt-tool.png" alt=""/><br/>
+	If you chose to use the WOGWT source project, then wogwt-tool will add the WOGWT Source directory to the classpath for the Hosted Mode launch script.<br/><br/></li>
+	<li>Run your application in <a href="http://code.google.com/docreader/#p=google-web-toolkit-doc-1-5&s=google-web-toolkit-doc-1-5&t=DevGuideHostedMode">Hosted Mode</a> 
+	using the generated launch script in your project's root, called ProjectName_HostedMode.launch</li>
+</ol>
+<br/>
+<hr/>
+<h3>Running and Debugging your application</h3>
 <p>GWT runs in different modes for development and production.  In production GWT compiles into static javascript files that served as WebServerResources by your application, which is all very normal.  This is called "<a href="http://code.google.com/docreader/#p=google-web-toolkit-doc-1-5&s=google-web-toolkit-doc-1-5&t=DevGuideRunningInWebMode">web mode</a>". </p>
 
 <p>But during development you run your code from the "<a href="http://code.google.com/docreader/#p=google-web-toolkit-doc-1-5&s=google-web-toolkit-doc-1-5&t=DevGuideHostedMode">hosted mode</a>" browser that comes with GWT.  This browser starts your app in a servlet container (jetty) and provides a special browser window.  This setup enables you to debug your GWT code as pure Java.  All your WO code will continue to work in this environment too.  So as a WOGWT developer, the "hosted mode" browser will become your new best friend.</p>
 
 <p>If you don't need to debug your GWT code, then you can run your app the way your always do (as a WOApplication).  You just have to compile the GWT code to javascript.  You can do this by calling the "gwt-compile-dev" ant build target.  This does a development-mode compile, which is faster than the full compile (gwt-compile) because it only generates code to support a single browser and locale (safari and english).</p>  
-
-<p>WOGWT requires Project Wonder build 8565 (Nov 11, 2008) or later.  WOGWT no longer requires WebObjects 5.4, but it is still recommended.</p>
-
-<p style="font-weight: bold;">UPDATE: There is a helper application that performs all the following steps automatically.  Simply run the Swing application wogwt-tool.jar found in the Resources directory of the WOGWT.framework. The tool will guide you through the process.</p>
-<br/>
-<br/>
-<br/>
-<br/>
-<p style="font-weight: bold; color: red">The following instructions are deprecated (and out-dated); use wogwt-tool.jar to automate this instead</p>
-
-<p>Here are the steps you need to follow to use WOGWT in your application.</p>
-
-<p>1) Install WOGWT.framework into /Library/Frameworks.</p>
-
-<p>2) Add WOGWT.framework to the build path of your project.  Also, add JavaWOJSPServlet.framework to the build path ofyour project.</p>
-
-<p>3) Create a new (empty) java package for your GWT code.  For now we'll assume the package is "your.app.gwt".</p>
-
-<p>4) Create a new class in this package for each page you want to write GWT code for.  For example, for the Main component, create a class like this:</p>
-
-<div class="instructions">
-PROJECTROOT/Sources/your/app/gwt/MainScript.java
-</div>
+<hr/>
+<h3>Adding GWT to pages</h3>
+<p>The wogwt-tool will add a WOGWTScript component into your Main component by default.  If you have other pages that you want to use GWT you will need to add a WOGWTScript component to each page.<br/><br/>
+WOGWT is loaded into a page by including a WOGWTScipt component in the body of the page, like this:<br/>
+Main.html
 <pre>
-package <span class="identifier">your.app.gwt</span>;
-
-import wogwt.translatable.WOGWTClientUtil;
-import com.allen_sauer.gwt.log.client.Log;
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.Window;
-
-public class <span class="identifier">MainScript</span> implements EntryPoint {
-
-	public void onModuleLoad() {
-		if (!WOGWTClientUtil.hostPageNameEquals("<span class="identifier">Main</span>")) {
-			return;
-		}
-		
-		Log.debug(getClass().getName() + ": onModuleLoad");
-		Window.alert("It works!");
-	}
-}
-</pre>
-
-<p>5) Create the GWT <a href="http://code.google.com/docreader/#p=google-web-toolkit-doc-1-5&s=google-web-toolkit-doc-1-5&t=DevGuideModules">module</a> file (called Application.gwt.xml) in the gwt package.  This will look like this:</p>
-
-<div class="instructions">
-PROJECTROOT/Sources/your/app/gwt/Application.gwt.xml
-</div>
-<pre>
-&lt;module&gt;
-	&lt;inherits name="com.google.gwt.user.User"/&gt;
-	&lt;inherits name="wogwt.translatable.WOGWT"/&gt;
-	
-  	&lt;source path=""/&gt;
-
-	&lt;entry-point class="<span class="identifier">your.app.gwt.MainScript</span>"/&gt;
-
-	&lt;servlet path="/<span class="identifier">WOGWTDemo</span>/WebObjects" class="er.extensions.jspservlet.ERXServletAdaptor"/&gt;
-&lt;/module&gt;
-</pre>
-
-<p>So your fully-qualified module name is "<span class="identifier">your.app.gwt.Application</span>" in this example.  Notice that we referenced the class we just created in the &lt;entrypoint&gt; tag.  Typically, for each page that uses GWT you will write a separate entry-point class and define the entry-point in the module file like we did here. So you will have multiple entry-points: one for each page.</p>
- 
-<p>6) (optional) Create a Development module file (called Development.gwt.xml) in the gwt package for faster development compilation if not using the hosted mode browser.  This will look like this:</p>
-
-<div class="instructions">
-PROJECTROOT/Sources/your/app/gwt/Development.gwt.xml
-</div>
-<pre>
-&lt;module rename-to="<span class="identifier">your.app.gwt.Application</span>"&gt;
-	&lt;inherits name="<span class="identifier">your.app.gwt.Application</span>"/&gt;
-
-  	&lt;set-property name="user.agent" value="safari"/&gt;
-  	&lt;set-property name="locale" value="default"/&gt;
-&lt;/module&gt;
-</pre>
-
-<div class="instructions">
-If you use Firefox 3 instead of Safari, change the value of "user.agent" to "gecko1_8".
-</div>
-<p>7) Add a WOGWTScript component inside the body of the WOComponent you're editing (Main.wo in this case).</p>
-
-<div class="instructions">
-PROJECTROOT/Components/Main.wo/Main.html
-</div>
-<pre>
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN"&gt;
 &lt;html&gt;
 &lt;head&gt;
-...
+	&lt;title&gt;Untitled&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-&lt;webobject name="WOGWTScript"/&gt;
-...
+	Hello World
+	&lt;webobject name="WOGWTScript"/&gt;
+&lt;/body&gt;
+&lt;/html&gt;
 </pre>
-
-<div class="instructions">
-PROJECTROOT/Components/Main.wo/Main.wod
-</div>
+<br/>
+Main.wod
 <pre>
 WOGWTScript : WOGWTScript {
-  module = "<span class="identifier">your.app.gwt.Application</span>";
-  enableHistorySupport = "true";
+	module = "your.app.gwt.Application";
+	enableHistorySupport = "true";
 }
 </pre>
-
-<p>8) Add this function to your Application class (the WOApplication subclass).  This will allow us to return partial pages as ajax responses.</p>
-
-<div class="instructions">
-PROJECTROOT/Sources/your/app/Application.java
-</div>
-<pre>
-public WOResponse dispatchRequest(WORequest request) {
-	WOResponse response = super.dispatchRequest(request);
-	WOGWTServerUtil.onlyIncludeUpdateContainerInResponse(request, response);
-	return response;
-}
-</pre>
-
-<div class="instructions">
-You also need to add a few things to the constructor:
-</div>
-<pre>
-public Application() {
-	super();
-	registerRequestHandler(new GWTRPCRequestHandler(), GWTRPCRequestHandler.KEY);
-	// needed for proper class loading in GWT's Hosted Mode shell
-	_NSUtilities.setClassForName( your.app.components.Main.class, "Main" );
-}
-</pre>
-<p>9) Run the GWT Shell (the hosted mode browser) once so that it generates it's configuration files.  To do this:</p>
-
-<div class="instructions">
-Select your project in the Package Explorer<br/>
-Click the Run menu -> "Open Debug Dialog"<br/>
-Click on Java Application on the left<br/>
-Click the "New launch Configuration" button at the top left<br/>
-For "Name" enter your project name followed by " - GWTShell"<br/>
-On the "Main" tab under "Main class" enter "com.google.gwt.dev.GWTShell" without the quotes<br/>
-On the "Arguments" tab under "Program arguments" enter:
-</div>
-<pre>
--logLevel TRACE -out "${workspace_loc:<span class="identifier">WOGWTDemo</span>}/WebServerResources" <span class="identifier">your.app.gwt.Application/WOGWTDemo<span class="identifier">/WebObjects/<span class="identifier">WOGWTDemo<span class="identifier">.woa
-</pre>
-
-<div class="instructions">
-<p>Replace the 3 occurences WOGWTDemo with the name of your project and make sure the module name (your.app.gwt.Application) is the package path to your Application.gwt.xml file.</p>
-
-On the "Arguments" tab under "VM arguments" enter:<br/>
-</div>
-<pre>
--XstartOnFirstThread -Xmx256M -Dwogwt.isHostedMode="true"
-</pre>
-<div class="instructions">
-<p>Click Debug to launch the hosted mode shell.  It won't work properly yet.  After it is done loading you can close it.  It will have generated some files we need to edit inside your project folder.</p>
-
-<p>If necessary refresh your project's contents in the Package Explorer by pressing F5 so that you see the "tomcat" folder in your project root.</p>
-</div>
-
-<p>10) Edit the GWT shell's web.xml file (PROJECTROOT/tomcat/webapps/ROOT/WEB-INF/web.xml) so that it looks like the following.  Make sure you set the WOClasspath entry to point to your compiled WOApplication subclass (Application.class), and then set the value of WOApplicationClass to be that class.</p>
-
-<div class="instructions">
-PROJECTROOT/tomcat/webapps/ROOT/WEB-INF/web.xml
-</div>
-<pre>
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;web-app&gt;
-	&lt;context-param&gt;
-		&lt;param-name&gt;WOAppMode&lt;/param-name&gt;
-		&lt;param-value&gt;Development&lt;/param-value&gt;
-	&lt;/context-param&gt;
-	
-	&lt;context-param&gt;
-		&lt;param-name&gt;WOClasspath&lt;/param-name&gt;
-		&lt;param-value&gt;
-			<span class="identifier">/workspace/WOGWTDemo</span>/build/<span class="identifier">WOGWTDemo</span>.woa/Contents/Resources/Java/<span class="identifier">your/app/</span>Application.class
-			<span class="identifier">/workspace/WOGWTDemo</span>/build/<span class="identifier">WOGWTDemo</span>.woa/Contents/Resources/Java
-		&lt;/param-value&gt;
-	&lt;/context-param&gt;
-	
-	&lt;context-param&gt;
-		&lt;param-name&gt;WOApplicationClass&lt;/param-name&gt;
-		&lt;param-value&gt;<span class="identifier">your.app</span>.Application&lt;/param-value&gt;
-	&lt;/context-param&gt;
-	
-	&lt;servlet&gt;
-		&lt;servlet-name&gt;shell&lt;/servlet-name&gt;
-		&lt;servlet-class&gt;com.google.gwt.dev.shell.GWTShellServlet&lt;/servlet-class&gt;
-	&lt;/servlet&gt;
-	
-	&lt;servlet-mapping&gt;
-		&lt;servlet-name&gt;shell&lt;/servlet-name&gt;
-		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
-	&lt;/servlet-mapping&gt;
-&lt;/web-app&gt;
-</pre>
-
-<p>11) Make sure that the patternset for "wsresources" has the line "WebServerResources/**/*" so that the compiled GWT scripts are included with it's parent folder.</p>
-
-<p>12) Add the following tasks to your build.xml and set the value for the gwtpackage property to be the gwt package for your project.</p>
-
-<div class="instructions">
-PROJECTROOT/build.xml
-</div>
-<pre>
-	&lt;property name="gwtpackage" value="<span class="identifier">your.app.gwt</span>"/&gt;
-	
-	&lt;import file="/Library/Frameworks/WOGWT.framework/Resources/wogwt-build.xml"/&gt;
-	
-	&lt;target name="gwt-compile-dev" depends="setProps"&gt;
-		&lt;gwtCompile module="${gwtpackage}.Development"
-			renamedto="${gwtpackage}.Application" 
-			style="PRETTY"/&gt;
-	&lt;/target&gt;
-	  	
-	&lt;target name="gwt-compile" depends="setProps"&gt;
-		&lt;gwtCompile module="${gwtpackage}.Application" forceBuild="true"/&gt;
-	&lt;/target&gt;
-</pre>
-
-<p>13) Add "gwt-compile" as a dependency on the install target.  This will compile your GWT java code into javascript.<p>
-
-<pre>
-	&lt;target name="install" depends="setProps,init.install,<span class="identifier">gwt-compile,</span>build.woapp,ssdd,war,compress" /&gt;
-</pre>
-
-<div class="instructions">
-<p>These ant tasks require the ant-contrib jar to be on the ant classpath.  This jar is included with WOGWT, but you have to add it to the classpath by doing this:</p>
-
-Click the Eclipse menu -> Preferences<br/>
-Expand on "Ant" on the left and click on "Runtime"<br/>
-Click on "Global Entries"<br/>
-Click "Add External Jars" and select /Library/Frameworks/WOGWT.framework/Resources/Java/ant-contrib-1.0b3.jar<br/>
-Click OK<br/>
-</div>
-
-<p>14) RPC (optional). To transfer EOs via RPC you must create Data Transfer Objects (DTOs) that are plain POJOs. This is because the EO* classes are not serializable by GWT.
-
-<div class="instructions">
-a) Create another .eogen file to generate the DTO/client classes.  This .eogen file should use the client templates distributed with WOGWT.<br/>
-b) Under "Templates Folder" enter: /Library/Frameworks/WOGWT.framework/Resources<br/>
-c) Under "Template" enter: _EntityClient.java<br/>
-d) Under "Subclass Template" enter: EntityClient.java<br/>
-e) Uncheck the "Java" box under Options<br/>
-f) Check the "Java Client" box under Options. This will cause the EO class to be generated using the "Client Class Name" we will define in Entity Modeler next.<br/>
 <br/>
-g) Open your EOModel in Entity Modeler<br/>
-h) For each entity, in the Properties view, on the Advanced tab, set the "Client Class Name" to something like "your.app.gwt.eo.MyEntityClient". The package MUST be inside your GWT package so that these classes are available to the GWT compiler. Adding "Client" to the end of the class name makes it easier to distinguish between the Server version of the class and the Client version, especially when using both classes in the same source file.<br/>
-i) For all the attributes and relationships you want to make available for RPC, select the Advanced tab in the Entity Modeler Properties view and check the "Client class property" box.
-j) Right-click your new .eogen file and choose "EOGenerate" to create the new client classes (DTOs).<br/>
-<br/>
-Your RPC servce will need to only return and accept the Client version of your EO classes since the Server versions are not serializable.  For details about how to implement the service see the <a href="http://code.google.com/p/wogwt/wiki/RPC">RPC wiki page</a>.
-<br/>
-For information about how to define an RPC service, see the GWT <a href="http://code.google.com/docreader/#p=google-web-toolkit-doc-1-5&s=google-web-toolkit-doc-1-5&t=DevGuideCreatingServices">documentation</a> or look at the WOGWTDemo example application.
-</div>
-
-<p>15) You're done!  Test it out in development mode by running the GWTShell launcher you created in step 9.  To test it like it will run in production run the ant task "gwt-compile" in your build.xml and then run your WOApplication like you always do.  The gwt-compile will generate some static javascript files in your WebServerResources folder.  You can configure your web server to cache the .cache.xxx files can forever using mod_expires with apache2 for a nice speed boost.</p>
-
-</div>
+<hr/>
+<h3>Compiling and deploying your application</h3>
+<p>Your GWT code can be compiled to javascript by running the ant task "gwt-compile" in your build.xml file.
+The gwt-compile task will generate static javascript files in your WebServerResources folder.</p>
+<p>After your GWT code is compiled to javascript you can run your WOApplication like you always do.</p>
 </body>
 </html>

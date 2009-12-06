@@ -12,11 +12,13 @@ import wogwt.translatable.rpc.WOGWTClientEO;
 
 import com.webobjects.appserver.WORequest;
 import com.webobjects.appserver.WOResponse;
+import com.webobjects.eocontrol.EOCustomObject;
 import com.webobjects.eocontrol.EOEnterpriseObject;
 import com.webobjects.eocontrol.EOKeyGlobalID;
 import com.webobjects.foundation.NSArray;
 import com.webobjects.foundation.NSComparator;
 import com.webobjects.foundation.NSDictionary;
+import com.webobjects.foundation.NSKeyValueCoding;
 import com.webobjects.foundation.NSKeyValueCodingAdditions;
 import com.webobjects.foundation.NSLog;
 import com.webobjects.foundation.NSMutableArray;
@@ -31,6 +33,9 @@ import er.extensions.foundation.ERXDictionaryUtilities;
  */
 public class WOGWTServerUtil {
 
+	private WOGWTServerUtil() {
+	}
+	
 	/**
 	 * Reads the updateContainerID from the url and then strips everything from the 
 	 * response except the updateContainer's html
@@ -73,21 +78,28 @@ public class WOGWTServerUtil {
 	}
 	  
 	/**
-	 * 
+	 * Creates a dictionary that can be used to construct a DTO: WOGWTClientEO
 	 * @param eo
-	 * @return the EO's snapshot dictionary minus any nulls and relationships, but
-	 * including the primary key value
+	 * @return dictionary containing the EOs attribute values, globalID, and isFault value
+	 * 
 	 */
-	public static NSDictionary eoToDictionary(EOEnterpriseObject eo) {
-		NSMutableDictionary data = eo.snapshot().mutableClone();
+	public static NSDictionary<String, Object> eoToDictionary(EOCustomObject eo) {
+		NSMutableDictionary<String, Object> data = new NSMutableDictionary<String, Object>();
 		
-		data = ERXDictionaryUtilities.removeNullValues(data).mutableClone();
+		data.setObjectForKey( eo.__globalID() == null ? 
+				NSKeyValueCoding.NullValue : 
+					eo.__globalID(), 
+					"__globalID" );
+		data.setObjectForKey( eo.isFault(), "isFault" );
 		
-		data.removeObjectsForKeys(eo.toOneRelationshipKeys());
-		data.removeObjectsForKeys(eo.toManyRelationshipKeys());
-		
-		if (primaryKeyValue(eo) != null) {
-			data.setObjectForKey( primaryKeyValue(eo), "primaryKeyValue" );
+		if (!eo.isFault()) {
+			for (String attributeKey : eo.attributeKeys()) {
+				data.setObjectForKey( 
+						eo.valueForKey(attributeKey) == null ? 
+								NSKeyValueCoding.NullValue : eo.valueForKey(attributeKey), 
+						attributeKey );
+			}
+
 		}
 
 		return data;
@@ -98,7 +110,7 @@ public class WOGWTServerUtil {
 	 * @param serverEOs
 	 * @return array of Client EOs
 	 */
-	public static NSArray toClientEOList(List<? extends WOGWTServerEO> serverEOs) {
+	public static NSArray<? extends WOGWTClientEO> toClientEOList(List<? extends WOGWTServerEO> serverEOs) {
 		return toClientEOList(serverEOs, null);
 	}
 	
@@ -108,8 +120,8 @@ public class WOGWTServerUtil {
 	 * @param keyPathsToSerialize a list of keys identifying relationships to include in the serialized objects
 	 * @return array of Client EOs
 	 */
-	public static NSArray toClientEOList(List<? extends WOGWTServerEO> serverEOs, List<String> keyPathsToSerialize) {
-		NSMutableArray result = new NSMutableArray(serverEOs.size());	  
+	public static NSArray<? extends WOGWTClientEO> toClientEOList(List<? extends WOGWTServerEO> serverEOs, List<String> keyPathsToSerialize) {
+		NSMutableArray<WOGWTClientEO> result = new NSMutableArray<WOGWTClientEO>(serverEOs.size());	  
 
 		for (int i = 0; i < serverEOs.size(); i++) {
 			WOGWTServerEO eo = serverEOs.get(i);
@@ -160,7 +172,7 @@ public class WOGWTServerUtil {
 	private static List<String> keyPathsBelowGivenKey(List<String> keyPaths, String key) {
 		List<String> result = new ArrayList<String>();
 		
-		for (Iterator iterator = keyPaths.iterator(); iterator.hasNext();) {
+		for (Iterator<String> iterator = keyPaths.iterator(); iterator.hasNext();) {
 			String keyPath = (String) iterator.next();
 			if (keyPath.startsWith(key + ".")) {
 				result.add(restOfKeyPath(keyPath));
@@ -174,8 +186,8 @@ public class WOGWTServerUtil {
 		List<String> result = new ArrayList<String>();
 		result.addAll(keyPaths);
 		
-		for (Iterator iterator = keyPaths.iterator(); iterator.hasNext();) {
-			String keyPath = (String) iterator.next();
+		for (Iterator<String> iterator = keyPaths.iterator(); iterator.hasNext();) {
+			String keyPath = iterator.next();
 			String[] parts = keyPath.split("\\.");
 			
 			for (int i = 0; i < parts.length; i++) {
@@ -196,27 +208,14 @@ public class WOGWTServerUtil {
 		
 		return result;
 	}
-	
-	public static void main(String[] args) {
-		List<String> keyPathsToSerialize = new ArrayList<String>();
-		keyPathsToSerialize.add("root.next.later");
-		keyPathsToSerialize.add("otherRoot.next");
-		keyPathsToSerialize.add("otherRoot");
-		NSArray<String> keyPaths = new NSArray<String>(addIntermediateKeyPaths(keyPathsToSerialize));
-		try {
-			keyPaths = keyPaths.sortedArrayUsingComparator(new KeyPathComparator());
-		} catch (ComparisonException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	
+		
 	/**
 	 * 
 	 * @param rootEO
 	 * @param keyPathsToSerialize
 	 * @return a dictionary with a key for each relationship the client EO as the value
 	 */
-	public static NSDictionary<String, ? extends WOGWTClientEO> _keyPathsToClientEOs(EOEnterpriseObject rootEO, List<String> keyPathsToSerialize) {
+	public static NSDictionary<String, Object> _keyPathsToClientEOs(EOEnterpriseObject rootEO, List<String> keyPathsToSerialize) {
 		// sort the list so the keyPaths are in order of increasing depth
 		NSArray<String> keyPaths = new NSArray<String>(addIntermediateKeyPaths(keyPathsToSerialize));
 		try {
@@ -225,7 +224,7 @@ public class WOGWTServerUtil {
 			throw new RuntimeException(e);
 		}
 		
-		NSMutableDictionary result = new NSMutableDictionary();
+		NSMutableDictionary<String, Object> result = new NSMutableDictionary<String, Object>();
 		for (int i = 0; i < keyPaths.size(); i++) { 
 			String keyPath = keyPaths.get(i);
 			
@@ -234,19 +233,22 @@ public class WOGWTServerUtil {
 		
 			Object value = rootEO.valueForKey(keyPath);
 
-			if (value != null && value instanceof NSArray) { // to-many relationship
-
-				NSArray objects = (NSArray)value;
-				NSMutableArray array = new NSMutableArray();
-				for (int j = 0; j < objects.count(); j++) {
-					WOGWTServerEO eo = (WOGWTServerEO)objects.objectAtIndex(j);
-					array.add(eo.toClientEO(keyPathsBelowGivenKey(keyPaths, keyPath)));
+			if (rootEO.isToManyKey(keyPath)) {
+				NSArray<WOGWTServerEO> relationshipObjects = (NSArray<WOGWTServerEO>)value;
+				NSMutableArray<WOGWTClientEO> clientObjects = new NSMutableArray<WOGWTClientEO>();
+				for (int j = 0; j < relationshipObjects.count(); j++) {
+					WOGWTServerEO eo = (WOGWTServerEO)relationshipObjects.objectAtIndex(j);
+					clientObjects.add(eo.toClientEO(keyPathsBelowGivenKey(keyPaths, keyPath)));
 				}
-				result.setObjectForKey(array.immutableClone(), keyPath);
-
-			} else if (value != null && value instanceof EOEnterpriseObject) { // to-one relationship
+				result.setObjectForKey(clientObjects.immutableClone(), keyPath);
+				
+			} else if (rootEO.toOneRelationshipKeys().contains(keyPath)) {
 				WOGWTServerEO serverEO = (WOGWTServerEO)value;
-				result.setObjectForKey(serverEO.toClientEO(keyPathsBelowGivenKey(keyPaths, keyPath)), keyPath);
+				if (serverEO == null) {
+					result.setObjectForKey(NSKeyValueCoding.NullValue, keyPath);
+				} else {
+					result.setObjectForKey(serverEO.toClientEO(keyPathsBelowGivenKey(keyPaths, keyPath)), keyPath);
+				}
 			}
 		}
 		return result.immutableClone();

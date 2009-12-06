@@ -1,5 +1,9 @@
 package wogwt.translatable.utils;
 
+/**
+ * Utility class for math operations
+ *
+ */
 public class MathUtils {
 
 	private MathUtils() {
