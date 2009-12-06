@@ -1,29 +1,27 @@
 {
     attributes = (
         {
+            allowsNull = N; 
             columnName = "MOVIE_ID"; 
-            externalType = long; 
             name = movieID; 
             precision = 9; 
-            valueClassName = NSNumber; 
-            valueType = i; 
+            prototypeName = id; 
         }, 
         {
             allowsNull = Y; 
             columnName = SUMMARY; 
-            externalType = object; 
             name = summary; 
-            valueClassName = NSString; 
+            prototypeName = longText; 
         }
     ); 
     attributesUsedForLocking = (movieID); 
-    className = "your.app.gwt.eo.PlotSummary"; 
+    className = "your.app.server.eo.PlotSummary"; 
     classProperties = (summary, movie); 
     externalName = "PLOT_SUMMARY"; 
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (summary, movie); 
-        "_javaClientClassName" = "your.app.gwt.eo.PlotSummary_CustomFieldSerializer"; 
+        "_javaClientClassName" = "your.app.gwt.eo.PlotSummaryClient"; 
     }; 
     maxNumberOfInstancesToBatchFetch = 10; 
     name = PlotSummary; 

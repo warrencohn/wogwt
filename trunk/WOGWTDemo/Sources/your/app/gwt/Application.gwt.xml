@@ -33,8 +33,7 @@
 --><module>
 
 	<inherits name="wogwt.translatable.WOGWT"/>
-	<inherits name="wogwt.translatable.rpc.RPC"/>
-
+	<inherits name="com.google.gwt.json.JSON"/>
 	<inherits name="com.google.gwt.user.theme.standard.Standard"/>
 
   	<source path=""/>

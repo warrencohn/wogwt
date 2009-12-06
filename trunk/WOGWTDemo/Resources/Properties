@@ -1,6 +1,17 @@
 
 wogwt.rpcImplementationPackage = your.app.server.rpc
 
+# REST
+ERXRest.allowUnsafeDelegates=true
+
+ERXRest.Movie.delegate=ERXUnsafeRestEntityDelegate
+ERXRest.Movie.details=true
+
+ERXRest.Studio.delegate=ERXUnsafeRestEntityDelegate
+ERXRest.Studio.details=true
+
+
+
 WODirectConnectEnabled=false
 
 er.extensions.ERXResponseRewriter.javascriptTypeAttribute=true
@@ -79,5 +90,8 @@ er.extensions.ERXNSLogLog4jBridge=INFO
 log4j.logger.er.extensions.ERXDatabaseContextDelegate=WARN
 log4j.logger.er.extensions.ERXConfigurationManager=INFO
 #log4j.logger.er.extensions.ERXApplication.RequestHandling=DEBUG
+
+log4j.logger.er.extensions.foundation.ERXProperties=WARN
+log4j.logger.er.extensions.appserver.ERXApplication$JarChecker=ERROR
 
 log4j.logger.org.mortbay=INFO

@@ -2,35 +2,32 @@
     attributes = (
         {
             columnName = "FIRST_NAME"; 
-            externalType = char; 
             name = firstName; 
-            valueClassName = NSString; 
+            prototypeName = varchar50; 
             width = 20; 
         }, 
         {
             columnName = "LAST_NAME"; 
-            externalType = char; 
             name = lastName; 
-            valueClassName = NSString; 
+            prototypeName = varchar50; 
             width = 30; 
         }, 
         {
+            allowsNull = N; 
             columnName = "TALENT_ID"; 
-            externalType = long; 
             name = talentID; 
             precision = 9; 
-            valueClassName = NSNumber; 
-            valueType = i; 
+            prototypeName = id; 
         }
     ); 
     attributesUsedForLocking = (talentID, firstName, lastName); 
-    className = "your.app.gwt.eo.Talent"; 
+    className = "your.app.server.eo.Talent"; 
     classProperties = (firstName, lastName, roles, moviesDirected, photo); 
     externalName = TALENT; 
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (firstName, lastName, roles, moviesDirected, photo); 
-        "_javaClientClassName" = "your.app.gwt.eo.Talent_CustomFieldSerializer"; 
+        "_javaClientClassName" = "your.app.gwt.eo.TalentClient"; 
     }; 
     maxNumberOfInstancesToBatchFetch = 10; 
     name = Talent; 

@@ -1,38 +1,35 @@
 {
     attributes = (
         {
+            allowsNull = N; 
             columnName = "MOVIE_ID"; 
-            externalType = long; 
             name = movieID; 
             precision = 9; 
-            valueClassName = NSNumber; 
-            valueType = i; 
+            prototypeName = id; 
         }, 
         {
             allowsNull = Y; 
             columnName = "ROLE_NAME"; 
-            externalType = char; 
             name = roleName; 
-            valueClassName = NSString; 
+            prototypeName = varchar50; 
             width = 30; 
         }, 
         {
+            allowsNull = N; 
             columnName = "TALENT_ID"; 
-            externalType = long; 
             name = talentID; 
             precision = 9; 
-            valueClassName = NSNumber; 
-            valueType = i; 
+            prototypeName = id; 
         }
     ); 
     attributesUsedForLocking = (talentID, movieID, roleName); 
-    className = "your.app.gwt.eo.MovieRole"; 
+    className = "your.app.server.eo.MovieRole"; 
     classProperties = (roleName, movie, talent); 
     externalName = "MOVIE_ROLE"; 
     fetchSpecificationDictionary = {}; 
     internalInfo = {
         "_clientClassPropertyNames" = (roleName, movie, talent); 
-        "_javaClientClassName" = "your.app.gwt.eo.MovieRole_CustomFieldSerializer"; 
+        "_javaClientClassName" = "your.app.gwt.eo.MovieRoleClient"; 
     }; 
     maxNumberOfInstancesToBatchFetch = 10; 
     name = MovieRole; 

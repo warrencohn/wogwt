@@ -1,8 +1,11 @@
 package your.app;
 
+import wogwt.GWTContext;
 import wogwt.WOGWTServerUtil;
+import wogwt.components.WOGWTScript;
 import wogwt.server.rpc.GWTRPCRequestHandler;
 
+import com.webobjects.appserver.WOContext;
 import com.webobjects.appserver.WORequest;
 import com.webobjects.appserver.WOResponse;
 import com.webobjects.appserver._private.WOComponentRequestHandler;
@@ -19,6 +22,17 @@ public class Application extends ERXApplication {
 
 	public Application() {
 		super();
+		
+//	    ERXRestRequestHandler.register(new ERXUnsafeRestAuthenticationDelegate(), true, false);
+//	    
+//	    ERXRouteRequestHandler routeRequestHandler = new ERXRouteRequestHandler(); 
+//	    routeRequestHandler.addRoutes(Studio.ENTITY_NAME);
+//	    routeRequestHandler.addDefaultRoutes(Movie.ENTITY_NAME);
+//	    ERXRouteRequestHandler.register(routeRequestHandler); 
+	    
+		if (WOGWTScript.isHostedMode()) {
+			setContextClassName(GWTContext.class.getName());
+		}
 		
 		registerRequestHandler(new GWTRPCRequestHandler(), GWTRPCRequestHandler.KEY);
 
