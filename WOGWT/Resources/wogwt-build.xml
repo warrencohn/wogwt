@@ -12,7 +12,7 @@
 		<!-- possible values are: ERROR, WARN, INFO, TRACE, DEBUG, SPAM, or ALL -->
 		<attribute name="logLevel" default="INFO"/>
 		<!-- The directory into which generated files will be written for review -->
-		<attribute name="genDir" default="" />
+		<attribute name="genDir" default="gen" />
 		<!-- The directory to write output files into -->
 		<attribute name="outputDir" default="WebServerResources"/>
 		<!-- Logs output in a graphical tree view  -->
@@ -23,6 +23,14 @@
 		<attribute name="enableAssert" default="false"/>
 		<!-- Validate all source code, but do not compile -->
 		<attribute name="validateOnly" default="false"/>
+		<!-- Validate all source code, but do not compile -->
+		<attribute name="disableClassMetadata" default="false"/>
+		<!-- Validate all source code, but do not compile -->
+		<attribute name="disableCastChecking" default="false"/>
+		<!-- Validate all source code, but do not compile -->
+		<attribute name="compileReport" default="false"/>
+		<!-- Faster compile for testing/debugging purposes -->
+		<attribute name="draftCompile" default="false"/>
 		<!-- build even if not deemed necessary by file timestamps -->
 		<attribute name="forceBuild" default="false"/>
 		<!-- classpath element id for adding third-party jars to the compiler classpath -->
@@ -51,7 +59,23 @@
 			<condition property="validateOnlyArg" value="-validateOnly" else="">
 				<istrue value="@{validateOnly}"/>
 			</condition>
-				
+			
+			<condition property="draftCompileArg" value="-draftCompile" else="">
+				<istrue value="@{draftCompile}"/>
+			</condition>
+			
+			<condition property="disableClassMetadataArg" value="-XdisableClassMetadata" else="">
+				<istrue value="@{disableClassMetadata}"/>
+			</condition>
+			
+			<condition property="disableCastCheckingArg" value="-XdisableCastChecking" else="">
+				<istrue value="@{disableCastChecking}"/>
+			</condition>
+			
+			<condition property="compileReportArg" value="-compileReport" else="">
+				<istrue value="@{compileReport}"/>
+			</condition>
+			
 			<java classname="com.google.gwt.dev.Compiler" fork="true">
 				<classpath refid="@{classpathRefid}" />
 				<classpath>
@@ -71,25 +95,29 @@
 				<jvmarg line="-XX:ThreadPriorityPolicy=1" />
 				<jvmarg line="-Xverify:none" />
 				
-				<!--
-				<arg line="-draftCompile" />
-				<arg line="-disableClassMetadata" />
-				<arg line="-disableCastChecking" />
-				-->
-										
-				<arg value="-localWorkers" />
-				<arg value="2" />
+			
 				<arg value="-logLevel" />
 				<arg value="@{logLevel}" />
-				<!--<arg value="${genDirArg}" />
-				<arg value="@{genDir}" />-->
-				<arg value="-war" />
-				<arg value="@{outputDir}" />
-				<!--<arg value="${treeLogger}" />-->
+				
+				<arg line="${genDirArg}" />
+				<arg line="@{genDir}" />
+
 				<arg value="-style" />
 				<arg value="@{style}" />
-				<!--<arg value="${assertArg}" />-->
-				<!--<arg value="${validateOnlyArg}" />-->
+				
+				<arg line="${assertArg}" />
+				<arg line="${disableClassMetadataArg}" />
+				<arg line="${disableCastCheckingArg}" />
+				<arg line="${validateOnlyArg}" />
+				<arg line="${draftCompileArg}" />
+				<arg line="${compileReportArg}" />
+				
+				<arg value="-localWorkers" />
+				<arg value="2" />
+				
+				<arg value="-war" />
+				<arg value="@{outputDir}" />
+				
 				<arg value="@{module}" />
 			</java>
 		</sequential>
