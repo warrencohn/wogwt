@@ -33,4 +33,5 @@ SUPPORTED CLASSES:
   * NSKeyValueCodingAdditions (limited though, no reflection)
     * Except Utility
 
-  * BigDecimal (very limited, via the 3rd-party gwt-math library)
+  * BigDecimal
+  * BigInteger
