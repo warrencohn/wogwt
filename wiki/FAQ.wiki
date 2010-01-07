@@ -14,11 +14,11 @@ A: No, GWT can be used as little or as much as you need, in the same way as you 
 
 *Q: What dependencies are necessary to use WOGWT?*
 
-A: WebObjects 5.4 or later and a recent version Project Wonder.  If you're not using WO 5.4 you can use Wonder's Ajax request hander instead and then WO 5.4 is not necessary.
+A: A recent version Project Wonder.  Both WebObjects 5.3 and 5.4 are supported.  If you're not using WO 5.4 you can use Wonder's Ajax request handler instead WO 5.4's Ajax handler.
 
 *Q: It's not working, why not?*
 
-A: Errors that occur in GWT Development Mode (aka Hosted Mode) are shown in the Development Mode application in the last tab (which represents the current browser connection).  If you think an error has occurred you should look in this tab and not just in the Eclipse console.
+A: Errors that occur in GWT Development Mode (aka Hosted Mode) are shown in the Development Mode view/tab in Eclipse - look there for more details about what went wrong.
 
 *Q: I get the error "No source code is available for type wogwt.translatable.WOGWTClientUtil; did you forget to inherit a required module?"*
 
