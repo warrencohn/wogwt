@@ -31,12 +31,17 @@ public class WOGWTToolMain extends JFrame {
 		
 		GridBagConstraints mainConstraints = new GridBagConstraints();
 		mainConstraints.gridx = 0;
-		mainConstraints.anchor = GridBagConstraints.EAST;
+		mainConstraints.anchor = GridBagConstraints.WEST;
 		
 		JLabel label = new JLabel("<html>WOGWT Tool - this will add WOGWT to an existing WO application.<br><br>" +
 				"Before you run this app you should do these things:<br><br>" +
-				"Step 1: Commit or backup your project<br><br>" +
-				"Step 2: Add the frameworks \"WOGWT\" and \"JavaWOJSPServlet\" to your project's build path.<br><br></html>");
+				"Step 1: Download and install WOGWT.framework into /Library/Frameworks/<br>" +
+				"You must install this even if you plan on using the WOGWT source.<br><br>" +
+				"Step 2: Install the Google Eclipse Plugin by following their instructions at:<br>" +
+				"http://code.google.com/eclipse<br><br>" + 
+				"Step 3: Commit or backup your project<br><br>" +
+				"Step 4: Add the frameworks \"WOGWT\" and \"JavaWOJSPServlet\" to your project's build path.<br><br>" +
+				"Step 5: Enter your project directory and click the button below.<br><br></html>");
 		this.add(label, mainConstraints);
 		
 		JPanel topPanel = new JPanel();
@@ -65,22 +70,28 @@ public class WOGWTToolMain extends JFrame {
 		topPanel.add(browseButton);
 		
 		
-		final JCheckBox chkUseGWTSourceProject = new JCheckBox("Use the WOGWT source project instead of the binary framework");
-		this.add(chkUseGWTSourceProject, mainConstraints);
-		
 		JButton runButton = new JButton("Add WOGWT to Project");
 		runButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ProjectCreator.main(new String[] {projectPath.getText(), chkUseGWTSourceProject.isSelected() + ""});
+					ProjectCreator.main(new String[] {projectPath.getText()});
 					JOptionPane.showMessageDialog(WOGWTToolMain.this, "WOGWT has been added to your project");
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			}
 		});
-		
+				
 		mainConstraints.anchor = GridBagConstraints.CENTER;
 		this.add(runButton, mainConstraints);
+		
+		JLabel bottomLabel = new JLabel("<html><br>" +
+			"Step 6: In your project properties go to Google->\"Web Toolkit\".<br>" +
+			"Check the box that says \"Use Google Web Toolkit\".<br>" +
+			"You must do this AFTER clicking the button above.<br><br>" +
+			"Step 7: Launch your project in GWT Development Mode by running the generated <br>" +
+			"&lt;ProjectName&gt;_GWTDevMode.launch file in your project folder.</html>");
+		mainConstraints.anchor = GridBagConstraints.WEST;
+		this.add(bottomLabel, mainConstraints);
 	}
 }
