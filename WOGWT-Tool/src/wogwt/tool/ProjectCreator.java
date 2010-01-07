@@ -14,11 +14,6 @@ public class ProjectCreator {
 	public static void main(String[] args) throws Exception {
 		String projectDir = args[0];
 		
-		boolean useWOGWTSourceProject = false;
-		if (args.length > 1 && "true".equals(args[1])) {
-			useWOGWTSourceProject = true;
-		}
-		
 		String projectName = new File(projectDir).getName();
 		
 		String applicationClassFileName = findFile(projectDir, "Application.java");
@@ -207,17 +202,7 @@ public class ProjectCreator {
 			    "\n" +
 			    "<servlet-mapping>\n" +
 				"   <servlet-name>woServlet</servlet-name>\n" +
-				"   <url-pattern>/" + gwtPackage + ".Application/" + projectName + "/WebObjects/*</url-pattern>\n" +
-			    "</servlet-mapping>\n" +
-			    "\n" +
-			    "<servlet>\n" + 
-			    "	<servlet-name>remoteLoggingService</servlet-name>\n" + 
-			    "	<servlet-class>com.google.gwt.libideas.logging.server.RemoteLoggingServiceImpl</servlet-class>\n" +
-			    "</servlet>\n" +
-			    "\n" + 
-			    "<servlet-mapping>\n" +
-			    "	<servlet-name>remoteLoggingService</servlet-name>\n" + 
-			    "	<url-pattern>/" + gwtPackage + ".Application/logging</url-pattern>\n" +
+				"   <url-pattern>/" + projectName + "/WebObjects/*</url-pattern>\n" +
 			    "</servlet-mapping>\n" +
 				"\n" +
 				"</web-app>\n";
@@ -245,7 +230,8 @@ public class ProjectCreator {
 				"	<target name=\"gwt-compile-dev\" depends=\"init.properties\">\n" +
 				"		<gwtCompile module=\"${gwtpackage}.Development\"\n" +
 				"			renamedto=\"${gwtpackage}.Application\" \n" +
-				"			style=\"PRETTY\"/>\n" +
+				"			style=\"PRETTY\" \n" +
+				"			draftCompile=\"true\" />\n" +
 				"	</target>\n" +
 				"\n" +
 				"	<target name=\"gwt-compile\" depends=\"init.properties\">\n" +
@@ -406,33 +392,28 @@ public class ProjectCreator {
 			System.out.println("Unable to locate Main.html");
 		}
 		
-		String sourceRelativeDir = sourceDir.replace(projectDir + "/", "");
-		
-		String launcherFileName = projectDir + "/" + projectName + "_HostedMode.launch";
-		String launcherText = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-			"<launchConfiguration type=\"org.eclipse.jdt.launching.localJavaApplication\">\n" +
+		String launcherFileName = projectDir + "/" + projectName + "_GWTDevMode.launch";
+		String launcherText = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+			"<launchConfiguration type=\"com.google.gdt.eclipse.suite.webapp\">\n" +
+			"<stringAttribute key=\"com.google.gwt.eclipse.core.LOG_LEVEL\" value=\"TRACE\"/>\n" +
 			"<listAttribute key=\"org.eclipse.debug.core.MAPPED_RESOURCE_PATHS\">\n" +
 			"<listEntry value=\"/" + projectName + "\"/>\n" +
 			"</listAttribute>\n" +
 			"<listAttribute key=\"org.eclipse.debug.core.MAPPED_RESOURCE_TYPES\">\n" +
 			"<listEntry value=\"4\"/>\n" +
 			"</listAttribute>\n" +
-			"<booleanAttribute key=\"org.eclipse.debug.core.appendEnvironmentVariables\" value=\"true\"/>\n" +
-			"<listAttribute key=\"org.eclipse.jdt.launching.CLASSPATH\">\n" +
-			"<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry containerPath=&quot;org.eclipse.jdt.launching.JRE_CONTAINER&quot; javaProject=&quot;" + projectName + "&quot; path=&quot;1&quot; type=&quot;4&quot;/&gt;&#10;\"/>\n" +
-			(useWOGWTSourceProject ? "<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry internalArchive=&quot;/WOGWT/Sources&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;\"/>\n" : "") +
-			"<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry internalArchive=&quot;/" + projectName + "/" + sourceRelativeDir + "/&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;\"/>\n" +
-			"<listEntry value=\"&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;runtimeClasspathEntry id=&quot;org.eclipse.jdt.launching.classpathentry.defaultClasspath&quot;&gt;&#10;&lt;memento exportedEntriesOnly=&quot;false&quot; project=&quot;" + projectName + "&quot;/&gt;&#10;&lt;/runtimeClasspathEntry&gt;&#10;\"/>\n" +
-			"</listAttribute>\n" +
-			"<booleanAttribute key=\"org.eclipse.jdt.launching.DEFAULT_CLASSPATH\" value=\"false\"/>\n" +
-			"<stringAttribute key=\"org.eclipse.jdt.launching.MAIN_TYPE\" value=\"com.google.gwt.dev.DevMode\"/>\n" +
-			"<stringAttribute key=\"org.eclipse.jdt.launching.PROGRAM_ARGUMENTS\" value=\"-logLevel TRACE -war &quot;${workspace_loc:" + projectName + "}/WebServerResources&quot; -startupUrl " + gwtPackage + ".Application/" + projectName + "/WebObjects/" + projectName + ".woa " + gwtPackage + ".Development\"/>\n" +
+			"<stringAttribute key=\"org.eclipse.jdt.launching.CLASSPATH_PROVIDER\" value=\"com.google.gwt.eclipse.core.moduleClasspathProvider\"/>\n" +
+			"<stringAttribute key=\"org.eclipse.jdt.launching.PROGRAM_ARGUMENTS\" value=\"-gen ${workspace_loc:" + projectName + "}/gen -war &quot;${workspace_loc:" + projectName + "}/WebServerResources&quot;  -startupUrl http://localhost:8888/" + projectName + "/WebObjects/" + projectName + ".woa  " + gwtPackage + ".Development\"/>\n" +
 			"<stringAttribute key=\"org.eclipse.jdt.launching.PROJECT_ATTR\" value=\"" + projectName + "\"/>\n" +
-			"<stringAttribute key=\"org.eclipse.jdt.launching.VM_ARGUMENTS\" value=\"-Xmx256M -Dwogwt.isHostedMode=&quot;true&quot; -DWOAINSTALLROOT=&quot;${workspace_loc:" + projectName + "/build}&quot; -DWOIDE=&quot;WOLips&quot; \"/>\n" +
-			"</launchConfiguration>\n";
+			"<stringAttribute key=\"org.eclipse.jdt.launching.VM_ARGUMENTS\" value=\"-Xmx256M -Dwogwt.isHostedMode=&quot;true&quot; -DWOAINSTALLROOT=&quot;${workspace_loc:" + projectName + "/build}&quot; -DWOIDE=&quot;WOLips&quot;\"/>\n" +
+			"<stringAttribute key=\"org.eclipse.jdt.launching.WORKING_DIRECTORY\" value=\"${working_dir_loc_WOLips:" + projectName + "}\"/>\n" +
+			"</launchConfiguration>";
+
 		if (!new File(launcherFileName).exists()) {
 			FileUtils.writeStringToFile(new File(launcherFileName), launcherText, "UTF-8");
 		}
+		
+		Runtime.getRuntime().exec(new String[] {"ln", "-s", projectDir + "/WebServerResources", projectDir + "/war"});
 		
 		// TODO: add JavaWOJSPServlet and WOGWT to project classpath
 	}
