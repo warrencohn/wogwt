@@ -228,15 +228,18 @@
 	
 	<import file="/Library/Frameworks/WOGWT.framework/Resources/wogwt-build.xml"/>
 	
-	<target name="gwt-compile-dev">		
+	<target name="gwt-compile-dev" depends="init.properties">		
 		<gwtCompile module="${gwtpackage}.Development"
 			renamedTo="${gwtpackage}.Application"
-			genDir="gen"
-			style="PRETTY" forceBuild="true"/>
+			style="PRETTY" 
+			draftCompile="true" />
 	</target>
 	  	
-	<target name="gwt-compile">
-		<gwtCompile module="${gwtpackage}.Application" forceBuild="true"/>
+	<target name="gwt-compile" depends="init.properties">
+		<gwtCompile module="${gwtpackage}.Application" 
+			forceBuild="true"
+			disableClassMetadata="true"
+			disableCastChecking="true"/>
 	</target>
 	
 </project>

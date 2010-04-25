@@ -16,7 +16,6 @@ public class MainScript implements EntryPoint {
 		}
 		
 		Log.setDefaultLevel(Level.ALL);
-		Log.addLogHandler(new RemoteLogHandler());
 		
 		Log.info(getClass().getName() + ": onModuleLoad");
 	}

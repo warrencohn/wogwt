@@ -31,14 +31,14 @@
   
 	<servlet-mapping>
 		<servlet-name>woServlet</servlet-name>
-		<url-pattern>/your.app.gwt.Application/WOGWTDemo/WebObjects/*</url-pattern>
+		<url-pattern>/WOGWTDemo/WebObjects/*</url-pattern>
 	</servlet-mapping>
 
-	<servlet> 
+	<servlet>
 		<servlet-name>remoteLoggingServiceImpl</servlet-name>
 		<servlet-class>com.google.gwt.libideas.logging.server.RemoteLoggingServiceImpl</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>remoteLoggingServiceImpl</servlet-name>
 		<url-pattern>/your.app.gwt.Application/logging</url-pattern>
