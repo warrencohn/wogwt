@@ -18,6 +18,7 @@ public class WOGWTToolMain extends JFrame {
 
 	public static void main(String[] args) {
 		WOGWTToolMain frame = new WOGWTToolMain();
+		frame.setTitle("WOGWT Tool");
 		frame.pack();
 		frame.setSize(frame.getWidth() + 50, frame.getHeight() + 50);
 		frame.setLocationRelativeTo(null);
@@ -38,7 +39,9 @@ public class WOGWTToolMain extends JFrame {
 				"Step 1: Download and install WOGWT.framework into /Library/Frameworks/<br>" +
 				"You must install this even if you plan on using the WOGWT source.<br><br>" +
 				"Step 2: Install the Google Eclipse Plugin by following their instructions at:<br>" +
-				"http://code.google.com/eclipse<br><br>" + 
+				"&nbsp;&nbsp;&nbsp;&nbsp;http://code.google.com/eclipse <br>" +
+				"Configure the GWT SDK location in eclipse preferences to point to the folder <br>" +
+				"&nbsp;&nbsp;&nbsp;&nbsp;/Library/Frameworks/WOGWT.framework/Resources/Java/<br><br>" + 
 				"Step 3: Commit or backup your project<br><br>" +
 				"Step 4: Add the frameworks \"WOGWT\" and \"JavaWOJSPServlet\" to your project's build path.<br><br>" +
 				"Step 5: Enter your project directory and click the button below.<br><br></html>");
@@ -75,7 +78,7 @@ public class WOGWTToolMain extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					ProjectCreator.main(new String[] {projectPath.getText()});
-					JOptionPane.showMessageDialog(WOGWTToolMain.this, "WOGWT has been added to your project");
+					JOptionPane.showMessageDialog(WOGWTToolMain.this, "WOGWT has been added to your project. Continue with step 6 below.");
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -90,7 +93,9 @@ public class WOGWTToolMain extends JFrame {
 			"Check the box that says \"Use Google Web Toolkit\".<br>" +
 			"You must do this AFTER clicking the button above.<br><br>" +
 			"Step 7: Launch your project in GWT Development Mode by running the generated <br>" +
-			"&lt;ProjectName&gt;_GWTDevMode.launch file in your project folder.</html>");
+			"&lt;ProjectName&gt;_GWTDevMode.launch file in your project folder.<br><br>" +
+			"Step 8: In the \"Development Mode\" tab in Eclipse copy the url displayed and paste it into the browser. The URL is like:<br>" +
+			"http://localhost:8888/MyApp/WebObjects/MyApp.woa?gwt.codesvr=127.0.0.1:9997</html>");
 		mainConstraints.anchor = GridBagConstraints.WEST;
 		this.add(bottomLabel, mainConstraints);
 	}

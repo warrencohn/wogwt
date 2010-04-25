@@ -205,6 +205,14 @@ public class ProjectCreator {
 				"   <url-pattern>/" + projectName + "/WebObjects/*</url-pattern>\n" +
 			    "</servlet-mapping>\n" +
 				"\n" +
+				"<servlet>\n" +
+				"   <servlet-name>remoteLoggingServiceImpl</servlet-name>\n" +
+				"   <servlet-class>com.google.gwt.libideas.logging.server.RemoteLoggingServiceImpl</servlet-class>\n" +
+				"</servlet>\n" +
+				"<servlet-mapping>\n" +
+				"   <servlet-name>remoteLoggingServiceImpl</servlet-name>\n" +
+				"   <url-pattern>/" + gwtPackage + ".Application/logging</url-pattern>\n" +
+				"</servlet-mapping>\n" +
 				"</web-app>\n";
 			
 			new File(webXMLFileName).getParentFile().mkdirs();
@@ -395,7 +403,12 @@ public class ProjectCreator {
 		String launcherFileName = projectDir + "/" + projectName + "_GWTDevMode.launch";
 		String launcherText = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
 			"<launchConfiguration type=\"com.google.gdt.eclipse.suite.webapp\">\n" +
-			"<stringAttribute key=\"com.google.gwt.eclipse.core.LOG_LEVEL\" value=\"TRACE\"/>\n" +
+			"<stringAttribute key=\"com.google.gdt.eclipse.suiteMainTypeProcessor.PREVIOUSLY_SET_MAIN_TYPE_NAME\" value=\"com.google.gwt.dev.DevMode\"/>\n" +
+			"<booleanAttribute key=\"com.google.gdt.eclipse.suiteWarArgumentProcessor.IS_WAR_FROM_PROJECT_PROPERTIES\" value=\"false\"/>\n" +
+			"<listAttribute key=\"com.google.gwt.eclipse.core.ENTRY_POINT_MODULES\">\n" +
+			"<listEntry value=\"" + gwtPackage + ".Application\"/>\n" +
+			"</listAttribute>\n" + 
+			"<stringAttribute key=\"com.google.gwt.eclipse.core.URL\" value=\"http://localhost:8888/" + projectName + "/WebObjects/" + projectName + ".woa\"/>\n" + 
 			"<listAttribute key=\"org.eclipse.debug.core.MAPPED_RESOURCE_PATHS\">\n" +
 			"<listEntry value=\"/" + projectName + "\"/>\n" +
 			"</listAttribute>\n" +
@@ -403,9 +416,10 @@ public class ProjectCreator {
 			"<listEntry value=\"4\"/>\n" +
 			"</listAttribute>\n" +
 			"<stringAttribute key=\"org.eclipse.jdt.launching.CLASSPATH_PROVIDER\" value=\"com.google.gwt.eclipse.core.moduleClasspathProvider\"/>\n" +
-			"<stringAttribute key=\"org.eclipse.jdt.launching.PROGRAM_ARGUMENTS\" value=\"-gen ${workspace_loc:" + projectName + "}/gen -war &quot;${workspace_loc:" + projectName + "}/WebServerResources&quot;  -startupUrl http://localhost:8888/" + projectName + "/WebObjects/" + projectName + ".woa  " + gwtPackage + ".Development\"/>\n" +
+			"<stringAttribute key=\"org.eclipse.jdt.launching.MAIN_TYPE\" value=\"com.google.gwt.dev.DevMode\"/>\n" +
+			"<stringAttribute key=\"org.eclipse.jdt.launching.PROGRAM_ARGUMENTS\" value=\"-remoteUI &quot;${gwt_remote_ui_server_port}:${unique_id}&quot; -startupUrl http://localhost:8888/" + projectName + "/WebObjects/" + projectName + ".woa -logLevel INFO -port 8888 -war &quot;${workspace_loc:" + projectName + "/WebServerResources}&quot;  " + gwtPackage + ".Application\"/>\n" +
 			"<stringAttribute key=\"org.eclipse.jdt.launching.PROJECT_ATTR\" value=\"" + projectName + "\"/>\n" +
-			"<stringAttribute key=\"org.eclipse.jdt.launching.VM_ARGUMENTS\" value=\"-Xmx256M -Dwogwt.isHostedMode=&quot;true&quot; -DWOAINSTALLROOT=&quot;${workspace_loc:" + projectName + "/build}&quot; -DWOIDE=&quot;WOLips&quot;\"/>\n" +
+			"<stringAttribute key=\"org.eclipse.jdt.launching.VM_ARGUMENTS\" value=\"-XstartOnFirstThread -d32 -Xmx256M -Dwogwt.isHostedMode=&quot;true&quot; -DWOAINSTALLROOT=&quot;${workspace_loc:" + projectName + "/build}&quot; -DWOIDE=&quot;WOLips&quot;\"/>\n" +
 			"<stringAttribute key=\"org.eclipse.jdt.launching.WORKING_DIRECTORY\" value=\"${working_dir_loc_WOLips:" + projectName + "}\"/>\n" +
 			"</launchConfiguration>";
 
@@ -413,7 +427,28 @@ public class ProjectCreator {
 			FileUtils.writeStringToFile(new File(launcherFileName), launcherText, "UTF-8");
 		}
 		
-		Runtime.getRuntime().exec(new String[] {"ln", "-s", projectDir + "/WebServerResources", projectDir + "/war"});
+		String gdtPrefsFilename =  projectDir + "/.settings/com.google.gdt.eclipse.core.prefs";
+		String gdtPrefsText = 
+			"#Sat Apr 24 21:38:37 CDT 2010\n" +
+			"eclipse.preferences.version=1\n" +
+			"jarsExcludedFromWebInfLib=\n" +
+			"warSrcDir=WebServerResources\n" +
+			"warSrcDirIsOutput=false\n" +
+			"com.google.gdt.eclipse.core.prefs\n";
+		if (!new File(gdtPrefsFilename).exists()) {
+			FileUtils.writeStringToFile(new File(gdtPrefsFilename), gdtPrefsText, "UTF-8");
+		}
+		
+		
+		String gwtPrefsFilename =  projectDir + "/.settings/com.google.gwt.eclipse.core.prefs";
+		String gwtPrefsText = 
+			"#Sat Dec 19 22:43:32 CST 2009\n" +
+			"eclipse.preferences.version=1\n" +
+			"entryPointModules=\n" +
+			"filesCopiedToWebInfLib=gwt-servlet.jar\n";
+		if (!new File(gwtPrefsFilename).exists()) {
+			FileUtils.writeStringToFile(new File(gwtPrefsFilename), gwtPrefsText, "UTF-8");
+		}
 		
 		// TODO: add JavaWOJSPServlet and WOGWT to project classpath
 	}
