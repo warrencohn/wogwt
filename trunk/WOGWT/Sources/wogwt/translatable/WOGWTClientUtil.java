@@ -28,7 +28,7 @@ import com.google.gwt.user.client.DOM;
  */
 public class WOGWTClientUtil {
 	
-	public static final String UPDATE_CONTAINER_ID_KEY = "__updateID";
+	public static final String UPDATE_CONTAINER_ID_KEY = "_u";
 	public static final String WOGWTMissingUpdateContainer = "WOGWTMissingUpdateContainer";
 	public static final String ACTION_ID_PREFIX = "wogwt_action_";
 	
